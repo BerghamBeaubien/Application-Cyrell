@@ -33,3 +33,4 @@ C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Release\net48
 C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\obj\Release\net48\Applicat.DBA0CFAF.Up2Date
 C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\obj\Release\net48\Application Cyrell.exe
 C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\obj\Release\net48\Application Cyrell.pdb
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\obj\Release\net48\Application Cyrell.sourcelink.json

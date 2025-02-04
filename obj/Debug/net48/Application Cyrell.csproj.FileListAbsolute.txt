@@ -68,3 +68,4 @@ C:\Users\mouad.khalladi\source\repos\Application Cyrell\firstCSMacro\bin\Debug\n
 C:\Users\mouad.khalladi\source\repos\Application Cyrell\firstCSMacro\bin\Debug\net48\SolidEdge.Community.dll
 C:\Users\mouad.khalladi\source\repos\Application Cyrell\firstCSMacro\bin\Debug\net48\Interop.SolidEdge.xml
 C:\Users\mouad.khalladi\source\repos\Application Cyrell\firstCSMacro\obj\Debug\net48\Applicat.DBA0CFAF.Up2Date
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\obj\Debug\net48\Application Cyrell.sourcelink.json

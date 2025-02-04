@@ -83,66 +83,6 @@ namespace Application_Cyrell.LogiqueBouttonsSolidEdge
 
                 // Set the document name to match the original STEP file name
                 asmDoc.Name = Path.GetFileNameWithoutExtension(fullPath);
-
-                SolidEdgeAssembly.Occurrences occs = null;
-                SolidEdgeAssembly.Occurrence occ1 = null;
-
-                FlatPatterns flps = null;
-                FlatPatternModel flpm = null;
-
-                Body body = null;
-                Faces faces = null;
-                Face face = null;
-                Edges edges = null;
-                Edge edge = null;
-                Vertex vertex = null;
-
-                occs = asmDoc.Occurrences;
-
-                occ1 = occs.Item(1);
-                string nomOcc1 = occ1.Name;
-
-                object occurenceDoc = occ1.OccurrenceDocument;
-
-                if (occs.Count == 1)
-                {
-                    // Close without saving using the Close method with specific options
-                    asmDoc.Close(0);
-
-                    // Open part with Normal.par template, keeping the original filename
-                    //SolidEdgePart.SheetMetalDocument psmDoc = (SolidEdgePart.SheetMetalDocument)seApp.Documents.OpenWithTemplate(fullPath, _partTemplatePath);
-                    PartDocument parDoc = (PartDocument)seApp.Documents.OpenWithTemplate(fullPath, _partTemplatePath);
-                    // Set the document name to match the original STEP file name
-                    parDoc.Name = Path.GetFileNameWithoutExtension(fullPath);
-
-                    //// Check if a flat pattern already exists
-                    //if (psmDoc.FlatPatternModels.Count == 0)
-                    //{
-                    //    flpm = psmDoc.FlatPatternModels.Add(psmDoc.Models.Item(1));
-                    //}
-                    //else
-                    //{
-                    //    flpm = (FlatPatternModel)psmDoc.Models.Item(1);
-                    //}
-
-                    //body = (Body)flpm.Body;
-                    //faces = (Faces)body.Faces[SolidEdgeGeometry.FeatureTopologyQueryTypeConstants.igQueryPlane];
-                    //face = (Face)faces.Item(1);
-
-                    //edges = (Edges)face.Edges;
-                    //edge = (Edge)edges.Item(1);
-
-                    //vertex = (Vertex)edge.EndVertex;
-
-                    //flps = flpm.FlatPatterns;
-
-                    //flps.Add(
-                    //    ReferenceEdge: edge,
-                    //    ReferenceFace: face,
-                    //    ReferenceVertex: vertex,
-                    //    ModelType: SolidEdgeConstants.FlattenPatternModelTypeConstants.igFlattenPatternModelTypeFlattenAnything
-                    //);
-                }
             }
             catch (Exception ex)
             {

@@ -89,11 +89,11 @@ namespace firstCSMacro
             this.listBoxDxfFiles.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listBoxDxfFiles.ForeColor = System.Drawing.Color.White;
             this.listBoxDxfFiles.FormattingEnabled = true;
-            this.listBoxDxfFiles.ItemHeight = 25;
+            this.listBoxDxfFiles.ItemHeight = 36;
             this.listBoxDxfFiles.Location = new System.Drawing.Point(84, 184);
             this.listBoxDxfFiles.Name = "listBoxDxfFiles";
             this.listBoxDxfFiles.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.listBoxDxfFiles.Size = new System.Drawing.Size(902, 500);
+            this.listBoxDxfFiles.Size = new System.Drawing.Size(902, 468);
             this.listBoxDxfFiles.TabIndex = 4;
             // 
             // textBoxFolderPath
@@ -104,7 +104,7 @@ namespace firstCSMacro
             this.textBoxFolderPath.ForeColor = System.Drawing.Color.White;
             this.textBoxFolderPath.Location = new System.Drawing.Point(84, 134);
             this.textBoxFolderPath.Name = "textBoxFolderPath";
-            this.textBoxFolderPath.Size = new System.Drawing.Size(902, 19);
+            this.textBoxFolderPath.Size = new System.Drawing.Size(902, 28);
             this.textBoxFolderPath.TabIndex = 5;
             // 
             // button10
@@ -272,7 +272,7 @@ namespace firstCSMacro
             this.txtBoxUnlock.ForeColor = System.Drawing.Color.LightCyan;
             this.txtBoxUnlock.Location = new System.Drawing.Point(51, 7);
             this.txtBoxUnlock.Name = "txtBoxUnlock";
-            this.txtBoxUnlock.Size = new System.Drawing.Size(950, 55);
+            this.txtBoxUnlock.Size = new System.Drawing.Size(950, 82);
             this.txtBoxUnlock.TabIndex = 19;
             this.txtBoxUnlock.Text = "Veiullez Choisir un répértoire pour continuer";
             // 
