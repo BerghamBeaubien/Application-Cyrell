@@ -1,0 +1,22 @@
+{
+  "version": 2,
+  "dgSpecHash": "nQOrOku95jU=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\mouad.khalladi\\source\\repos\\firstCSMacro\\firstCSMacro\\Application Cyrell.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\mouad.khalladi\\.nuget\\packages\\acadsharp\\1.0.6\\acadsharp.1.0.6.nupkg.sha512",
+    "C:\\Users\\mouad.khalladi\\.nuget\\packages\\epplus\\7.5.3\\epplus.7.5.3.nupkg.sha512",
+    "C:\\Users\\mouad.khalladi\\.nuget\\packages\\epplus.interfaces\\7.5.0\\epplus.interfaces.7.5.0.nupkg.sha512",
+    "C:\\Users\\mouad.khalladi\\.nuget\\packages\\epplus.system.drawing\\7.5.0\\epplus.system.drawing.7.5.0.nupkg.sha512",
+    "C:\\Users\\mouad.khalladi\\.nuget\\packages\\microsoft.io.recyclablememorystream\\3.0.1\\microsoft.io.recyclablememorystream.3.0.1.nupkg.sha512",
+    "C:\\Users\\mouad.khalladi\\.nuget\\packages\\system.buffers\\4.5.1\\system.buffers.4.5.1.nupkg.sha512",
+    "C:\\Users\\mouad.khalladi\\.nuget\\packages\\system.componentmodel.annotations\\5.0.0\\system.componentmodel.annotations.5.0.0.nupkg.sha512",
+    "C:\\Users\\mouad.khalladi\\.nuget\\packages\\system.drawing.common\\8.0.4\\system.drawing.common.8.0.4.nupkg.sha512",
+    "C:\\Users\\mouad.khalladi\\.nuget\\packages\\system.memory\\4.5.5\\system.memory.4.5.5.nupkg.sha512",
+    "C:\\Users\\mouad.khalladi\\.nuget\\packages\\system.numerics.vectors\\4.5.0\\system.numerics.vectors.4.5.0.nupkg.sha512",
+    "C:\\Users\\mouad.khalladi\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\4.5.3\\system.runtime.compilerservices.unsafe.4.5.3.nupkg.sha512",
+    "C:\\Users\\mouad.khalladi\\.nuget\\packages\\system.threading.tasks\\4.3.0\\system.threading.tasks.4.3.0.nupkg.sha512",
+    "C:\\Users\\mouad.khalladi\\.nuget\\packages\\system.valuetuple\\4.5.0\\system.valuetuple.4.5.0.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -1,0 +1,8 @@
+C:\Users\mouad.khalladi\Desktop\firstCSMacro.exe
+C:\Users\mouad.khalladi\Desktop\firstCSMacro.exe.config
+C:\Users\mouad.khalladi\Desktop\firstCSMacro.pdb
+C:\Users\mouad.khalladi\Desktop\netDxf.dll
+C:\Users\mouad.khalladi\Desktop\System.ValueTuple.dll
+C:\Users\mouad.khalladi\Desktop\Interop.SolidEdge.dll
+C:\Users\mouad.khalladi\Desktop\SolidEdge.Community.dll
+C:\Users\mouad.khalladi\Desktop\Interop.SolidEdge.xml
