@@ -18,6 +18,8 @@ namespace firstCSMacro
         private TextBox textBox1;
         private string xlFilePath;
         private string dxfFilePath;
+        private Button buttonVerifDim;
+        private Button buttonVerifQte;
         private string stepFilePath;
 
         public PanelXlQc()
@@ -36,6 +38,8 @@ namespace firstCSMacro
             this.btnBrowseXl = new System.Windows.Forms.Button();
             this.btnBrowseDxf = new System.Windows.Forms.Button();
             this.btnBrowseStep = new System.Windows.Forms.Button();
+            this.buttonVerifDim = new System.Windows.Forms.Button();
+            this.buttonVerifQte = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // textBox1
@@ -172,10 +176,42 @@ namespace firstCSMacro
             this.btnBrowseStep.UseVisualStyleBackColor = true;
             this.btnBrowseStep.Click += new System.EventHandler(this.btnBrowseStep_Click);
             // 
+            // buttonVerifDim
+            // 
+            this.buttonVerifDim.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(30)))), ((int)(((byte)(54)))));
+            this.buttonVerifDim.FlatAppearance.BorderSize = 0;
+            this.buttonVerifDim.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonVerifDim.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonVerifDim.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.buttonVerifDim.Location = new System.Drawing.Point(101, 444);
+            this.buttonVerifDim.Name = "buttonVerifDim";
+            this.buttonVerifDim.Size = new System.Drawing.Size(234, 40);
+            this.buttonVerifDim.TabIndex = 18;
+            this.buttonVerifDim.Text = "Verifier Dimension Coupe";
+            this.buttonVerifDim.UseVisualStyleBackColor = false;
+            this.buttonVerifDim.Click += new System.EventHandler(this.buttonVerifDim_Click);
+            // 
+            // buttonVerifQte
+            // 
+            this.buttonVerifQte.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(30)))), ((int)(((byte)(54)))));
+            this.buttonVerifQte.FlatAppearance.BorderSize = 0;
+            this.buttonVerifQte.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonVerifQte.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonVerifQte.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.buttonVerifQte.Location = new System.Drawing.Point(382, 444);
+            this.buttonVerifQte.Name = "buttonVerifQte";
+            this.buttonVerifQte.Size = new System.Drawing.Size(234, 40);
+            this.buttonVerifQte.TabIndex = 19;
+            this.buttonVerifQte.Text = "Verifier Quantité Pièces";
+            this.buttonVerifQte.UseVisualStyleBackColor = false;
+            this.buttonVerifQte.Click += new System.EventHandler(this.buttonVerifQte_Click);
+            // 
             // PanelXlQc
             // 
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
             this.ClientSize = new System.Drawing.Size(1123, 798);
+            this.Controls.Add(this.buttonVerifQte);
+            this.Controls.Add(this.buttonVerifDim);
             this.Controls.Add(this.btnBrowseStep);
             this.Controls.Add(this.btnBrowseDxf);
             this.Controls.Add(this.btnBrowseXl);
@@ -218,18 +254,18 @@ namespace firstCSMacro
             clickParStep = null;
         }
 
-        public void btnVerifQtePcs()
-        {
-            var clickVerifNbPieces = new VerifNbPiecesCommand(xlJobPathTxtBox, dxfPathTxtBox, stepPathTxtBox);
-            clickVerifNbPieces.Execute();
-            clickVerifNbPieces = null;
-        }
-
-        public void btnVerifDimCoupe()
+        private void buttonVerifDim_Click(object sender, EventArgs e)
         {
             var clickVerifDimCoupe = new VerifDimCommand(xlJobPathTxtBox, dxfPathTxtBox);
             clickVerifDimCoupe.Execute();
             clickVerifDimCoupe = null;
+        }
+
+        private void buttonVerifQte_Click(object sender, EventArgs e)
+        {
+            var clickVerifQte = new VerifNbPiecesCommand(xlJobPathTxtBox, dxfPathTxtBox, stepPathTxtBox);
+            clickVerifQte.Execute();
+            clickVerifQte = null;
         }
     }
 }

@@ -13,7 +13,7 @@ L'application est divisée en **deux onglets principaux** :
 1. **Automatisation des Opérations sur Solid Edge** : Génération de fichiers DFT, conversion en DXF/STEP, extraction de dimensions.
 2. **Validation des Fichiers et Quantités** : Vérification de la cohérence des fichiers DXF/STEP avec un fichier Excel.
 
-![Capture d'écran de l'interface principale] <!-- Ajouter image de l'interface principale -->
+![Capture d'écran de l'interface principale](https://github.com/BerghamBeaubien/Application-Cyrell/blob/main/Resources/CapturePrincipale.png)
 
 ---
 
@@ -21,49 +21,73 @@ L'application est divisée en **deux onglets principaux** :
 Cet onglet automatise la gestion des fichiers Solid Edge. Avant de commencer, **sélectionnez un répertoire** contenant les fichiers à traiter.
 
 ### **1. Traitement des Fichiers DXF**
-Le bouton **"Traitement des Fichiers DXF"** ajoute une annotation avec le nom du fichier dans les fichiers DXF ouverts dans Solid Edge. 
-
-- **Sélectionner des fichiers DXF** : Choisissez les fichiers à traiter.
-- **Connexion à Solid Edge** : L'application se connecte à Solid Edge et ouvre chaque fichier DXF sélectionné.
-- **Ajouter une annotation** : Une annotation avec le nom du fichier est ajoutée au document.
-- **Enregistrer et fermer** : Le fichier est enregistré et Solid Edge est fermé si nécessaire.
-
 ![Bouton Annoter DXF (Tag)](https://github.com/BerghamBeaubien/Application-Cyrell/blob/main/Resources/btnTagDxf.png)
+Le bouton **"Annoter DXF (Tag)"** ajoute une annotation avec le nom du fichier dans les fichiers DXF choisis. 
+
+- Choisissez les fichiers à traiter.
+- Cliquez sur **"Annoter DXF (Tag)"**.
+- Les fichiers traités sont annotés et sauvegardés
 
 ### **2. Ouvrir les fichiers sélectionnés**
+![Bouton Ouvrir Fichiers Choisis](https://github.com/BerghamBeaubien/Application-Cyrell/blob/main/Resources/btnOpenSelFiles.png)
+Le bouton **"Ouvrir Fichiers Choisis"** permet d'ouvrir rapidement les fichiers choisis dans Solid Edge.
+
 - Sélectionnez des fichiers.
-- Cliquez sur **"Ouvrir fichiers choisis"**.
+- Cliquez sur **"Ouvrir Fichiers Choisis"**.
 - Les fichiers s'ouvrent dans Solid Edge.
 
-![Bouton Ouvrir Fichiers Choisis](https://github.com/BerghamBeaubien/Application-Cyrell/blob/main/Resources/btnOpenSelFiles.png)
-
 ### **3. Exporter les dimensions**
+![Bouton Exporter dimensions](https://github.com/BerghamBeaubien/Application-Cyrell/blob/main/Resources/btnExportDim.png)
+Le bouton **"Exporter les dimensions"** extrait les dimensions des fichiers sélectionnés et les enregistre dans un fichier Excel.
+
 - Sélectionnez des fichiers **DXF, PAR, PSM**.
 - Cliquez sur **"Exporter dimensions"**.
 - Un fichier **Excel (Dimensions-Deplie.xlsx)** est créé avec les dimensions des fichiers.
 
-![Bouton Exporter dimensions] (https://github.com/BerghamBeaubien/Application-Cyrell/blob/main/Resources/btnExportDim.png)
 
 ### **4. Sauvegarder DXF/STEP**
+![Bouton Sauvegarder DXF & Step](https://github.com/BerghamBeaubien/Application-Cyrell/blob/main/Resources/btnSaveDxfStep.png)
+Le bouton **"Sauvegarder DXF/STEP"** convertit les fichiers sélectionnés en formats DXF **(si la pièce est dépliée)** et STEP.
+
 - Sélectionnez des fichiers **PAR/PSM**.
 - Cliquez sur **"Sauvegarder DXF/STEP"**.
 - Choisissez les dossiers de destination.
 - Les fichiers sont convertis en DXF et STEP.
 
-![Bouton Sauvegarder DXF & Step](https://github.com/BerghamBeaubien/Application-Cyrell/blob/main/Resources/btnSaveDxfStep.png)
-
 ### **5. Créer un fichier DFT**
+![Bouton Générer Dessins (DFT)](https://github.com/BerghamBeaubien/Application-Cyrell/blob/main/Resources/btnDft.png)
+Le bouton **"Créer un fichier DFT"** génère un fichier de dessin (DFT) à partir des fichiers sélectionnés.
+
 - Sélectionnez des fichiers **PAR, PSM ou ASM**.
 - Cliquez sur **"Créer un fichier DFT"**.
 - Si le fichier est un **ASM**, une fenêtre s'ouvre affichant toutes les pièces contenues dans l'assemblage.
+    pic fenetre
   - L'utilisateur peut cocher/décocher les pièces qu'il souhaite inclure dans le fichier DFT.
-  - Un clic droit sur une pièce permet de **modifier son nom**.
+  - Un clic droit sur une pièce permet de **modifier son nom**. 
+    ![Pic liste pieces asm](https://github.com/BerghamBeaubien/Application-Cyrell/blob/main/Resources/reName.png)
+    ![Pic rename](https://github.com/BerghamBeaubien/Application-Cyrell/blob/main/Resources/actualRename.png)
   - **Attention** : une pièce ne peut pas avoir le même nom que l'assemblage.
 - Un fichier DFT est généré avec des vues automatiques et, si applicable, une nomenclature et une table de pliage.
 
-![Bouton Générer Dessins (DFT)](https://github.com/BerghamBeaubien/Application-Cyrell/blob/main/Resources/btnDft.png)
+### **6. Paramètres**  
+![Pic bouton Parametres](https://github.com/BerghamBeaubien/Application-Cyrell/blob/main/Resources/btnParam.png)  
+![Pic Parametres](https://github.com/BerghamBeaubien/Application-Cyrell/blob/main/Resources/params.png)
 
-### **6. Autres Fonctionnalités**
+Ces paramètres permettent de contrôler certaines actions lors du traitement des fichiers.  
+
+#### **Tag DXF**  
+- Lorsque l'option est activée, après l'annotation des DXF, tous les fichiers traités seront affichés dans Solid Edge. *(Activé par défaut)*  
+
+#### **Extraire Dimensions**  
+- Si une pièce n'est pas dépliée, ses mesures retournées seront à 0. Cette option contrôle l'affichage d'un message pour chaque pièce non dépliée. *(Activé par défaut)*  
+- Garde les fichiers traités (*seulement PSM et PAR*) ouverts dans Solid Edge. *(Désactivé par défaut)*  
+
+#### **Générer DFT**  
+- Ajoute la nomenclature pour chaque pièce individuelle. *(Activé par défaut)*  
+- Pour les assemblages, permet de sélectionner les pièces à inclure dans une nouvelle page/onglet du document DFT. *(Activé par défaut)*  
+- Ajoute la table de pliage pour les pièces possédant un *Flat Pattern*. *(Activé par défaut)* 
+
+### **7. Autres Fonctionnalités**
 
 #### **Fermer Solid Edge**
 - Ferme toutes les instances de Solid Edge en cours d'exécution.
@@ -74,25 +98,27 @@ Le bouton **"Traitement des Fichiers DXF"** ajoute une annotation avec le nom du
 #### **Gestion des extensions**
 - **Clic droit sur une extension** : la coche seule.
 - **Clic droit à nouveau** : toutes les extensions sont cochées.
+![Pic ext bar](https://github.com/BerghamBeaubien/Application-Cyrell/blob/main/Resources/extensionBar.png)
 
 ---
 
 ## **Onglet 2 : Validation des Fichiers et Quantités**
 Cet onglet permet de comparer les fichiers avec un document Excel pour assurer leur cohérence.
+![Pic Panel Excel](https://github.com/BerghamBeaubien/Application-Cyrell/blob/main/Resources/capturePanelXl.png)
 
 ### **1. Vérifier les dimensions**
 - Assurez-vous que les chemins vers le fichier Excel et les fichiers DXF sont définis.
 - Cliquez sur **"Vérifier les dimensions"**.
 - Un rapport s'affiche indiquant les incohérences.
 
-![Bouton Vérifier dimensions] <!-- Ajouter image du bouton -->
+![Bouton Vérifier dimensions](https://github.com/BerghamBeaubien/Application-Cyrell/blob/main/Resources/btnXlDim.png)
 
 ### **2. Vérifier le nombre de pièces**
 - Assurez-vous que les chemins vers le fichier Excel, DXF et STEP sont définis.
 - Cliquez sur **"Vérifier le nombre de pièces"**.
 - Un rapport s'affiche indiquant les incohérences.
 
-![Bouton Vérifier quantites] <!-- Ajouter image du bouton -->
+![Bouton Vérifier quantites](https://github.com/BerghamBeaubien/Application-Cyrell/blob/main/Resources/btnXlQte.png)
 
 ---
 
@@ -294,7 +320,5 @@ Ce bouton effectue les actions suivantes :
 ---
 
 ## **Conclusion**
-Ce guide vous aide à utiliser l'application Cyrell efficacement. Si vous avez des questions, n'hésitez pas à consulter les illustrations ou à demander de l'aide à un collègue !
-
-![Image finale de l'application] <!-- Ajouter une image de l'application en action -->
+Ce guide vous aide à utiliser l’application Cyrell efficacement. Si vous avez des questions, n’hésitez pas à contacter Mouad pour tout problème ou suggestions.
 

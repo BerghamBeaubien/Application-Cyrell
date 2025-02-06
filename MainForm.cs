@@ -39,8 +39,6 @@ namespace Application_Cyrell
         private Button button8;
         private Button button5;
         private Button button4;
-        private Button btnVerifNbPieces;
-        private Button btnVerifDimCoupe;
         public PanelSE pnlSe;
         public PanelXlQc pnlXlQc;
         public PanelSettings pnlSettings;
@@ -137,8 +135,6 @@ namespace Application_Cyrell
             this.button5 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.panelSubXlQc = new System.Windows.Forms.Panel();
-            this.btnVerifNbPieces = new System.Windows.Forms.Button();
-            this.btnVerifDimCoupe = new System.Windows.Forms.Button();
             this.buttonExcelQc = new System.Windows.Forms.Button();
             this.panelSubSolideEdge = new System.Windows.Forms.Panel();
             this.PnlNav = new System.Windows.Forms.Panel();
@@ -151,7 +147,6 @@ namespace Application_Cyrell
             this.btnClose = new System.Windows.Forms.Button();
             this.btnReduce = new System.Windows.Forms.Button();
             this.panelMenu.SuspendLayout();
-            this.panelSubXlQc.SuspendLayout();
             this.panelLOGO.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panelBarreMenu.SuspendLayout();
@@ -228,41 +223,12 @@ namespace Application_Cyrell
             // panelSubXlQc
             // 
             this.panelSubXlQc.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(32)))), ((int)(((byte)(39)))));
-            this.panelSubXlQc.Controls.Add(this.btnVerifNbPieces);
-            this.panelSubXlQc.Controls.Add(this.btnVerifDimCoupe);
             this.panelSubXlQc.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelSubXlQc.Location = new System.Drawing.Point(0, 490);
             this.panelSubXlQc.Name = "panelSubXlQc";
             this.panelSubXlQc.Size = new System.Drawing.Size(266, 78);
             this.panelSubXlQc.TabIndex = 12;
-            // 
-            // btnVerifNbPieces
-            // 
-            this.btnVerifNbPieces.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnVerifNbPieces.FlatAppearance.BorderSize = 0;
-            this.btnVerifNbPieces.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnVerifNbPieces.ForeColor = System.Drawing.Color.LightGray;
-            this.btnVerifNbPieces.Location = new System.Drawing.Point(0, 38);
-            this.btnVerifNbPieces.Name = "btnVerifNbPieces";
-            this.btnVerifNbPieces.Size = new System.Drawing.Size(266, 38);
-            this.btnVerifNbPieces.TabIndex = 2;
-            this.btnVerifNbPieces.Text = "Verifier Quantité Pièces";
-            this.btnVerifNbPieces.UseVisualStyleBackColor = true;
-            this.btnVerifNbPieces.Click += new System.EventHandler(this.btnVerifNbPieces_Click);
-            // 
-            // btnVerifDimCoupe
-            // 
-            this.btnVerifDimCoupe.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnVerifDimCoupe.FlatAppearance.BorderSize = 0;
-            this.btnVerifDimCoupe.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnVerifDimCoupe.ForeColor = System.Drawing.Color.LightGray;
-            this.btnVerifDimCoupe.Location = new System.Drawing.Point(0, 0);
-            this.btnVerifDimCoupe.Name = "btnVerifDimCoupe";
-            this.btnVerifDimCoupe.Size = new System.Drawing.Size(266, 38);
-            this.btnVerifDimCoupe.TabIndex = 1;
-            this.btnVerifDimCoupe.Text = "Verifier Dimension Coupe";
-            this.btnVerifDimCoupe.UseVisualStyleBackColor = true;
-            this.btnVerifDimCoupe.Click += new System.EventHandler(this.btnVerifDimCoupe_Click);
+            this.panelSubXlQc.Visible = false;
             // 
             // buttonExcelQc
             // 
@@ -413,7 +379,6 @@ namespace Application_Cyrell
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
             this.panelMenu.ResumeLayout(false);
-            this.panelSubXlQc.ResumeLayout(false);
             this.panelLOGO.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panelBarreMenu.ResumeLayout(false);
@@ -476,7 +441,6 @@ namespace Application_Cyrell
 
             openChildForm(() => pnlXlQc);
             hideSubMenu();
-            showSubMenu(panelSubXlQc);
         }
 
         private void buttonExcelQc_Leave(object sender, EventArgs e)
@@ -523,16 +487,6 @@ namespace Application_Cyrell
         public void OpenChildForm<T>(Func<T> formFactory) where T : Form
         {
             openChildForm(formFactory);
-        }
-
-        private void btnVerifNbPieces_Click(object sender, EventArgs e)
-        {
-            pnlXlQc.btnVerifQtePcs();
-        }
-
-        private void btnVerifDimCoupe_Click(object sender, EventArgs e)
-        {
-            pnlXlQc.btnVerifDimCoupe();
         }
     }
 }
