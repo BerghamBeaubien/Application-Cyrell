@@ -1,150 +1,102 @@
 # Guide de l'Application Cyrell
 
 ## Introduction
-Cette application est conçue pour automatiser certaines opérations sur Solid Edge. Elle est divisée en deux onglets principaux, chacun offrant des fonctionnalités spécifiques. Ce guide explique comment utiliser l'application de manière efficace.
+Bienvenue dans le guide de l'application Cyrell ! Ce document vous aidera à comprendre et utiliser facilement l'application, même si vous êtes débutant. L'application est conçue pour automatiser certaines opérations sur Solid Edge et simplifier la gestion des fichiers DXF, STEP et DFT.
+
+Des **illustrations** seront ajoutées à certains endroits pour clarifier les instructions.
 
 ---
 
 ## Structure de l'Application
+L'application est divisée en **deux onglets principaux** :
 
-L'application est divisée en **deux onglets principaux**, chacun offrant des fonctionnalités spécifiques pour automatiser et simplifier les tâches liées à Solid Edge et à la gestion des fichiers.
+1. **Automatisation des Opérations sur Solid Edge** : Génération de fichiers DFT, conversion en DXF/STEP, extraction de dimensions.
+2. **Validation des Fichiers et Quantités** : Vérification de la cohérence des fichiers DXF/STEP avec un fichier Excel.
 
----
-
-### **Onglet 1 : Automatisation des Opérations sur Solid Edge**
-Cet onglet permet d'automatiser certaines opérations sur Solid Edge, notamment la création de dessins (DFT), la gestion des fichiers DXF/STEP, et l'extraction des dimensions.
-
-#### Fonctionnalités Principales :
-1. **Créer un fichier DFT** :
-   - Génère un fichier DFT à partir des fichiers PAR, PSM ou ASM sélectionnés.
-   - Ajoute des vues (vue de face, vue de côté, vue de dessous) et des nomenclatures automatiques.
-   - Inclut des tables de pliage pour les pièces en tôle.
-
-2. **Sauvegarder DXF/STEP** :
-   - Convertit les fichiers PAR/PSM en fichiers DXF et STEP.
-   - Permet d'ajouter des annotations aux fichiers DXF (option **Tag DXF**).
-
-3. **Exporter les dimensions** :
-   - Exporte les dimensions des fichiers DXF, PAR et PSM vers un fichier Excel.
-   - Compare les dimensions des fichiers DXF avec les valeurs Excel et signale les incohérences.
-
-4. **Ouvrir les fichiers sélectionnés** :
-   - Ouvre les fichiers PAR, PSM ou ASM sélectionnés dans Solid Edge.
-   - Utilise des modèles prédéfinis pour garantir une configuration cohérente.
+![Capture d'écran de l'interface principale] <!-- Ajouter image de l'interface principale -->
 
 ---
 
-### **Onglet 2 : Validation des Fichiers et Quantités**
-Cet onglet permet de vérifier la cohérence entre les fichiers Excel, les fichiers DXF et les fichiers STEP, ainsi que de valider les quantités et les dimensions.
+## **Onglet 1 : Automatisation des Opérations sur Solid Edge**
+Cet onglet automatise la gestion des fichiers Solid Edge. Avant de commencer, **sélectionnez un répertoire** contenant les fichiers à traiter.
 
-#### Fonctionnalités Principales :
-1. **Vérifier les dimensions** :
-   - Compare les dimensions des fichiers DXF avec les valeurs spécifiées dans le fichier Excel.
-   - Signale les fichiers manquants, les fichiers supplémentaires et les incohérences de dimensions.
+### **1. Traitement des Fichiers DXF**
+Le bouton **"Traitement des Fichiers DXF"** ajoute une annotation avec le nom du fichier dans les fichiers DXF ouverts dans Solid Edge. 
 
-2. **Vérifier le nombre de pièces** :
-   - Vérifie que les fichiers DXF et STEP correspondent aux tags Excel.
-   - Valide les quantités spécifiées dans le fichier Excel.
-   - Signale les fichiers manquants, les fichiers supplémentaires et les incohérences de quantités.
+- **Sélectionner des fichiers DXF** : Choisissez les fichiers à traiter.
+- **Connexion à Solid Edge** : L'application se connecte à Solid Edge et ouvre chaque fichier DXF sélectionné.
+- **Ajouter une annotation** : Une annotation avec le nom du fichier est ajoutée au document.
+- **Enregistrer et fermer** : Le fichier est enregistré et Solid Edge est fermé si nécessaire.
 
----
+![Bouton Annoter DXF (Tag)]
 
-## Onglet 1 : Automatisation des Opérations sur Solid Edge
+### **2. Ouvrir les fichiers sélectionnés**
+- Sélectionnez des fichiers.
+- Cliquez sur **"Ouvrir fichiers choisis"**.
+- Les fichiers s'ouvrent dans Solid Edge.
 
-Cet onglet permet d'automatiser certaines opérations sur des fichiers Solid Edge. Avant de commencer, l'utilisateur doit sélectionner un répertoire contenant les fichiers à traiter.
+![Bouton Ouvrir Fichiers Choisis](https://imgur.com/a/ei3S73k)
 
-### Bouton : Traiter les fichiers DXF
-Ce bouton permet de traiter les fichiers DXF sélectionnés en placant un tag(annontation) à l'intérieur de la pièce :
+### **3. Exporter les dimensions**
+- Sélectionnez des fichiers **DXF, PAR, PSM**.
+- Cliquez sur **"Exporter dimensions"**.
+- Un fichier **Excel (Dimensions-Deplie.xlsx)** est créé avec les dimensions des fichiers.
 
-1. **Sélectionnez les fichiers** : Dans la liste, sélectionnez un ou plusieurs fichiers DXF.
-2. **Cliquez sur le bouton** : Utilisez le bouton **Traiter les fichiers DXF** pour lancer l'opération.
-3. **Attendez la confirmation** : Une fois le traitement terminé, un message s'affiche pour confirmer la fin des opérations.
+![Bouton Exporter dimensions] <!-- Ajouter image du bouton -->
 
-![Image du bouton](C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\Resources\btnTagDxf.png) 
+### **4. Sauvegarder DXF/STEP**
+- Sélectionnez des fichiers **PAR/PSM**.
+- Cliquez sur **"Sauvegarder DXF/STEP"**.
+- Choisissez les dossiers de destination.
+- Les fichiers sont convertis en DXF et STEP.
 
-### Bouton : Ouvrir les fichiers sélectionnés
-Ce bouton permet d'ouvrir les fichiers sélectionnés dans Solid Edge. Voici comment l'utiliser :
+![Bouton Sauvegarder DXF & Step] <!-- Ajouter image du bouton -->
 
-1. **Sélectionnez les fichiers** : Dans la liste, sélectionnez un ou plusieurs fichiers (DXF, STEP, etc.).
-2. **Cliquez sur le bouton** : Utilisez le bouton **Ouvrir fichiers choisis** pour lancer l'opération.
-3. **Attendez la confirmation** : Une fois les fichiers ouverts, un message s'affiche pour confirmer la fin des opérations.
+### **5. Créer un fichier DFT**
+- Sélectionnez des fichiers **PAR, PSM ou ASM**.
+- Cliquez sur **"Créer un fichier DFT"**.
+- Si le fichier est un **ASM**, une fenêtre s'ouvre affichant toutes les pièces contenues dans l'assemblage.
+  - L'utilisateur peut cocher/décocher les pièces qu'il souhaite inclure dans le fichier DFT.
+  - Un clic droit sur une pièce permet de **modifier son nom**.
+  - **Attention** : une pièce ne peut pas avoir le même nom que l'assemblage.
+- Un fichier DFT est généré avec des vues automatiques et, si applicable, une nomenclature et une table de pliage.
 
-![Image du bouton](C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\Resources\btnOpenSelFiles.png)
+![Bouton Générer Dessins (DFT)] <!-- Ajouter image du bouton -->
 
-### Bouton : Exporter dimensions
-Ce bouton permet d'exporter les dimensions des fichiers sélectionnés (DXF, PAR, PSM) vers un fichier Excel. Voici comment l'utiliser :
+### **6. Autres Fonctionnalités**
 
-1. **Sélectionnez les fichiers** : Dans la liste, sélectionnez un ou plusieurs fichiers (DXF, PAR, PSM).
-2. **Cliquez sur le bouton** : Utilisez le bouton Exporter dimensions pour lancer l'exportation.
-3. **Vérifiez le fichier Excel** : Un fichier Excel nommé Dimensions-Deplie.xlsx est créé dans le répertoire sélectionné, contenant les dimensions des fichiers.
+#### **Fermer Solid Edge**
+- Ferme toutes les instances de Solid Edge en cours d'exécution.
 
-![Image du bouton](C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\Resources\btnExportDim.png)
+#### **Select All**
+- Sélectionne tous les fichiers affichés.
 
-### Bouton : Sauvegarder DXF/STEP
-Ce bouton permet de sauvegarder les fichiers PAR/PSM sélectionnés en fichiers DXF et STEP. Voici comment l'utiliser :
-
-1. **Sélectionnez les fichiers** : Dans la liste, sélectionnez un ou plusieurs fichiers PAR ou PSM.
-2. **Cliquez sur le bouton** : Utilisez le bouton **Sauvegarder DXF/STEP** pour lancer l'opération.
-3. **Confirmez les répertoires** : Une fenêtre s'ouvre pour choisir les répertoires de sauvegarde des fichiers DXF et STEP.
-4. **Vérifiez les fichiers générés** : Les fichiers DXF et STEP sont sauvegardés dans les répertoires spécifiés.
-
-![Image du bouton](C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\Resources\btnSaveDxfStep.png)
-
-### Bouton : Créer un fichier DFT
-Ce bouton permet de créer un fichier DFT (dessin) à partir des fichiers PAR, PSM ou ASM sélectionnés. Voici comment l'utiliser :
-
-1. **Sélectionnez les fichiers** : Dans la liste, sélectionnez un ou plusieurs fichiers PAR, PSM ou ASM.
-2. **Cliquez sur le bouton** : Utilisez le bouton **Créer un fichier DFT** pour lancer l'opération.
-3. **Vérifiez le fichier DFT** : Un fichier DFT est généré avec des vues, des nomenclatures (si applicable) et des tables de pliage (si applicable).
-
-![Image du bouton](C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\Resources\btnDft.png)
-
-## Autres Fonctionnalités et Astuces
-
-### Bouton : Fermer Solid Edge
-Ce bouton va fermer l'application Solid Edge sans sauvegarder son contenu.
-Ça arrive que Solid Edge est en cours d'execution et que vous ne le voyez pas. Ce bouton va s'assure qu'aucune instance du programme est en cours d'execution.
-
-### Bouton : Select All
-Ce bouton va choisir tout les fichiers affichés dans la liste.
-
-### Barre D'extension
-Par défaut, toutes les extensions sont cochées.
-Vous pouvez faire **CLIQUE DROIT** avec la souris sur une extension et elle sera l'unique cochée.
-Si vous réappuyez sur **CLIQUE DROIT** toutes les extensions vont rendevenir cochés.
+#### **Gestion des extensions**
+- **Clic droit sur une extension** : la coche seule.
+- **Clic droit à nouveau** : toutes les extensions sont cochées.
 
 ---
 
-## Onglet 2 : [Nom de l'onglet]
+## **Onglet 2 : Validation des Fichiers et Quantités**
+Cet onglet permet de comparer les fichiers avec un document Excel pour assurer leur cohérence.
 
-### Fonctionnalités Principales
-- **Fonction 1** : Description de la fonction.
-- **Fonction 2** : Description de la fonction.
-- **Fonction 3** : Description de la fonction.
+### **1. Vérifier les dimensions**
+- Assurez-vous que les chemins vers le fichier Excel et les fichiers DXF sont définis.
+- Cliquez sur **"Vérifier les dimensions"**.
+- Un rapport s'affiche indiquant les incohérences.
 
-### Instructions Simples
+![Bouton Vérifier dimensions] <!-- Ajouter image du bouton -->
 
-#### Bouton : Vérifier les dimensions
-Ce bouton permet de vérifier la valeurs longueur et largeur du déplié entre les fichiers Excel et les fichiers DXF. Voici comment l'utiliser :
+### **2. Vérifier le nombre de pièces**
+- Assurez-vous que les chemins vers le fichier Excel, DXF et STEP sont définis.
+- Cliquez sur **"Vérifier le nombre de pièces"**.
+- Un rapport s'affiche indiquant les incohérences.
 
-1. **Sélectionnez les fichiers** : Assurez-vous que les chemins vers le fichier Excel et le répertoire des fichiers DXF sont correctement définis.
-2. **Cliquez sur le bouton** : Utilisez le bouton **Vérifier les dimensions** pour lancer l'opération.
-3. **Consultez le rapport** : Un rapport détaillé s'affiche, montrant les correspondances, les erreurs et les avertissements.
-
-![Image du bouton] <!-- changer le chemin -->
-
-#### Bouton : Vérifier le nombre de pièces
-Ce bouton permet de vérifier la cohérence entre les fichiers Excel, les fichiers DXF et les fichiers STEP. Voici comment l'utiliser :
-
-1. **Sélectionnez les fichiers** : Assurez-vous que les chemins vers le fichier Excel, le(s) répertoire(s) des fichiers DXF et STEP sont correctement définis.
-2. **Cliquez sur le bouton** : Utilisez le bouton **Vérifier le nombre de pièces** pour lancer l'opération.
-3. **Consultez le rapport** : Un rapport détaillé s'affiche, montrant les correspondances, les erreurs et les avertissements.
-
-![Image du bouton] <!-- changer le chemin -->
+![Bouton Vérifier quantites] <!-- Ajouter image du bouton -->
 
 ---
 
-## Details Fonctions Solid Edge
+## **Explications Détaillées des Fonctionnalités Solid Edge**
 
 ### Bouton : Traiter les fichiers DXF
 Ce bouton effectue les actions suivantes :
@@ -277,7 +229,7 @@ Ce bouton effectue les actions suivantes :
    - Le fichier DFT est sauvegardé avec le nom `Dessins dft`.
    - Solid Edge reste ouvert pour permettre à l'utilisateur de visualiser ou de modifier le fichier DFT.
 
-## Details Fonctions Excel QC
+## **Explications Détaillées des Fonctionnalités Excel QC**
 
 ### Bouton : Vérifier les dimensions
 Ce bouton effectue les actions suivantes :
@@ -310,10 +262,6 @@ Ce bouton effectue les actions suivantes :
      - La correspondance des dimensions (largeur et hauteur).
      - Le statut (OK, erreur ou avertissement).
 
-6. **Gestion des erreurs** :
-   - En cas d'erreur pendant le traitement, un message d'erreur est affiché avec les détails.
-   - Les erreurs courantes incluent des fichiers Excel mal formatés ou des fichiers DXF manquants.
-
 ### Bouton : Vérifier le nombre de pièces
 Ce bouton effectue les actions suivantes :
 
@@ -342,9 +290,11 @@ Ce bouton effectue les actions suivantes :
      - La correspondance avec un fichier STEP.
      - Le statut (OK, erreur ou avertissement).
 
-6. **Gestion des erreurs** :
-   - En cas d'erreur pendant le traitement, un message d'erreur est affiché avec les détails.
-   - Les erreurs courantes incluent des fichiers Excel mal formatés ou des fichiers DXF/STEP manquants.
 
-## Conclusion
-Cette application est conçue pour simplifier et automatiser les tâches répétitives liées à Solid Edge et à la gestion des fichiers. Chaque onglet offre des fonctionnalités spécifiques pour répondre à des besoins précis, tout en garantissant une utilisation intuitive et efficace.
+---
+
+## **Conclusion**
+Ce guide vous aide à utiliser l'application Cyrell efficacement. Si vous avez des questions, n'hésitez pas à consulter les illustrations ou à demander de l'aide à un collègue !
+
+![Image finale de l'application] <!-- Ajouter une image de l'application en action -->
+
