@@ -78,16 +78,36 @@ namespace Application_Cyrell.LogiqueBouttonsSolidEdge
         {
             try
             {
-                // Open part with Normal.par template, keeping the original filename
+                // Ouvrir le fichier STEP avec le template d'assemblage
                 SolidEdgeAssembly.AssemblyDocument asmDoc = (SolidEdgeAssembly.AssemblyDocument)seApp.Documents.OpenWithTemplate(fullPath, _assemblyTemplatePath);
 
-                // Set the document name to match the original STEP file name
-                asmDoc.Name = Path.GetFileNameWithoutExtension(fullPath);
+                // Vérifier le nombre de composants dans l'assemblage
+                SolidEdgeAssembly.Occurrences occurrences = asmDoc.Occurrences;
+                int componentCount = occurrences.Count;
+
+                if (componentCount == 1)
+                {
+                    // Si un seul composant, récupérer son fichier et rouvrir avec le template de pièce
+                    SolidEdgeAssembly.Occurrence singleOccurrence = occurrences.Item(1);
+
+                    // Fermer l'assemblage temporaire
+                    asmDoc.Close(false);
+
+                    // Ouvrir le fichier en tant que pièce avec le bon template
+                    SolidEdgePart.PartDocument partDoc = (SolidEdgePart.PartDocument)seApp.Documents.OpenWithTemplate(fullPath, _partTemplatePath);
+                    partDoc.Name = Path.GetFileNameWithoutExtension(fullPath);
+                }
+                else
+                {
+                    // Garde le nom de l'assemblage si c'est bien un assemblage
+                    asmDoc.Name = Path.GetFileNameWithoutExtension(fullPath);
+                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error processing {fullPath}: {ex.Message}");
             }
         }
+
     }
 }

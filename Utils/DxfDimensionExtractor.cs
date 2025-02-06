@@ -237,26 +237,20 @@ public class DxfDimensionExtractor
 
             bool isSymmetrical = Math.Abs(positiveYDistance - negativeYDistance) < (positiveYDistance * 0.5); // Allowing a small tolerance
 
-            // Determine quadrant based on X and Y coordinates
+            // Compare total distances above and below X-axis
+            double aboveXAxis = maxY;
+            double belowXAxis = Math.Abs(minY);
+            bool mostlyAbove = aboveXAxis > belowXAxis;
+
             if (isSymmetrical)
             {
-                // If the part is symmetrical, return -1 (indicating symmetry)
-                return -1;  // Indicating symmetry (not a specific quadrant)
-            }
-            else
-            {
-                // If not symmetrical, simply check the min and max Y values for determining the quadrant
-                if (maxX > 0 && minY < 0)
-                {
-                    return 4;  // 4th quadrant
-                }
-                else if (maxX > 0 && maxY > 0)
-                {
-                    return 1;  // 1st quadrant
-                }
+                return -1;  // Indiquant la symétrie
             }
 
-            return 0;  // If it's not in the expected quadrants or if the check doesn't match
+            // Pas besoin de tester maxX, il ne change pas le quadrant dans ton code
+            return mostlyAbove ? 1 : 4;
+
+
         }
         catch (Exception ex)
         {

@@ -7,15 +7,45 @@ Cette application est conçue pour automatiser certaines opérations sur Solid E
 
 ## Structure de l'Application
 
-L'application est divisée en deux onglets principaux :
+L'application est divisée en **deux onglets principaux**, chacun offrant des fonctionnalités spécifiques pour automatiser et simplifier les tâches liées à Solid Edge et à la gestion des fichiers.
 
-1. **Onglet 1 : [Nom de l'onglet]**
-   - Description des fonctions principales.
-   - Explication des boutons et des champs disponibles.
+---
 
-2. **Onglet 2 : [Nom de l'onglet]**
-   - Description des fonctions principales.
-   - Explication des boutons et des champs disponibles.
+### **Onglet 1 : Automatisation des Opérations sur Solid Edge**
+Cet onglet permet d'automatiser certaines opérations sur Solid Edge, notamment la création de dessins (DFT), la gestion des fichiers DXF/STEP, et l'extraction des dimensions.
+
+#### Fonctionnalités Principales :
+1. **Créer un fichier DFT** :
+   - Génère un fichier DFT à partir des fichiers PAR, PSM ou ASM sélectionnés.
+   - Ajoute des vues (vue de face, vue de côté, vue de dessous) et des nomenclatures automatiques.
+   - Inclut des tables de pliage pour les pièces en tôle.
+
+2. **Sauvegarder DXF/STEP** :
+   - Convertit les fichiers PAR/PSM en fichiers DXF et STEP.
+   - Permet d'ajouter des annotations aux fichiers DXF (option **Tag DXF**).
+
+3. **Exporter les dimensions** :
+   - Exporte les dimensions des fichiers DXF, PAR et PSM vers un fichier Excel.
+   - Compare les dimensions des fichiers DXF avec les valeurs Excel et signale les incohérences.
+
+4. **Ouvrir les fichiers sélectionnés** :
+   - Ouvre les fichiers PAR, PSM ou ASM sélectionnés dans Solid Edge.
+   - Utilise des modèles prédéfinis pour garantir une configuration cohérente.
+
+---
+
+### **Onglet 2 : Validation des Fichiers et Quantités**
+Cet onglet permet de vérifier la cohérence entre les fichiers Excel, les fichiers DXF et les fichiers STEP, ainsi que de valider les quantités et les dimensions.
+
+#### Fonctionnalités Principales :
+1. **Vérifier les dimensions** :
+   - Compare les dimensions des fichiers DXF avec les valeurs spécifiées dans le fichier Excel.
+   - Signale les fichiers manquants, les fichiers supplémentaires et les incohérences de dimensions.
+
+2. **Vérifier le nombre de pièces** :
+   - Vérifie que les fichiers DXF et STEP correspondent aux tags Excel.
+   - Valide les quantités spécifiées dans le fichier Excel.
+   - Signale les fichiers manquants, les fichiers supplémentaires et les incohérences de quantités.
 
 ---
 
@@ -317,4 +347,4 @@ Ce bouton effectue les actions suivantes :
    - Les erreurs courantes incluent des fichiers Excel mal formatés ou des fichiers DXF/STEP manquants.
 
 ## Conclusion
-Ce guide couvre les fonctionnalités de base de l'application. Pour toute question supplémentaire, veuillez contacter Mouad Khalladi.
+Cette application est conçue pour simplifier et automatiser les tâches répétitives liées à Solid Edge et à la gestion des fichiers. Chaque onglet offre des fonctionnalités spécifiques pour répondre à des besoins précis, tout en garantissant une utilisation intuitive et efficace.

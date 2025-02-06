@@ -19,125 +19,7 @@ using TextBox = System.Windows.Forms.TextBox;
 
 namespace Application_Cyrell.LogiqueBouttonsSolidEdge
 {
-    public class FolderSelectionForm : Form
-    {
-        private TextBox txtDxfPath;
-        private TextBox txtStepPath;
-        private CheckBox chkTagDxf;
-        private Button btnBrowseDxf;
-        private Button btnBrowseStep;
-        private Button btnContinue;
-        private Button btnCancel;
-
-        public string DxfPath => txtDxfPath.Text;
-        public string StepPath => txtStepPath.Text;
-        public bool TagDxf => chkTagDxf.Checked;
-
-        public FolderSelectionForm()
-        {
-            InitializeComponents();
-        }
-
-        private void InitializeComponents()
-        {
-            this.Text = "Sélection des répertoires";
-            this.Size = new Size(500, 200);
-            this.FormBorderStyle = FormBorderStyle.FixedDialog;
-            this.MaximizeBox = false;
-            this.StartPosition = FormStartPosition.CenterParent;
-
-            // DXF Path Controls
-            Label lblDxf = new Label
-            {
-                Text = "Répertoire DXF:",
-                Location = new System.Drawing.Point(10, 15),
-                AutoSize = true
-            };
-
-            txtDxfPath = new TextBox
-            {
-                Location = new System.Drawing.Point(10, 35),
-                Width = 380,
-                ReadOnly = true
-            };
-
-            btnBrowseDxf = new Button
-            {
-                Text = "...",
-                Location = new System.Drawing.Point(400, 34),
-                Width = 30
-            };
-            btnBrowseDxf.Click += (s, e) => BrowseFolder(txtDxfPath);
-
-            // STEP Path Controls
-            Label lblStep = new Label
-            {
-                Text = "Répertoire STEP:",
-                Location = new System.Drawing.Point(10, 65),
-                AutoSize = true
-            };
-
-            txtStepPath = new TextBox
-            {
-                Location = new System.Drawing.Point(10, 85),
-                Width = 380,
-                ReadOnly = true
-            };
-
-            btnBrowseStep = new Button
-            {
-                Text = "...",
-                Location = new System.Drawing.Point(400, 84),
-                Width = 30
-            };
-            btnBrowseStep.Click += (s, e) => BrowseFolder(txtStepPath);
-
-            // Checkbox
-            chkTagDxf = new CheckBox
-            {
-                Text = "Tag DXF",
-                Location = new System.Drawing.Point(10, 115),
-                AutoSize = true
-            };
-
-            // Buttons
-            btnContinue = new Button
-            {
-                Text = "Continuer",
-                DialogResult = DialogResult.OK,
-                Location = new System.Drawing.Point(280, 115),
-                Width = 80
-            };
-
-            btnCancel = new Button
-            {
-                Text = "Annuler",
-                DialogResult = DialogResult.Cancel,
-                Location = new System.Drawing.Point(370, 115),
-                Width = 80
-            };
-
-            this.Controls.AddRange(new Control[] {
-            lblDxf, txtDxfPath, btnBrowseDxf,
-            lblStep, txtStepPath, btnBrowseStep,
-            chkTagDxf, btnContinue, btnCancel
-        });
-
-            this.AcceptButton = btnContinue;
-            this.CancelButton = btnCancel;
-        }
-
-        private void BrowseFolder(TextBox textBox)
-        {
-            using (FolderBrowserDialog dialog = new FolderBrowserDialog())
-            {
-                if (dialog.ShowDialog() == DialogResult.OK)
-                {
-                    textBox.Text = dialog.SelectedPath;
-                }
-            }
-        }
-    }
+  
     public class SaveDxfStepCommand : IButtonManager
     {
         private readonly ListBox _listBoxDxfFiles;
@@ -393,6 +275,132 @@ namespace Application_Cyrell.LogiqueBouttonsSolidEdge
             }
 
             return (x1, y1);
+        }
+    }
+
+    public class FolderSelectionForm : Form
+    {
+        private TextBox txtDxfPath;
+        private TextBox txtStepPath;
+        private CheckBox chkTagDxf;
+        private Button btnBrowseDxf;
+        private Button btnBrowseStep;
+        private Button btnContinue;
+        private Button btnCancel;
+
+        public string DxfPath => txtDxfPath.Text;
+        public string StepPath => txtStepPath.Text;
+        public bool TagDxf => chkTagDxf.Checked;
+
+        public FolderSelectionForm()
+        {
+            InitializeComponents();
+        }
+
+        private void InitializeComponents()
+        {
+            this.Text = "Sélection des répertoires";
+            this.Size = new Size(500, 200);
+            this.FormBorderStyle = FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
+            this.StartPosition = FormStartPosition.CenterParent;
+
+            // DXF Path Controls
+            Label lblDxf = new Label
+            {
+                Text = "Répertoire DXF:",
+                Location = new System.Drawing.Point(10, 15),
+                AutoSize = true
+            };
+
+            txtDxfPath = new TextBox
+            {
+                Location = new System.Drawing.Point(10, 35),
+                Width = 380,
+                ReadOnly = true
+            };
+
+            btnBrowseDxf = new Button
+            {
+                Text = "...",
+                Location = new System.Drawing.Point(400, 34),
+                Width = 30
+            };
+            btnBrowseDxf.Click += (s, e) => BrowseFolder(txtDxfPath);
+
+            // STEP Path Controls
+            Label lblStep = new Label
+            {
+                Text = "Répertoire STEP:",
+                Location = new System.Drawing.Point(10, 65),
+                AutoSize = true
+            };
+
+            txtStepPath = new TextBox
+            {
+                Location = new System.Drawing.Point(10, 85),
+                Width = 380,
+                ReadOnly = true
+            };
+
+            btnBrowseStep = new Button
+            {
+                Text = "...",
+                Location = new System.Drawing.Point(400, 84),
+                Width = 30
+            };
+            btnBrowseStep.Click += (s, e) => BrowseFolder(txtStepPath);
+
+            // Checkbox
+            chkTagDxf = new CheckBox
+            {
+                Text = "Tag DXF",
+                Location = new System.Drawing.Point(10, 115),
+                AutoSize = true
+            };
+
+            // Buttons
+            btnContinue = new Button
+            {
+                Text = "Continuer",
+                DialogResult = DialogResult.OK,
+                Location = new System.Drawing.Point(280, 115),
+                Width = 80
+            };
+
+            btnCancel = new Button
+            {
+                Text = "Annuler",
+                DialogResult = DialogResult.Cancel,
+                Location = new System.Drawing.Point(370, 115),
+                Width = 80
+            };
+
+            this.Controls.AddRange(new Control[] {
+            lblDxf, txtDxfPath, btnBrowseDxf,
+            lblStep, txtStepPath, btnBrowseStep,
+            chkTagDxf, btnContinue, btnCancel
+        });
+
+            this.AcceptButton = btnContinue;
+            this.CancelButton = btnCancel;
+        }
+
+        private void BrowseFolder(TextBox textBox)
+        {
+            using (OpenFileDialog dialog = new OpenFileDialog())
+            {
+                dialog.CheckFileExists = false;
+                dialog.CheckPathExists = true;
+                dialog.ValidateNames = false;
+                dialog.FileName = "Folder Selection."; // Placeholder text
+
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    string selectedPath = Path.GetDirectoryName(dialog.FileName);
+                    textBox.Text = selectedPath;
+                }
+            }
         }
     }
 }

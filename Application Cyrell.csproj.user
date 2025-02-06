@@ -4,9 +4,6 @@
     <_LastSelectedProfileId>C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\Properties\PublishProfiles\FolderProfile.pubxml</_LastSelectedProfileId>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Update="LogiqueBouttonsSolidEdge\SaveDxfStepCommand.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Update="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
