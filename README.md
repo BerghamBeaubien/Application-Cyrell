@@ -28,21 +28,21 @@ Le bouton **"Traitement des Fichiers DXF"** ajoute une annotation avec le nom du
 - **Ajouter une annotation** : Une annotation avec le nom du fichier est ajoutée au document.
 - **Enregistrer et fermer** : Le fichier est enregistré et Solid Edge est fermé si nécessaire.
 
-![Bouton Annoter DXF (Tag)]
+![Bouton Annoter DXF (Tag)](https://github.com/BerghamBeaubien/Application-Cyrell/blob/main/Resources/btnTagDxf.png)
 
 ### **2. Ouvrir les fichiers sélectionnés**
 - Sélectionnez des fichiers.
 - Cliquez sur **"Ouvrir fichiers choisis"**.
 - Les fichiers s'ouvrent dans Solid Edge.
 
-![Bouton Ouvrir Fichiers Choisis](https://imgur.com/a/ei3S73k)
+![Bouton Ouvrir Fichiers Choisis](https://github.com/BerghamBeaubien/Application-Cyrell/blob/main/Resources/btnOpenSelFiles.png)
 
 ### **3. Exporter les dimensions**
 - Sélectionnez des fichiers **DXF, PAR, PSM**.
 - Cliquez sur **"Exporter dimensions"**.
 - Un fichier **Excel (Dimensions-Deplie.xlsx)** est créé avec les dimensions des fichiers.
 
-![Bouton Exporter dimensions] <!-- Ajouter image du bouton -->
+![Bouton Exporter dimensions] (https://github.com/BerghamBeaubien/Application-Cyrell/blob/main/Resources/btnExportDim.png)
 
 ### **4. Sauvegarder DXF/STEP**
 - Sélectionnez des fichiers **PAR/PSM**.
@@ -50,7 +50,7 @@ Le bouton **"Traitement des Fichiers DXF"** ajoute une annotation avec le nom du
 - Choisissez les dossiers de destination.
 - Les fichiers sont convertis en DXF et STEP.
 
-![Bouton Sauvegarder DXF & Step] <!-- Ajouter image du bouton -->
+![Bouton Sauvegarder DXF & Step](https://github.com/BerghamBeaubien/Application-Cyrell/blob/main/Resources/btnSaveDxfStep.png)
 
 ### **5. Créer un fichier DFT**
 - Sélectionnez des fichiers **PAR, PSM ou ASM**.
@@ -61,7 +61,7 @@ Le bouton **"Traitement des Fichiers DXF"** ajoute une annotation avec le nom du
   - **Attention** : une pièce ne peut pas avoir le même nom que l'assemblage.
 - Un fichier DFT est généré avec des vues automatiques et, si applicable, une nomenclature et une table de pliage.
 
-![Bouton Générer Dessins (DFT)] <!-- Ajouter image du bouton -->
+![Bouton Générer Dessins (DFT)](https://github.com/BerghamBeaubien/Application-Cyrell/blob/main/Resources/btnDft.png)
 
 ### **6. Autres Fonctionnalités**
 
