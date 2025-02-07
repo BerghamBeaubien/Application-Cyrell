@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -42,11 +43,15 @@ namespace Application_Cyrell
         public PanelSE pnlSe;
         public PanelXlQc pnlXlQc;
         public PanelSettings pnlSettings;
+        private Label labelTimeDate;
+        private System.Windows.Forms.Timer timer;
         private CancellationTokenSource cancelTokenTag;
         private CustomTooltipForm customTooltipTag;
         private CancellationTokenSource cancelTokenDim;
         private CustomTooltipForm customTooltipDimensions;
         private CancellationTokenSource cancelTokenDft;
+        private TextBox textBoxAcceuil;
+        private TextBox textBox1;
         private CustomTooltipForm customTooltipDft;
 
         [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
@@ -78,6 +83,8 @@ namespace Application_Cyrell
             PnlNav.Left = buttonAcceuil.Left;
             buttonAcceuil.BackColor = Color.FromArgb(46, 51, 73);
 
+            InitializationTimerAcceuil();
+
             MouseDown += MainForm_MouseDown;
             customizeDesign();
             pnlSettings = new PanelSettings();
@@ -85,6 +92,52 @@ namespace Application_Cyrell
             pnlXlQc = new PanelXlQc();
             pnlSettings.InitializeParent(pnlSe);
             pnlSe.InitializeSettings(pnlSettings);
+        }
+
+        private void InitializationTimerAcceuil()
+        {
+            labelTimeDate = new Label
+            {
+                Font = new Font("Arial", 36, FontStyle.Bold),
+                ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(32)))), ((int)(((byte)(39))))),
+                AutoSize = false,
+                TextAlign = ContentAlignment.MiddleCenter,
+                Dock = DockStyle.Fill
+            };
+
+            // Ajout du Label au Panel
+            panelContainer.Controls.Add(labelTimeDate);
+
+            // Ajout du Panel au Form
+            this.Controls.Add(panelContainer);
+
+            // Initialisation du Timer
+            timer = new System.Windows.Forms.Timer
+            {
+                Interval = 1000 // Mise à jour chaque seconde
+            };
+            timer.Tick += Timer_Tick;
+            timer.Start();
+
+            // Mise à jour initiale
+            UpdateTimeDate();
+        }
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            UpdateTimeDate();
+        }
+
+        private void UpdateTimeDate()
+        {
+            // Définition de la culture française
+            CultureInfo culture = new CultureInfo("fr-FR");
+
+            // Formatage de l'heure et de la date en français
+            string dateTimeString = DateTime.Now.ToString("HH:mm:ss\ndddd dd MMMM yyyy", culture);
+
+            // Mise à jour du label
+            labelTimeDate.Text = dateTimeString;
         }
 
         private void customizeDesign()
@@ -143,12 +196,15 @@ namespace Application_Cyrell
             this.panelLOGO = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panelContainer = new System.Windows.Forms.Panel();
+            this.textBoxAcceuil = new System.Windows.Forms.TextBox();
             this.panelBarreMenu = new System.Windows.Forms.Panel();
             this.btnClose = new System.Windows.Forms.Button();
             this.btnReduce = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.panelMenu.SuspendLayout();
             this.panelLOGO.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.panelContainer.SuspendLayout();
             this.panelBarreMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -322,10 +378,24 @@ namespace Application_Cyrell
             // panelContainer
             // 
             this.panelContainer.BackColor = System.Drawing.Color.Transparent;
+            this.panelContainer.Controls.Add(this.textBox1);
+            this.panelContainer.Controls.Add(this.textBoxAcceuil);
             this.panelContainer.Location = new System.Drawing.Point(266, 58);
             this.panelContainer.Name = "panelContainer";
             this.panelContainer.Size = new System.Drawing.Size(1123, 798);
             this.panelContainer.TabIndex = 1;
+            // 
+            // textBoxAcceuil
+            // 
+            this.textBoxAcceuil.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
+            this.textBoxAcceuil.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBoxAcceuil.Font = new System.Drawing.Font("Arial Rounded MT Bold", 26F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxAcceuil.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(126)))), ((int)(((byte)(249)))));
+            this.textBoxAcceuil.Location = new System.Drawing.Point(270, 86);
+            this.textBoxAcceuil.Name = "textBoxAcceuil";
+            this.textBoxAcceuil.Size = new System.Drawing.Size(607, 41);
+            this.textBoxAcceuil.TabIndex = 0;
+            this.textBoxAcceuil.Text = "Bienvenue dans l\'application Cyrell\r\n";
             // 
             // panelBarreMenu
             // 
@@ -367,6 +437,18 @@ namespace Application_Cyrell
             this.btnReduce.UseVisualStyleBackColor = true;
             this.btnReduce.Click += new System.EventHandler(this.button9_Click);
             // 
+            // textBox1
+            // 
+            this.textBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
+            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox1.Font = new System.Drawing.Font("Arial Rounded MT Bold", 26F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(126)))), ((int)(((byte)(249)))));
+            this.textBox1.Location = new System.Drawing.Point(270, 139);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(607, 41);
+            this.textBox1.TabIndex = 1;
+            this.textBox1.Text = "Veuillez choisir un onlget à gauche";
+            // 
             // MainForm
             // 
             this.AutoSize = true;
@@ -381,6 +463,8 @@ namespace Application_Cyrell
             this.panelMenu.ResumeLayout(false);
             this.panelLOGO.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.panelContainer.ResumeLayout(false);
+            this.panelContainer.PerformLayout();
             this.panelBarreMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -396,6 +480,7 @@ namespace Application_Cyrell
 
             panelContainer.BringToFront();
             pnlSe.Hide();
+            pnlXlQc.Hide();
             pnlSettings.Hide();
             hideSubMenu();
         }
@@ -431,9 +516,9 @@ namespace Application_Cyrell
 
         private void buttonExcelQc_Click(object sender, EventArgs e)
         {
-            pnlSe.Hide();
-            pnlSettings.Hide();
-            panelContainer.BringToFront();
+            //pnlSe.Hide();
+            //pnlSettings.Hide();
+            //panelContainer.BringToFront();
             PnlNav.Height = buttonExcelQc.Height;
             PnlNav.Top = buttonExcelQc.Top;
             buttonExcelQc.BackColor = Color.FromArgb(46, 51, 73);
