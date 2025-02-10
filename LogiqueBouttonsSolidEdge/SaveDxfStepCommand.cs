@@ -152,7 +152,7 @@ namespace Application_Cyrell.LogiqueBouttonsSolidEdge
                 string docName = Path.GetFileNameWithoutExtension(activeDocument.FullName);
 
                 string activeDxfPath = Path.Combine(_dxfFolderPath, $"{docName}.dxf");
-                string activeStepPath = Path.Combine(_stepFolderPath, $"{docName}.step");
+                string activeStepPath = Path.Combine(_stepFolderPath, $"{docName}.stp");
 
                 if (flatPatternModels.Count == 0)
                 {

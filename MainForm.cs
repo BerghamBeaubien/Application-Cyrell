@@ -99,7 +99,7 @@ namespace Application_Cyrell
             labelTimeDate = new Label
             {
                 Font = new Font("Arial", 36, FontStyle.Bold),
-                ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(32)))), ((int)(((byte)(39))))),
+                ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(230)))), ((int)(((byte)(240))))),
                 AutoSize = false,
                 TextAlign = ContentAlignment.MiddleCenter,
                 Dock = DockStyle.Fill
@@ -196,11 +196,11 @@ namespace Application_Cyrell
             this.panelLOGO = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panelContainer = new System.Windows.Forms.Panel();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.textBoxAcceuil = new System.Windows.Forms.TextBox();
             this.panelBarreMenu = new System.Windows.Forms.Panel();
             this.btnClose = new System.Windows.Forms.Button();
             this.btnReduce = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.panelMenu.SuspendLayout();
             this.panelLOGO.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -380,22 +380,38 @@ namespace Application_Cyrell
             this.panelContainer.BackColor = System.Drawing.Color.Transparent;
             this.panelContainer.Controls.Add(this.textBox1);
             this.panelContainer.Controls.Add(this.textBoxAcceuil);
-            this.panelContainer.Location = new System.Drawing.Point(266, 58);
+            this.panelContainer.Location = new System.Drawing.Point(266, 61);
             this.panelContainer.Name = "panelContainer";
-            this.panelContainer.Size = new System.Drawing.Size(1123, 798);
+            this.panelContainer.Size = new System.Drawing.Size(1123, 801);
             this.panelContainer.TabIndex = 1;
+            // 
+            // textBox1
+            // 
+            this.textBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
+            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox1.Cursor = System.Windows.Forms.Cursors.Default;
+            this.textBox1.Font = new System.Drawing.Font("Arial Rounded MT Bold", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(126)))), ((int)(((byte)(249)))));
+            this.textBox1.Location = new System.Drawing.Point(159, 148);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.ReadOnly = true;
+            this.textBox1.Size = new System.Drawing.Size(831, 56);
+            this.textBox1.TabIndex = 1;
+            this.textBox1.Text = "Veuillez choisir un onlget à gauche";
             // 
             // textBoxAcceuil
             // 
             this.textBoxAcceuil.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
             this.textBoxAcceuil.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBoxAcceuil.Font = new System.Drawing.Font("Arial Rounded MT Bold", 26F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxAcceuil.Cursor = System.Windows.Forms.Cursors.Default;
+            this.textBoxAcceuil.Font = new System.Drawing.Font("Arial Rounded MT Bold", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxAcceuil.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(126)))), ((int)(((byte)(249)))));
-            this.textBoxAcceuil.Location = new System.Drawing.Point(270, 86);
+            this.textBoxAcceuil.Location = new System.Drawing.Point(110, 86);
             this.textBoxAcceuil.Name = "textBoxAcceuil";
-            this.textBoxAcceuil.Size = new System.Drawing.Size(607, 41);
+            this.textBoxAcceuil.ReadOnly = true;
+            this.textBoxAcceuil.Size = new System.Drawing.Size(952, 56);
             this.textBoxAcceuil.TabIndex = 0;
-            this.textBoxAcceuil.Text = "Bienvenue dans l\'application Cyrell\r\n";
+            this.textBoxAcceuil.Text = "Bienvenue dans l\'application Cyrell\r\n AMP";
             // 
             // panelBarreMenu
             // 
@@ -404,9 +420,9 @@ namespace Application_Cyrell
             this.panelBarreMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(30)))), ((int)(((byte)(54)))));
             this.panelBarreMenu.Controls.Add(this.btnClose);
             this.panelBarreMenu.Controls.Add(this.btnReduce);
-            this.panelBarreMenu.Location = new System.Drawing.Point(260, 0);
+            this.panelBarreMenu.Location = new System.Drawing.Point(257, 0);
             this.panelBarreMenu.Name = "panelBarreMenu";
-            this.panelBarreMenu.Size = new System.Drawing.Size(1129, 61);
+            this.panelBarreMenu.Size = new System.Drawing.Size(1132, 64);
             this.panelBarreMenu.TabIndex = 6;
             this.panelBarreMenu.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainForm_MouseDown);
             // 
@@ -417,7 +433,7 @@ namespace Application_Cyrell
             this.btnClose.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.btnClose.Location = new System.Drawing.Point(1068, 0);
             this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(58, 58);
+            this.btnClose.Size = new System.Drawing.Size(61, 61);
             this.btnClose.TabIndex = 2;
             this.btnClose.Text = "X";
             this.btnClose.UseVisualStyleBackColor = true;
@@ -429,25 +445,13 @@ namespace Application_Cyrell
             this.btnReduce.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnReduce.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnReduce.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.btnReduce.Location = new System.Drawing.Point(1010, 0);
+            this.btnReduce.Location = new System.Drawing.Point(1007, 0);
             this.btnReduce.Name = "btnReduce";
-            this.btnReduce.Size = new System.Drawing.Size(58, 58);
+            this.btnReduce.Size = new System.Drawing.Size(61, 61);
             this.btnReduce.TabIndex = 5;
             this.btnReduce.Text = "-";
             this.btnReduce.UseVisualStyleBackColor = true;
             this.btnReduce.Click += new System.EventHandler(this.button9_Click);
-            // 
-            // textBox1
-            // 
-            this.textBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
-            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox1.Font = new System.Drawing.Font("Arial Rounded MT Bold", 26F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(126)))), ((int)(((byte)(249)))));
-            this.textBox1.Location = new System.Drawing.Point(270, 139);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(607, 41);
-            this.textBox1.TabIndex = 1;
-            this.textBox1.Text = "Veuillez choisir un onlget à gauche";
             // 
             // MainForm
             // 
