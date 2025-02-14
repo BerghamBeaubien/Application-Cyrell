@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -50,8 +51,8 @@ namespace Application_Cyrell
         private CancellationTokenSource cancelTokenDim;
         private CustomTooltipForm customTooltipDimensions;
         private CancellationTokenSource cancelTokenDft;
-        private TextBox textBoxAcceuil;
-        private TextBox textBox1;
+        private Label labelAcceuil2;
+        private Label labelAcceuil1;
         private CustomTooltipForm customTooltipDft;
 
         [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
@@ -134,7 +135,9 @@ namespace Application_Cyrell
             CultureInfo culture = new CultureInfo("fr-FR");
 
             // Formatage de l'heure et de la date en français
-            string dateTimeString = DateTime.Now.ToString("HH:mm:ss\ndddd dd MMMM yyyy", culture);
+            string formattedDate = DateTime.Now.ToString("dddd dd MMMM yyyy", culture).ToUpper();
+            string dateTimeString = DateTime.Now.ToString("HH:mm:ss\n", culture) + formattedDate;
+
 
             // Mise à jour du label
             labelTimeDate.Text = dateTimeString;
@@ -196,11 +199,11 @@ namespace Application_Cyrell
             this.panelLOGO = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panelContainer = new System.Windows.Forms.Panel();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBoxAcceuil = new System.Windows.Forms.TextBox();
             this.panelBarreMenu = new System.Windows.Forms.Panel();
             this.btnClose = new System.Windows.Forms.Button();
             this.btnReduce = new System.Windows.Forms.Button();
+            this.labelAcceuil1 = new System.Windows.Forms.Label();
+            this.labelAcceuil2 = new System.Windows.Forms.Label();
             this.panelMenu.SuspendLayout();
             this.panelLOGO.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -378,40 +381,12 @@ namespace Application_Cyrell
             // panelContainer
             // 
             this.panelContainer.BackColor = System.Drawing.Color.Transparent;
-            this.panelContainer.Controls.Add(this.textBox1);
-            this.panelContainer.Controls.Add(this.textBoxAcceuil);
+            this.panelContainer.Controls.Add(this.labelAcceuil2);
+            this.panelContainer.Controls.Add(this.labelAcceuil1);
             this.panelContainer.Location = new System.Drawing.Point(266, 61);
             this.panelContainer.Name = "panelContainer";
             this.panelContainer.Size = new System.Drawing.Size(1123, 801);
             this.panelContainer.TabIndex = 1;
-            // 
-            // textBox1
-            // 
-            this.textBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
-            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox1.Cursor = System.Windows.Forms.Cursors.Default;
-            this.textBox1.Font = new System.Drawing.Font("Arial Rounded MT Bold", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(126)))), ((int)(((byte)(249)))));
-            this.textBox1.Location = new System.Drawing.Point(159, 148);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(831, 56);
-            this.textBox1.TabIndex = 1;
-            this.textBox1.Text = "Veuillez choisir un onlget à gauche";
-            // 
-            // textBoxAcceuil
-            // 
-            this.textBoxAcceuil.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
-            this.textBoxAcceuil.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBoxAcceuil.Cursor = System.Windows.Forms.Cursors.Default;
-            this.textBoxAcceuil.Font = new System.Drawing.Font("Arial Rounded MT Bold", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxAcceuil.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(126)))), ((int)(((byte)(249)))));
-            this.textBoxAcceuil.Location = new System.Drawing.Point(110, 86);
-            this.textBoxAcceuil.Name = "textBoxAcceuil";
-            this.textBoxAcceuil.ReadOnly = true;
-            this.textBoxAcceuil.Size = new System.Drawing.Size(952, 56);
-            this.textBoxAcceuil.TabIndex = 0;
-            this.textBoxAcceuil.Text = "Bienvenue dans l\'application Cyrell\r\n AMP";
             // 
             // panelBarreMenu
             // 
@@ -452,6 +427,28 @@ namespace Application_Cyrell
             this.btnReduce.Text = "-";
             this.btnReduce.UseVisualStyleBackColor = true;
             this.btnReduce.Click += new System.EventHandler(this.button9_Click);
+            // 
+            // labelAcceuil1
+            // 
+            this.labelAcceuil1.AutoSize = true;
+            this.labelAcceuil1.Font = new System.Drawing.Font("Arial Rounded MT Bold", 36F);
+            this.labelAcceuil1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(126)))), ((int)(((byte)(249)))));
+            this.labelAcceuil1.Location = new System.Drawing.Point(94, 101);
+            this.labelAcceuil1.Name = "labelAcceuil1";
+            this.labelAcceuil1.Size = new System.Drawing.Size(965, 55);
+            this.labelAcceuil1.TabIndex = 2;
+            this.labelAcceuil1.Text = "Bienvenue dans l\'application Cyrell AMP";
+            // 
+            // labelAcceuil2
+            // 
+            this.labelAcceuil2.AutoSize = true;
+            this.labelAcceuil2.Font = new System.Drawing.Font("Arial Rounded MT Bold", 36F);
+            this.labelAcceuil2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(126)))), ((int)(((byte)(249)))));
+            this.labelAcceuil2.Location = new System.Drawing.Point(162, 156);
+            this.labelAcceuil2.Name = "labelAcceuil2";
+            this.labelAcceuil2.Size = new System.Drawing.Size(837, 55);
+            this.labelAcceuil2.TabIndex = 3;
+            this.labelAcceuil2.Text = "Veuillez choisir un onlget à gauche";
             // 
             // MainForm
             // 

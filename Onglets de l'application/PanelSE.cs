@@ -45,8 +45,8 @@ namespace firstCSMacro
         private CustomTooltipForm customTooltipDimensions;
         private CancellationTokenSource cancelTokenDft;
         private CustomTooltipForm customTooltipDft;
-        private TextBox txtBoxUnlock;
         private PictureBox picBoxArrow;
+        private Label labelUnlock;
         private Dictionary<string, bool> extensionFilters = new Dictionary<string, bool>()
         {
             { ".asm", true },
@@ -77,8 +77,8 @@ namespace firstCSMacro
             this.buttonExportDim = new System.Windows.Forms.Button();
             this.buttonSaveDxfStep = new System.Windows.Forms.Button();
             this.buttonGenererDFT = new System.Windows.Forms.Button();
-            this.txtBoxUnlock = new System.Windows.Forms.TextBox();
             this.picBoxArrow = new System.Windows.Forms.PictureBox();
+            this.labelUnlock = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.picBoxArrow)).BeginInit();
             this.SuspendLayout();
             // 
@@ -89,11 +89,11 @@ namespace firstCSMacro
             this.listBoxDxfFiles.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listBoxDxfFiles.ForeColor = System.Drawing.Color.White;
             this.listBoxDxfFiles.FormattingEnabled = true;
-            this.listBoxDxfFiles.ItemHeight = 36;
+            this.listBoxDxfFiles.ItemHeight = 25;
             this.listBoxDxfFiles.Location = new System.Drawing.Point(84, 184);
             this.listBoxDxfFiles.Name = "listBoxDxfFiles";
             this.listBoxDxfFiles.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.listBoxDxfFiles.Size = new System.Drawing.Size(902, 468);
+            this.listBoxDxfFiles.Size = new System.Drawing.Size(902, 450);
             this.listBoxDxfFiles.TabIndex = 4;
             // 
             // textBoxFolderPath
@@ -104,7 +104,7 @@ namespace firstCSMacro
             this.textBoxFolderPath.ForeColor = System.Drawing.Color.White;
             this.textBoxFolderPath.Location = new System.Drawing.Point(84, 134);
             this.textBoxFolderPath.Name = "textBoxFolderPath";
-            this.textBoxFolderPath.Size = new System.Drawing.Size(902, 28);
+            this.textBoxFolderPath.Size = new System.Drawing.Size(902, 19);
             this.textBoxFolderPath.TabIndex = 5;
             // 
             // button10
@@ -264,18 +264,6 @@ namespace firstCSMacro
             this.buttonGenererDFT.MouseEnter += new System.EventHandler(this.btnGenererDft_MouseEnter);
             this.buttonGenererDFT.MouseLeave += new System.EventHandler(this.btnGenererDft_MouseLeave);
             // 
-            // txtBoxUnlock
-            // 
-            this.txtBoxUnlock.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
-            this.txtBoxUnlock.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtBoxUnlock.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBoxUnlock.ForeColor = System.Drawing.Color.LightCyan;
-            this.txtBoxUnlock.Location = new System.Drawing.Point(51, 7);
-            this.txtBoxUnlock.Name = "txtBoxUnlock";
-            this.txtBoxUnlock.Size = new System.Drawing.Size(950, 82);
-            this.txtBoxUnlock.TabIndex = 19;
-            this.txtBoxUnlock.Text = "Veiullez Choisir un répértoire pour continuer";
-            // 
             // picBoxArrow
             // 
             this.picBoxArrow.BackgroundImage = global::Application_Cyrell.Properties.Resources.logoArrow;
@@ -286,12 +274,23 @@ namespace firstCSMacro
             this.picBoxArrow.TabIndex = 20;
             this.picBoxArrow.TabStop = false;
             // 
+            // labelUnlock
+            // 
+            this.labelUnlock.AutoSize = true;
+            this.labelUnlock.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F);
+            this.labelUnlock.ForeColor = System.Drawing.Color.LightCyan;
+            this.labelUnlock.Location = new System.Drawing.Point(41, 9);
+            this.labelUnlock.Name = "labelUnlock";
+            this.labelUnlock.Size = new System.Drawing.Size(960, 55);
+            this.labelUnlock.TabIndex = 21;
+            this.labelUnlock.Text = "Veiullez Choisir un répértoire pour continuer";
+            // 
             // PanelSE
             // 
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
             this.ClientSize = new System.Drawing.Size(1123, 798);
+            this.Controls.Add(this.labelUnlock);
             this.Controls.Add(this.picBoxArrow);
-            this.Controls.Add(this.txtBoxUnlock);
             this.Controls.Add(this.buttonGenererDFT);
             this.Controls.Add(this.buttonSaveDxfStep);
             this.Controls.Add(this.buttonExportDim);
@@ -428,7 +427,7 @@ namespace firstCSMacro
             browseCommand.Execute();
             if (buttonExportDim.Visible != true)
             {
-                txtBoxUnlock.Visible = false;
+                labelUnlock.Visible = false;
                 picBoxArrow.Visible = false;
                 buttonExportDim.Visible = true;
                 buttonGenererDFT.Visible = true;
