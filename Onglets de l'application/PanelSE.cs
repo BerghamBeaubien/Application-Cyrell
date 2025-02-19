@@ -54,7 +54,8 @@ namespace firstCSMacro
             { ".stp", true },
             { ".step", true },
             { ".par", true },
-            { ".psm", true }
+            { ".psm", true },
+            { ".SLDASM", true }
         };
 
         public PanelSE()

@@ -47,7 +47,8 @@ namespace Application_Cyrell.LogiqueBouttonsSolidEdge
 
                     // Check if the file is a STEP/STP file
                     if (fullPath.EndsWith(".stp", StringComparison.OrdinalIgnoreCase) ||
-                        fullPath.EndsWith(".step", StringComparison.OrdinalIgnoreCase))
+                        fullPath.EndsWith(".step", StringComparison.OrdinalIgnoreCase) ||
+                        fullPath.EndsWith(".SLDASM", StringComparison.OrdinalIgnoreCase))
                     {
                         ProcessStepFile(seApp, fullPath);
                     }

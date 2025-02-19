@@ -9,9 +9,6 @@ namespace firstCSMacro
         private TextBox xlJobPathTxtBox;
         private TextBox dxfPathTxtBox;
         private TextBox stepPathTxtBox;
-        private TextBox textBox4;
-        private TextBox textBox5;
-        private TextBox textBox6;
         private Button btnBrowseXl;
         private Button btnBrowseDxf;
         private Button btnBrowseStep;
@@ -20,6 +17,9 @@ namespace firstCSMacro
         private string dxfFilePath;
         private Button buttonVerifDim;
         private Button buttonVerifQte;
+        private Label label1;
+        private Label label2;
+        private Label label3;
         private string stepFilePath;
 
         public PanelXlQc()
@@ -32,14 +32,14 @@ namespace firstCSMacro
             this.xlJobPathTxtBox = new System.Windows.Forms.TextBox();
             this.dxfPathTxtBox = new System.Windows.Forms.TextBox();
             this.stepPathTxtBox = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.textBox5 = new System.Windows.Forms.TextBox();
-            this.textBox6 = new System.Windows.Forms.TextBox();
             this.btnBrowseXl = new System.Windows.Forms.Button();
             this.btnBrowseDxf = new System.Windows.Forms.Button();
             this.btnBrowseStep = new System.Windows.Forms.Button();
             this.buttonVerifDim = new System.Windows.Forms.Button();
             this.buttonVerifQte = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // textBox1
@@ -52,7 +52,7 @@ namespace firstCSMacro
             this.textBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(71)))), ((int)(((byte)(93)))));
             this.textBox1.Location = new System.Drawing.Point(335, 566);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(776, 166);
+            this.textBox1.Size = new System.Drawing.Size(776, 111);
             this.textBox1.TabIndex = 0;
             this.textBox1.Text = "EXCEL QC";
             // 
@@ -64,7 +64,7 @@ namespace firstCSMacro
             this.xlJobPathTxtBox.ForeColor = System.Drawing.Color.White;
             this.xlJobPathTxtBox.Location = new System.Drawing.Point(101, 114);
             this.xlJobPathTxtBox.Name = "xlJobPathTxtBox";
-            this.xlJobPathTxtBox.Size = new System.Drawing.Size(813, 28);
+            this.xlJobPathTxtBox.Size = new System.Drawing.Size(813, 19);
             this.xlJobPathTxtBox.TabIndex = 6;
             // 
             // dxfPathTxtBox
@@ -75,7 +75,7 @@ namespace firstCSMacro
             this.dxfPathTxtBox.ForeColor = System.Drawing.Color.White;
             this.dxfPathTxtBox.Location = new System.Drawing.Point(101, 230);
             this.dxfPathTxtBox.Name = "dxfPathTxtBox";
-            this.dxfPathTxtBox.Size = new System.Drawing.Size(813, 28);
+            this.dxfPathTxtBox.Size = new System.Drawing.Size(813, 19);
             this.dxfPathTxtBox.TabIndex = 7;
             // 
             // stepPathTxtBox
@@ -86,50 +86,8 @@ namespace firstCSMacro
             this.stepPathTxtBox.ForeColor = System.Drawing.Color.White;
             this.stepPathTxtBox.Location = new System.Drawing.Point(101, 352);
             this.stepPathTxtBox.Name = "stepPathTxtBox";
-            this.stepPathTxtBox.Size = new System.Drawing.Size(813, 28);
+            this.stepPathTxtBox.Size = new System.Drawing.Size(813, 19);
             this.stepPathTxtBox.TabIndex = 8;
-            // 
-            // textBox4
-            // 
-            this.textBox4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
-            this.textBox4.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox4.Cursor = System.Windows.Forms.Cursors.Default;
-            this.textBox4.Font = new System.Drawing.Font("Arial", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox4.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.textBox4.Location = new System.Drawing.Point(101, 62);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.ReadOnly = true;
-            this.textBox4.Size = new System.Drawing.Size(776, 46);
-            this.textBox4.TabIndex = 9;
-            this.textBox4.Text = "Emplacement du fichier Excel";
-            // 
-            // textBox5
-            // 
-            this.textBox5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
-            this.textBox5.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox5.Cursor = System.Windows.Forms.Cursors.Default;
-            this.textBox5.Font = new System.Drawing.Font("Arial", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox5.ForeColor = System.Drawing.Color.White;
-            this.textBox5.Location = new System.Drawing.Point(101, 178);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.ReadOnly = true;
-            this.textBox5.Size = new System.Drawing.Size(776, 46);
-            this.textBox5.TabIndex = 10;
-            this.textBox5.Text = "Emplacement du répértoire des DXF";
-            // 
-            // textBox6
-            // 
-            this.textBox6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
-            this.textBox6.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox6.Cursor = System.Windows.Forms.Cursors.No;
-            this.textBox6.Font = new System.Drawing.Font("Arial", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox6.ForeColor = System.Drawing.Color.White;
-            this.textBox6.Location = new System.Drawing.Point(101, 300);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.ReadOnly = true;
-            this.textBox6.Size = new System.Drawing.Size(776, 46);
-            this.textBox6.TabIndex = 11;
-            this.textBox6.Text = "Emplacement du répértoire des Step";
             // 
             // btnBrowseXl
             // 
@@ -206,18 +164,51 @@ namespace firstCSMacro
             this.buttonVerifQte.UseVisualStyleBackColor = false;
             this.buttonVerifQte.Click += new System.EventHandler(this.buttonVerifQte_Click);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Arial", 25F, System.Drawing.FontStyle.Bold);
+            this.label1.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.label1.Location = new System.Drawing.Point(95, 65);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(497, 40);
+            this.label1.TabIndex = 20;
+            this.label1.Text = "Emplacement du fichier Excel";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Arial", 25F, System.Drawing.FontStyle.Bold);
+            this.label2.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.label2.Location = new System.Drawing.Point(93, 180);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(605, 40);
+            this.label2.TabIndex = 21;
+            this.label2.Text = "Emplacement du répértoire des DXF";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Arial", 25F, System.Drawing.FontStyle.Bold);
+            this.label3.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.label3.Location = new System.Drawing.Point(95, 307);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(610, 40);
+            this.label3.TabIndex = 22;
+            this.label3.Text = "Emplacement du répértoire des Step";
+            // 
             // PanelXlQc
             // 
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
             this.ClientSize = new System.Drawing.Size(1123, 798);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.buttonVerifQte);
             this.Controls.Add(this.buttonVerifDim);
             this.Controls.Add(this.btnBrowseStep);
             this.Controls.Add(this.btnBrowseDxf);
             this.Controls.Add(this.btnBrowseXl);
-            this.Controls.Add(this.textBox6);
-            this.Controls.Add(this.textBox5);
-            this.Controls.Add(this.textBox4);
             this.Controls.Add(this.stepPathTxtBox);
             this.Controls.Add(this.dxfPathTxtBox);
             this.Controls.Add(this.xlJobPathTxtBox);

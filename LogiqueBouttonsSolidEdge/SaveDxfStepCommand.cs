@@ -27,6 +27,8 @@ namespace Application_Cyrell.LogiqueBouttonsSolidEdge
         private string _dxfFolderPath;
         private string _stepFolderPath;
         private bool paramTagDxf;
+        private bool paramChangeName;
+        private bool paramFabbrica;
 
         public SaveDxfStepCommand(ListBox listBoxDxfFiles, TextBox textBoxFolderPath)
         {
@@ -43,6 +45,8 @@ namespace Application_Cyrell.LogiqueBouttonsSolidEdge
                     _dxfFolderPath = form.DxfPath;
                     _stepFolderPath = form.StepPath;
                     paramTagDxf = form.TagDxf;
+                    paramChangeName = form.ChangeName;
+                    paramFabbrica = form.Fabbrica;
                     return true;
                 }
                 return false;
@@ -149,7 +153,36 @@ namespace Application_Cyrell.LogiqueBouttonsSolidEdge
                 SolidEdgePart.Models models = activeDocument.Models;
                 SolidEdgePart.Model model = models.Item(1);
                 SolidEdgePart.FlatPatternModels flatPatternModels = activeDocument.FlatPatternModels;
+
+                // Définition du nom par défaut du document
                 string docName = Path.GetFileNameWithoutExtension(activeDocument.FullName);
+
+                if (paramFabbrica)
+                {
+                    // Remplacer chaque 'B' par 'P' et supprimer tout ce qui suit "_Default_As Machined"
+                    docName = docName.Replace("B", "P");
+                    int index = docName.IndexOf("_Default_As Machined");
+                    if (index != -1)
+                    {
+                        docName = docName.Substring(0, index);
+                    }
+                }
+
+                if (paramChangeName)
+                {
+                    using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+                    {
+                        saveFileDialog.Filter = "DXF files (*.dxf)|*.dxf|STEP files (*.stp)|*.stp";
+                        saveFileDialog.Title = "Enregistrer sous";
+                        saveFileDialog.FileName = docName; // Utilise le nom modifié si `paramFabbrica` est vrai
+
+                        if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                        {
+                            docName = Path.GetFileNameWithoutExtension(saveFileDialog.FileName);
+                        }
+                    }
+                }
+
 
                 string activeDxfPath = Path.Combine(_dxfFolderPath, $"{docName}.dxf");
                 string activeStepPath = Path.Combine(_stepFolderPath, $"{docName}.stp");
@@ -283,6 +316,8 @@ namespace Application_Cyrell.LogiqueBouttonsSolidEdge
         private TextBox txtDxfPath;
         private TextBox txtStepPath;
         private CheckBox chkTagDxf;
+        private CheckBox chkChangeName;
+        private CheckBox chkFabbrica;
         private Button btnBrowseDxf;
         private Button btnBrowseStep;
         private Button btnContinue;
@@ -291,6 +326,8 @@ namespace Application_Cyrell.LogiqueBouttonsSolidEdge
         public string DxfPath => txtDxfPath.Text;
         public string StepPath => txtStepPath.Text;
         public bool TagDxf => chkTagDxf.Checked;
+        public bool ChangeName => chkChangeName.Checked;
+        public bool Fabbrica => chkFabbrica.Checked;
 
         public FolderSelectionForm()
         {
@@ -359,6 +396,20 @@ namespace Application_Cyrell.LogiqueBouttonsSolidEdge
                 AutoSize = true
             };
 
+            chkChangeName = new CheckBox
+            {
+                Text = "Changer le nom",
+                Location = new System.Drawing.Point(80, 115),
+                AutoSize = true
+            };
+
+            chkFabbrica = new CheckBox
+            {
+                Text = "Fabbrica",
+                Location = new System.Drawing.Point(180, 115),
+                AutoSize = true
+            };
+
             // Buttons
             btnContinue = new Button
             {
@@ -379,7 +430,7 @@ namespace Application_Cyrell.LogiqueBouttonsSolidEdge
             this.Controls.AddRange(new Control[] {
             lblDxf, txtDxfPath, btnBrowseDxf,
             lblStep, txtStepPath, btnBrowseStep,
-            chkTagDxf, btnContinue, btnCancel
+            chkTagDxf, btnContinue, btnCancel,chkChangeName,chkFabbrica
         });
 
             this.AcceptButton = btnContinue;
