@@ -127,7 +127,7 @@ public class ProcessDxfCommand : SolidEdgeCommandBase
                 y1: y1,
                 z1: 0
             );
-            callout.BalloonText = "%{File Name (no extension)}";
+            callout.BalloonText = draftDoc.Name;
             callout.TextScale = scale;
         }
         catch (Exception ex)

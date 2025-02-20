@@ -261,6 +261,7 @@ namespace Application_Cyrell.LogiqueBouttonsSolidEdge
                 Sheet sheet = draftDoc.ActiveSheet;
                 SolidEdgeFrameworkSupport.Balloons balloons = (SolidEdgeFrameworkSupport.Balloons)sheet.Balloons;
                 var (width, height) = DxfDimensionExtractor.GetDxfDimensions(fullPath);
+                MessageBox.Show(draftDoc.Name);
 
                 // Determine the scale and positions based on conditions
                 double scale = (width < 10 && height < 10) ? 2.0 : 4.0;
@@ -274,7 +275,7 @@ namespace Application_Cyrell.LogiqueBouttonsSolidEdge
                     y1: y1,
                     z1: 0
                 );
-                callout.BalloonText = "%{File Name (no extension)}";
+                callout.BalloonText = draftDoc.Name;
                 callout.TextScale = scale;
             }
             catch (Exception ex)
