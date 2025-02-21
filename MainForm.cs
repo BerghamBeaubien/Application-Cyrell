@@ -199,11 +199,11 @@ namespace Application_Cyrell
             this.panelLOGO = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panelContainer = new System.Windows.Forms.Panel();
+            this.labelAcceuil2 = new System.Windows.Forms.Label();
+            this.labelAcceuil1 = new System.Windows.Forms.Label();
             this.panelBarreMenu = new System.Windows.Forms.Panel();
             this.btnClose = new System.Windows.Forms.Button();
             this.btnReduce = new System.Windows.Forms.Button();
-            this.labelAcceuil1 = new System.Windows.Forms.Label();
-            this.labelAcceuil2 = new System.Windows.Forms.Label();
             this.panelMenu.SuspendLayout();
             this.panelLOGO.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -354,7 +354,7 @@ namespace Application_Cyrell
             this.buttonAcceuil.Name = "buttonAcceuil";
             this.buttonAcceuil.Size = new System.Drawing.Size(266, 52);
             this.buttonAcceuil.TabIndex = 1;
-            this.buttonAcceuil.Text = "Acceuil";
+            this.buttonAcceuil.Text = "Accueil";
             this.buttonAcceuil.UseVisualStyleBackColor = false;
             this.buttonAcceuil.Click += new System.EventHandler(this.btnAcceuil_Click);
             this.buttonAcceuil.Leave += new System.EventHandler(this.btnAcceuil_Leave);
@@ -387,6 +387,28 @@ namespace Application_Cyrell
             this.panelContainer.Name = "panelContainer";
             this.panelContainer.Size = new System.Drawing.Size(1123, 801);
             this.panelContainer.TabIndex = 1;
+            // 
+            // labelAcceuil2
+            // 
+            this.labelAcceuil2.AutoSize = true;
+            this.labelAcceuil2.Font = new System.Drawing.Font("Arial Rounded MT Bold", 36F);
+            this.labelAcceuil2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(126)))), ((int)(((byte)(249)))));
+            this.labelAcceuil2.Location = new System.Drawing.Point(162, 156);
+            this.labelAcceuil2.Name = "labelAcceuil2";
+            this.labelAcceuil2.Size = new System.Drawing.Size(837, 55);
+            this.labelAcceuil2.TabIndex = 3;
+            this.labelAcceuil2.Text = "Veuillez choisir un onlget à gauche";
+            // 
+            // labelAcceuil1
+            // 
+            this.labelAcceuil1.AutoSize = true;
+            this.labelAcceuil1.Font = new System.Drawing.Font("Arial Rounded MT Bold", 36F);
+            this.labelAcceuil1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(126)))), ((int)(((byte)(249)))));
+            this.labelAcceuil1.Location = new System.Drawing.Point(94, 101);
+            this.labelAcceuil1.Name = "labelAcceuil1";
+            this.labelAcceuil1.Size = new System.Drawing.Size(965, 55);
+            this.labelAcceuil1.TabIndex = 2;
+            this.labelAcceuil1.Text = "Bienvenue dans l\'application Cyrell AMP";
             // 
             // panelBarreMenu
             // 
@@ -427,28 +449,6 @@ namespace Application_Cyrell
             this.btnReduce.Text = "-";
             this.btnReduce.UseVisualStyleBackColor = true;
             this.btnReduce.Click += new System.EventHandler(this.button9_Click);
-            // 
-            // labelAcceuil1
-            // 
-            this.labelAcceuil1.AutoSize = true;
-            this.labelAcceuil1.Font = new System.Drawing.Font("Arial Rounded MT Bold", 36F);
-            this.labelAcceuil1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(126)))), ((int)(((byte)(249)))));
-            this.labelAcceuil1.Location = new System.Drawing.Point(94, 101);
-            this.labelAcceuil1.Name = "labelAcceuil1";
-            this.labelAcceuil1.Size = new System.Drawing.Size(965, 55);
-            this.labelAcceuil1.TabIndex = 2;
-            this.labelAcceuil1.Text = "Bienvenue dans l\'application Cyrell AMP";
-            // 
-            // labelAcceuil2
-            // 
-            this.labelAcceuil2.AutoSize = true;
-            this.labelAcceuil2.Font = new System.Drawing.Font("Arial Rounded MT Bold", 36F);
-            this.labelAcceuil2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(126)))), ((int)(((byte)(249)))));
-            this.labelAcceuil2.Location = new System.Drawing.Point(162, 156);
-            this.labelAcceuil2.Name = "labelAcceuil2";
-            this.labelAcceuil2.Size = new System.Drawing.Size(837, 55);
-            this.labelAcceuil2.TabIndex = 3;
-            this.labelAcceuil2.Text = "Veuillez choisir un onlget à gauche";
             // 
             // MainForm
             // 
