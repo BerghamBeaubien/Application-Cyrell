@@ -51,7 +51,7 @@ Le bouton **"Sauvegarder DXF/STEP"** convertit les fichiers sélectionnés en fo
 
 - Sélectionnez des fichiers **PAR/PSM**.
 - Cliquez sur **"Sauvegarder DXF/STEP"**.
-- Choisissez les dossiers de destination.
+- Choisissez le dossier de destination.
 - Les fichiers sont convertis en DXF et STEP.
 
 ### **5. Créer un fichier DFT**
@@ -61,7 +61,6 @@ Le bouton **"Créer un fichier DFT"** génère un fichier de dessin (DFT) à par
 - Sélectionnez des fichiers **PAR, PSM ou ASM**.
 - Cliquez sur **"Créer un fichier DFT"**.
 - Si le fichier est un **ASM**, une fenêtre s'ouvre affichant toutes les pièces contenues dans l'assemblage.
-    pic fenetre
   - L'utilisateur peut cocher/décocher les pièces qu'il souhaite inclure dans le fichier DFT.
   - Un clic droit sur une pièce permet de **modifier son nom**. 
     ![Pic liste pieces asm](https://github.com/BerghamBeaubien/Application-Cyrell/blob/main/Resources/reName.png)
@@ -209,20 +208,23 @@ Ce bouton effectue les actions suivantes :
    - Vérifie qu'au moins un fichier PAR ou PSM est sélectionné.
    - Affiche un message d'erreur si aucun fichier n'est sélectionné.
 
-2. **Sélection des répertoires** :
-   - Ouvre une fenêtre pour choisir les répertoires de sauvegarde des fichiers DXF et STEP.
-   - Permet également d'activer l'option **Tag DXF** pour ajouter des annotations aux fichiers DXF.
+2. **Sélection du répertoire** :
+   - Ouvre une fenêtre pour choisir le répertoire de sauvegarde commun pour les fichiers DXF et STEP.
+   - Permet également d'activer les options :
+     - **Tag DXF** : pour ajouter des annotations aux fichiers DXF.
+     - **Changer le nom** : pour modifier le nom des fichiers générés.
+     - **Fabbrica** : pour remplacer les "B" par des "P" dans le nom et supprimer "_Default_As Machined".
 
 3. **Traitement des fichiers** :
    - Pour chaque fichier sélectionné :
      - Ouvre le fichier dans Solid Edge.
      - Vérifie si le fichier contient un modèle déplié (Flat Pattern).
-     - Si un modèle déplié est trouvé, le fichier est sauvegardé en DXF et STEP.
+     - Si un modèle déplié est trouvé, le fichier est sauvegardé en DXF et STEP dans le même répertoire.
      - Si l'option **Tag DXF** est activée, une annotation est ajoutée au fichier DXF.
 
 4. **Gestion des erreurs** :
    - En cas d'erreur pendant le traitement, un message d'erreur est affiché avec les détails.
-   - Si un fichier ne contient pas de modèle déplié, un message d'avertissement est affiché.
+   - Si un fichier ne contient pas de modèle déplié, un message d'avertissement est affiché et seul le fichier STEP est généré.
 
 5. **Nettoyage et fin de l'opération** :
    - Ferme Solid Edge (sauf si l'utilisateur choisit de le garder ouvert).
