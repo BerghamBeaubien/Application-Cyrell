@@ -354,7 +354,7 @@ namespace Application_Cyrell
             this.buttonAcceuil.Name = "buttonAcceuil";
             this.buttonAcceuil.Size = new System.Drawing.Size(266, 52);
             this.buttonAcceuil.TabIndex = 1;
-            this.buttonAcceuil.Text = "Accueil";
+            this.buttonAcceuil.Text = "Acceuil";
             this.buttonAcceuil.UseVisualStyleBackColor = false;
             this.buttonAcceuil.Click += new System.EventHandler(this.btnAcceuil_Click);
             this.buttonAcceuil.Leave += new System.EventHandler(this.btnAcceuil_Leave);
@@ -395,7 +395,7 @@ namespace Application_Cyrell
             this.labelAcceuil2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(126)))), ((int)(((byte)(249)))));
             this.labelAcceuil2.Location = new System.Drawing.Point(162, 156);
             this.labelAcceuil2.Name = "labelAcceuil2";
-            this.labelAcceuil2.Size = new System.Drawing.Size(837, 55);
+            this.labelAcceuil2.Size = new System.Drawing.Size(1250, 83);
             this.labelAcceuil2.TabIndex = 3;
             this.labelAcceuil2.Text = "Veuillez choisir un onlget à gauche";
             // 
@@ -406,7 +406,7 @@ namespace Application_Cyrell
             this.labelAcceuil1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(126)))), ((int)(((byte)(249)))));
             this.labelAcceuil1.Location = new System.Drawing.Point(94, 101);
             this.labelAcceuil1.Name = "labelAcceuil1";
-            this.labelAcceuil1.Size = new System.Drawing.Size(965, 55);
+            this.labelAcceuil1.Size = new System.Drawing.Size(1440, 83);
             this.labelAcceuil1.TabIndex = 2;
             this.labelAcceuil1.Text = "Bienvenue dans l\'application Cyrell AMP";
             // 

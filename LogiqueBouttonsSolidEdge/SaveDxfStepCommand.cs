@@ -19,13 +19,12 @@ using TextBox = System.Windows.Forms.TextBox;
 
 namespace Application_Cyrell.LogiqueBouttonsSolidEdge
 {
-  
+
     public class SaveDxfStepCommand : IButtonManager
     {
         private readonly ListBox _listBoxDxfFiles;
         private readonly TextBox _textBoxFolderPath;
-        private string _dxfFolderPath;
-        private string _stepFolderPath;
+        private string _outputFolderPath; // Single folder path for both DXF and STEP
         private bool paramTagDxf;
         private bool paramChangeName;
         private bool paramFabbrica;
@@ -36,14 +35,13 @@ namespace Application_Cyrell.LogiqueBouttonsSolidEdge
             _textBoxFolderPath = textBoxFolderPath;
         }
 
-        private bool PromptForFolders()
+        private bool PromptForFolder()
         {
             using (var form = new FolderSelectionForm())
             {
                 if (form.ShowDialog() == DialogResult.OK)
                 {
-                    _dxfFolderPath = form.DxfPath;
-                    _stepFolderPath = form.StepPath;
+                    _outputFolderPath = form.OutputPath;
                     paramTagDxf = form.TagDxf;
                     paramChangeName = form.ChangeName;
                     paramFabbrica = form.Fabbrica;
@@ -61,9 +59,9 @@ namespace Application_Cyrell.LogiqueBouttonsSolidEdge
                 return;
             }
 
-            if (!PromptForFolders())
+            if (!PromptForFolder())
             {
-                MessageBox.Show("Sélection des répertoires annulée");
+                MessageBox.Show("Sélection du répertoire annulée");
                 return;
             }
 
@@ -142,7 +140,7 @@ namespace Application_Cyrell.LogiqueBouttonsSolidEdge
             if (seApp.ActiveDocument is SolidEdgePart.PartDocument ||
                 seApp.ActiveDocument is SolidEdgePart.SheetMetalDocument)
             {
-                timeToShine(seApp.ActiveDocument,seApp);
+                timeToShine(seApp.ActiveDocument, seApp);
             }
         }
 
@@ -183,9 +181,9 @@ namespace Application_Cyrell.LogiqueBouttonsSolidEdge
                     }
                 }
 
-
-                string activeDxfPath = Path.Combine(_dxfFolderPath, $"{docName}.dxf");
-                string activeStepPath = Path.Combine(_stepFolderPath, $"{docName}.stp");
+                // Use the same folder path for both DXF and STEP files
+                string activeDxfPath = Path.Combine(_outputFolderPath, $"{docName}.dxf");
+                string activeStepPath = Path.Combine(_outputFolderPath, $"{docName}.stp");
 
                 if (flatPatternModels.Count == 0)
                 {
@@ -261,7 +259,6 @@ namespace Application_Cyrell.LogiqueBouttonsSolidEdge
                 Sheet sheet = draftDoc.ActiveSheet;
                 SolidEdgeFrameworkSupport.Balloons balloons = (SolidEdgeFrameworkSupport.Balloons)sheet.Balloons;
                 var (width, height) = DxfDimensionExtractor.GetDxfDimensions(fullPath);
-                MessageBox.Show(draftDoc.Name);
 
                 // Determine the scale and positions based on conditions
                 double scale = (width < 10 && height < 10) ? 2.0 : 4.0;
@@ -314,18 +311,15 @@ namespace Application_Cyrell.LogiqueBouttonsSolidEdge
 
     public class FolderSelectionForm : Form
     {
-        private TextBox txtDxfPath;
-        private TextBox txtStepPath;
+        private TextBox txtOutputPath;
         private CheckBox chkTagDxf;
         private CheckBox chkChangeName;
         private CheckBox chkFabbrica;
-        private Button btnBrowseDxf;
-        private Button btnBrowseStep;
+        private Button btnBrowseOutput;
         private Button btnContinue;
         private Button btnCancel;
 
-        public string DxfPath => txtDxfPath.Text;
-        public string StepPath => txtStepPath.Text;
+        public string OutputPath => txtOutputPath.Text;
         public bool TagDxf => chkTagDxf.Checked;
         public bool ChangeName => chkChangeName.Checked;
         public bool Fabbrica => chkFabbrica.Checked;
@@ -337,77 +331,54 @@ namespace Application_Cyrell.LogiqueBouttonsSolidEdge
 
         private void InitializeComponents()
         {
-            this.Text = "Sélection des répertoires";
-            this.Size = new Size(500, 200);
+            this.Text = "Sélection du répertoire de sortie";
+            this.Size = new Size(500, 170);
             this.FormBorderStyle = FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.StartPosition = FormStartPosition.CenterParent;
 
-            // DXF Path Controls
-            Label lblDxf = new Label
+            // Output Path Controls
+            Label lblOutput = new Label
             {
-                Text = "Répertoire DXF:",
+                Text = "Répertoire de sortie (DXF et STEP):",
                 Location = new System.Drawing.Point(10, 15),
                 AutoSize = true
             };
 
-            txtDxfPath = new TextBox
+            txtOutputPath = new TextBox
             {
                 Location = new System.Drawing.Point(10, 35),
                 Width = 380,
                 ReadOnly = true
             };
 
-            btnBrowseDxf = new Button
+            btnBrowseOutput = new Button
             {
                 Text = "...",
                 Location = new System.Drawing.Point(400, 34),
                 Width = 30
             };
-            btnBrowseDxf.Click += (s, e) => BrowseFolder(txtDxfPath);
+            btnBrowseOutput.Click += (s, e) => BrowseFolder(txtOutputPath);
 
-            // STEP Path Controls
-            Label lblStep = new Label
-            {
-                Text = "Répertoire STEP:",
-                Location = new System.Drawing.Point(10, 65),
-                AutoSize = true
-            };
-
-            txtStepPath = new TextBox
-            {
-                Location = new System.Drawing.Point(10, 85),
-                Width = 380,
-                ReadOnly = true
-            };
-
-            btnBrowseStep = new Button
-            {
-                Text = "...",
-                Location = new System.Drawing.Point(400, 84),
-                Width = 30
-            };
-            btnBrowseStep.Click += (s, e) => BrowseFolder(txtStepPath);
-
-            // Checkbox
+            // Checkbox options
             chkTagDxf = new CheckBox
             {
                 Text = "Tag DXF",
-                Location = new System.Drawing.Point(10, 115),
+                Location = new System.Drawing.Point(10, 75),
                 AutoSize = true
             };
 
             chkChangeName = new CheckBox
             {
                 Text = "Changer le nom",
-                Location = new System.Drawing.Point(80, 115),
+                Location = new System.Drawing.Point(80, 75),
                 AutoSize = true
             };
 
             chkFabbrica = new CheckBox
             {
                 Text = "Fabbrica",
-                Location = new System.Drawing.Point(180, 115),
+                Location = new System.Drawing.Point(180, 75),
                 AutoSize = true
             };
 
@@ -416,7 +387,7 @@ namespace Application_Cyrell.LogiqueBouttonsSolidEdge
             {
                 Text = "Continuer",
                 DialogResult = DialogResult.OK,
-                Location = new System.Drawing.Point(280, 115),
+                Location = new System.Drawing.Point(280, 75),
                 Width = 80
             };
 
@@ -424,15 +395,15 @@ namespace Application_Cyrell.LogiqueBouttonsSolidEdge
             {
                 Text = "Annuler",
                 DialogResult = DialogResult.Cancel,
-                Location = new System.Drawing.Point(370, 115),
+                Location = new System.Drawing.Point(370, 75),
                 Width = 80
             };
 
             this.Controls.AddRange(new Control[] {
-            lblDxf, txtDxfPath, btnBrowseDxf,
-            lblStep, txtStepPath, btnBrowseStep,
-            chkTagDxf, btnContinue, btnCancel,chkChangeName,chkFabbrica
-        });
+                lblOutput, txtOutputPath, btnBrowseOutput,
+                chkTagDxf, chkChangeName, chkFabbrica,
+                btnContinue, btnCancel
+            });
 
             this.AcceptButton = btnContinue;
             this.CancelButton = btnCancel;
