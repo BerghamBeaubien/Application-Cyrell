@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Application Cyrell")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c0aa063bee53a6d0fbd50054388716ce357ff21f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2c7e54576816b9be84c05e39e001b88ab0383d10")]
 [assembly: System.Reflection.AssemblyProductAttribute("Application Cyrell")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Application Cyrell")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

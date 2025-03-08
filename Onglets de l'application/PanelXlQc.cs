@@ -20,6 +20,7 @@ namespace firstCSMacro
         private Label label1;
         private Label label2;
         private Label label3;
+        private Button btnRefresh;
         private string stepFilePath;
 
         public PanelXlQc()
@@ -40,6 +41,7 @@ namespace firstCSMacro
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.btnRefresh = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // textBox1
@@ -197,10 +199,26 @@ namespace firstCSMacro
             this.label3.TabIndex = 22;
             this.label3.Text = "Emplacement du répértoire des Step";
             // 
+            // btnRefresh
+            // 
+            this.btnRefresh.BackColor = System.Drawing.Color.DarkOrange;
+            this.btnRefresh.FlatAppearance.BorderSize = 0;
+            this.btnRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRefresh.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRefresh.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btnRefresh.Location = new System.Drawing.Point(916, 430);
+            this.btnRefresh.Name = "btnRefresh";
+            this.btnRefresh.Size = new System.Drawing.Size(99, 38);
+            this.btnRefresh.TabIndex = 23;
+            this.btnRefresh.Text = "Rafraîchir";
+            this.btnRefresh.UseVisualStyleBackColor = false;
+            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
+            // 
             // PanelXlQc
             // 
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
             this.ClientSize = new System.Drawing.Size(1123, 798);
+            this.Controls.Add(this.btnRefresh);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -257,6 +275,16 @@ namespace firstCSMacro
             var clickVerifQte = new VerifNbPiecesCommand(xlJobPathTxtBox, dxfPathTxtBox, stepPathTxtBox);
             clickVerifQte.Execute();
             clickVerifQte = null;
+        }
+
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            xlFilePath = "";
+            dxfFilePath = "";
+            stepFilePath = "";
+            xlJobPathTxtBox.Text = "";
+            dxfPathTxtBox.Text = "";
+            stepPathTxtBox.Text = "";
         }
     }
 }

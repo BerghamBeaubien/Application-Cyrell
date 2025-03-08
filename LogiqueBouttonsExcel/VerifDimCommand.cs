@@ -23,7 +23,7 @@ namespace Application_Cyrell.LogiqueBouttonsExcel
         public HashSet<string> ExtraDxf { get; set; } = new HashSet<string>();
         public Dictionary<string, int> TagQuantities { get; set; } = new Dictionary<string, int>();
         public Dictionary<string, (double Width, double Height, int Row)> TagDimensions { get; set; } = new Dictionary<string, (double Width, double Height, int Row)>();
-        public HashSet<string> DimensionMismatches { get; set; } = new HashSet<string>();  // Added to track mismatches
+        public HashSet<string> DimensionMismatches { get; set; } = new HashSet<string>();  // Pour suivre les différences de dimensions
         public bool QcPass { get; set; }
         public Dictionary<string, bool> SwappedDimensions { get; set; } = new Dictionary<string, bool>();
     }
@@ -31,20 +31,22 @@ namespace Application_Cyrell.LogiqueBouttonsExcel
     public class DetailedComparisonFormDimension : Form
     {
         private readonly string _pathDxf;
+        private ListView listView;
+        private MenuStrip menuStrip;
+
         public DetailedComparisonFormDimension(ValidationResultDimension result, string pathDxf)
         {
             _pathDxf = pathDxf;
             InitializeComponents(result);
         }
 
-        private ListView listView;
-        private MenuStrip menuStrip;
-
         private void InitializeComponents(ValidationResultDimension result)
         {
-            Text = "Detailed Comparison";
+            // Configuration de la fenêtre
+            Text = "Comparaison Détaillée";
             Size = new Size(1000, 600);
 
+            // Création de la ListView
             listView = new ListView
             {
                 Dock = DockStyle.Fill,
@@ -53,74 +55,71 @@ namespace Application_Cyrell.LogiqueBouttonsExcel
                 GridLines = true,
                 OwnerDraw = true
             };
+            Controls.Add(listView);
 
+            // Création du menu
             menuStrip = new MenuStrip();
-
-            var containerPanel = new Panel
-            {
-                Dock = DockStyle.Fill
-            };
-            menuStrip.Dock = DockStyle.Top;
             Controls.Add(menuStrip);
+            menuStrip.Dock = DockStyle.Top;
 
-            listView.Dock = DockStyle.Fill;
-            containerPanel.Controls.Add(listView);
-            var sortMenu = new ToolStripMenuItem("Sort");
+            // Configuration des options de tri
+            var sortMenu = new ToolStripMenuItem("Trier");
 
-            var sortByRowAsc = new ToolStripMenuItem("Sort by Row (Ascending)");
-            sortByRowAsc.Click += (s, e) =>
-            {
-                listView.ListViewItemSorter = new ListViewItemComparer(0, true);
-                listView.Sort();
-            };
+            var sortByRowAsc = new ToolStripMenuItem("Trier par Rangée (Ordre Excel)");
+            sortByRowAsc.Click += (s, e) => SortListView(0, true);
 
-            var sortByTagAsc = new ToolStripMenuItem("Sort by TAG (A-Z)");
-            sortByTagAsc.Click += (s, e) =>
-            {
-                listView.ListViewItemSorter = new ListViewItemComparer(1, true);
-                listView.Sort();
-            };
+            var sortByTagAsc = new ToolStripMenuItem("Trier par TAG (A-Z)");
+            sortByTagAsc.Click += (s, e) => SortListView(1, true);
 
             sortMenu.DropDownItems.Add(sortByRowAsc);
             sortMenu.DropDownItems.Add(sortByTagAsc);
             menuStrip.Items.Add(sortMenu);
 
-            Controls.Add(menuStrip);
-            listView.Dock = DockStyle.Fill;
-
-            listView.Columns.Add("Row", 50);
+            // Configuration des colonnes de la ListView
+            listView.Columns.Add("Rangée", 50);
             listView.Columns.Add("TAG", 170);
-            listView.Columns.Add("Qty", 40);
+            listView.Columns.Add("Qté", 40);
             listView.Columns.Add("DXF", 40);
-            listView.Columns.Add("Width Match", 40);
-            listView.Columns.Add("Height Match", 40);
-            listView.Columns.Add("Mismatched Width", 140); // Only show if width doesn't match
-            listView.Columns.Add("Mismatched Height", 140); // Only show if height doesn't match
-            listView.Columns.Add("Status", 200);
+            listView.Columns.Add("Largeur", 45);
+            listView.Columns.Add("Hauteur", 45);
+            listView.Columns.Add("Problème Largeur", 140);
+            listView.Columns.Add("Problème Hauteur", 140);
+            listView.Columns.Add("Statut", 200);
 
-            // Combine all unique tags
+            // Combiner tous les tags uniques
             var allTags = new HashSet<string>();
             allTags.UnionWith(result.ExcelTags);
             allTags.UnionWith(result.DxfFiles.Select(f => Path.GetFileNameWithoutExtension(f)));
 
+            // Remplir la ListView avec les données
+            PopulateListView(allTags, result);
+
+            // Configuration des événements de dessin
+            ConfigureDrawingEvents();
+        }
+
+        // Méthode pour remplir la ListView avec les données
+        private void PopulateListView(HashSet<string> allTags, ValidationResultDimension result)
+        {
             foreach (var tag in allTags.OrderBy(t => t))
             {
                 var item = new ListViewItem("");
-                // Add row number as first subitem
+
+                // Ajouter le numéro de ligne
                 int rowNumber = result.TagDimensions.TryGetValue(tag, out var dim) ? dim.Row : 0;
-                item.Text = rowNumber.ToString(); // First column is Row
+                item.Text = rowNumber.ToString();
 
                 item.SubItems.Add(tag);
 
-                // Quantity
+                // Quantité
                 result.TagQuantities.TryGetValue(tag, out int qty);
                 item.SubItems.Add(qty.ToString());
 
-                // DXF Status
+                // Statut DXF
                 bool hasDxf = result.DxfFiles.Contains($"{NormalizeFileName(tag)}.dxf", StringComparer.OrdinalIgnoreCase);
                 item.SubItems.Add(hasDxf ? "✓" : "✗");
 
-                // Excel Dimensions
+                // Dimensions Excel
                 double excelWidth = 0;
                 double excelHeight = 0;
                 if (result.TagDimensions.TryGetValue(tag, out var excelDimensions))
@@ -129,7 +128,7 @@ namespace Application_Cyrell.LogiqueBouttonsExcel
                     excelHeight = excelDimensions.Height;
                 }
 
-                // DXF Dimensions
+                // Dimensions DXF
                 double dxfWidth = 0;
                 double dxfHeight = 0;
                 if (hasDxf)
@@ -139,11 +138,12 @@ namespace Application_Cyrell.LogiqueBouttonsExcel
                     dxfHeight = dxfDimensions.height;
                 }
 
-                // Comparaison Moins Stricte
+                // Comparaison moins stricte (valeurs tronquées)
                 bool widthMatch = Math.Truncate(excelWidth) == Math.Truncate(dxfWidth);
                 bool heightMatch = Math.Truncate(excelHeight) == Math.Truncate(dxfHeight);
                 bool swappedMatch = false;
 
+                // Vérifier si les dimensions sont inversées
                 if (!widthMatch || !heightMatch)
                 {
                     bool swappedWidthMatch = Math.Truncate(excelWidth) == Math.Truncate(dxfHeight);
@@ -157,57 +157,55 @@ namespace Application_Cyrell.LogiqueBouttonsExcel
                     }
                 }
 
-                // Width Match Column
+                // Colonnes de correspondance
                 item.SubItems.Add(widthMatch ? "✓" : "✗");
-
-                // Height Match Column
                 item.SubItems.Add(heightMatch ? "✓" : "✗");
 
-                // Mismatched Width Column (only show if width doesn't match)
+                // Colonnes de différences
                 item.SubItems.Add(widthMatch ? "" : $"XL {excelWidth:F3} | DXF {dxfWidth:F3}");
-
-                // Mismatched Height Column (only show if height doesn't match)
                 item.SubItems.Add(heightMatch ? "" : $"XL {excelHeight:F3} | DXF {dxfHeight:F3}");
 
-                string status = "";
-                bool isSwapped = result.SwappedDimensions.TryGetValue(tag, out bool swapped) && swapped;
-
-                // Overall Status
-                if (!result.ExcelTags.Contains(tag))
-                    status = "❌ Not in Excel";
-                else if (!hasDxf)
-                    status = "❌ Missing DXF";
-                else if (!widthMatch || !heightMatch)
-                {
-                    if (!swappedMatch)
-                        status = "❌ Dimension Mismatch";
-                    else
-                        status = "✅ OK (Dimensions Inversées)";
-                }
-                else if (qty <= 0)
-                    status = "⚠️ Invalid Quantity";
-                else
-                    status = "✅ OK";
-
-                double compareDxfWidth = isSwapped ? dxfHeight : dxfWidth;
-                double compareDxfHeight = isSwapped ? dxfWidth : dxfHeight;
-
-                //item.SubItems.Add(widthMatch ? "" : $"XL {excelWidth:F3} | DXF {compareDxfWidth:F3}");
-                //item.SubItems.Add(heightMatch ? "" : $"XL {excelHeight:F3} | DXF {compareDxfHeight:F3}");
-
+                // Déterminer le statut global
+                string status = DetermineStatus(tag, hasDxf, widthMatch, heightMatch, swappedMatch, qty, result);
                 item.SubItems.Add(status);
 
-                // Add item to the list view
+                // Ajouter l'élément à la ListView
                 listView.Items.Add(item);
             }
+        }
 
+        // Déterminer le statut global d'un élément
+        private string DetermineStatus(string tag, bool hasDxf, bool widthMatch, bool heightMatch,
+                                     bool swappedMatch, int qty, ValidationResultDimension result)
+        {
+            if (!result.ExcelTags.Contains(tag))
+                return "❌ Pas dans Excel";
+            else if (!hasDxf)
+                return "❌ DXF Manquant";
+            else if (!widthMatch || !heightMatch)
+            {
+                if (!swappedMatch)
+                    return "❌ Dimensions Incompatibles";
+                else
+                    return "✅ OK (Dimensions Inversées)";
+            }
+            else if (qty <= 0)
+                return "⚠️ Quantité Invalide";
+            else
+                return "✅ OK";
+        }
+
+        // Configuration des événements de dessin
+        private void ConfigureDrawingEvents()
+        {
+            // Événement de dessin des sous-éléments
             listView.DrawSubItem += (s, e) =>
             {
-                // Default to window background
+                // Couleur de fond par défaut
                 Color backgroundColor = SystemColors.Window;
 
-                // Color status column
-                if (e.ColumnIndex == 8) // Status column
+                // Colorer la colonne de statut
+                if (e.ColumnIndex == 8) // Colonne de statut
                 {
                     string status = e.Item.SubItems[8].Text;
                     if (status.StartsWith("❌"))
@@ -217,24 +215,25 @@ namespace Application_Cyrell.LogiqueBouttonsExcel
                     else if (status.StartsWith("✅"))
                         backgroundColor = Color.LightGreen;
                 }
-                // Color DXF, Width Match, Height Match columns
+                // Colorer les colonnes DXF, Largeur, Hauteur
                 else if (e.ColumnIndex == 3 || e.ColumnIndex == 4 || e.ColumnIndex == 5)
                 {
                     if (e.Item.SubItems[e.ColumnIndex].Text == "✗")
                         backgroundColor = Color.LightSalmon;
                 }
 
+                // Dessiner le fond
                 using (var brush = new SolidBrush(backgroundColor))
                 {
                     e.Graphics.FillRectangle(brush, e.Bounds);
                 }
 
-                // Draw text
+                // Dessiner le texte
                 TextRenderer.DrawText(e.Graphics, e.SubItem.Text, listView.Font, e.Bounds,
                     SystemColors.ControlText, TextFormatFlags.Left | TextFormatFlags.VerticalCenter);
             };
 
-            // Draw column headers
+            // Événement de dessin des en-têtes de colonne
             listView.DrawColumnHeader += (s, e) =>
             {
                 e.DrawBackground();
@@ -244,15 +243,16 @@ namespace Application_Cyrell.LogiqueBouttonsExcel
                     SystemBrushes.ControlText,
                     e.Bounds);
             };
-
-            Controls.Add(containerPanel);
         }
+
+        // Méthode pour trier la ListView
         private void SortListView(int column, bool ascending)
         {
             listView.ListViewItemSorter = new ListViewItemComparer(column, ascending);
             listView.Sort();
         }
 
+        // Classe pour comparer les éléments de la ListView
         private class ListViewItemComparer : IComparer
         {
             private readonly int column;
@@ -269,26 +269,26 @@ namespace Application_Cyrell.LogiqueBouttonsExcel
                 var itemX = (ListViewItem)x;
                 var itemY = (ListViewItem)y;
 
-                // Parse as numbers if possible
+                // Essayer de parser comme nombres si possible
                 if (int.TryParse(itemX.SubItems[column].Text, out int numX) &&
                     int.TryParse(itemY.SubItems[column].Text, out int numY))
                 {
                     return ascending ? numX.CompareTo(numY) : numY.CompareTo(numX);
                 }
 
-                // Fall back to string comparison
+                // Sinon, comparer comme chaînes
                 return ascending
                     ? string.Compare(itemX.SubItems[column].Text, itemY.SubItems[column].Text)
                     : string.Compare(itemY.SubItems[column].Text, itemX.SubItems[column].Text);
             }
         }
 
+        // Normaliser le nom de fichier (supprimer les espaces avant l'extension)
         private string NormalizeFileName(string fileName)
         {
             if (string.IsNullOrEmpty(fileName))
                 return fileName;
 
-            // Remove any spaces before the extension
             int extensionIndex = fileName.LastIndexOf('.');
             if (extensionIndex > 0)
             {
@@ -314,6 +314,7 @@ namespace Application_Cyrell.LogiqueBouttonsExcel
 
         public void Execute()
         {
+            // Vérifier que les fichiers/dossiers sont spécifiés
             if (string.IsNullOrEmpty(pathXl))
             {
                 MessageBox.Show("Veuillez choisir un fichier Excel à analyser");
@@ -322,7 +323,7 @@ namespace Application_Cyrell.LogiqueBouttonsExcel
 
             if (string.IsNullOrEmpty(pathDxf))
             {
-                MessageBox.Show("Veuillez choisir un repertoir contenant des DXF");
+                MessageBox.Show("Veuillez choisir un répertoire contenant des DXF");
                 return;
             }
 
@@ -334,6 +335,7 @@ namespace Application_Cyrell.LogiqueBouttonsExcel
 
             try
             {
+                // Effectuer la validation et afficher le rapport
                 lastValidationResult = ValidateFiles();
                 ShowValidationReport(lastValidationResult);
             }
@@ -343,11 +345,12 @@ namespace Application_Cyrell.LogiqueBouttonsExcel
             }
         }
 
+        // Valider les fichiers Excel et DXF
         private ValidationResultDimension ValidateFiles()
         {
             var result = new ValidationResultDimension();
 
-            // Read Excel values
+            // Lire les valeurs d'Excel
             var (excelTags, totalCount, tagQuantities, tagDimensions) = ReadColumnValuesFromProjetSheet(pathXl);
             result.ExcelTags = excelTags;
             result.TotalCount = totalCount;
@@ -355,21 +358,35 @@ namespace Application_Cyrell.LogiqueBouttonsExcel
             result.TagDimensions = tagDimensions;
             result.DimensionMismatches = new HashSet<string>();
 
-            // Get DXF files and normalize filenames
+            // Obtenir les fichiers DXF et normaliser les noms de fichier
             result.DxfFiles = GetFilesByExtension(pathDxf, "dxf")
                 .Select(NormalizeFileName)
                 .ToHashSet(StringComparer.OrdinalIgnoreCase);
 
-            // Find missing files
+            // Trouver les fichiers manquants
             result.MissingDxf = new HashSet<string>(
                 result.ExcelTags.Where(tag => !result.DxfFiles.Contains($"{tag}.dxf", StringComparer.OrdinalIgnoreCase)));
 
-            // Find extra files
+            // Trouver les fichiers supplémentaires
             result.ExtraDxf = new HashSet<string>(
                 result.DxfFiles.Select(f => Path.GetFileNameWithoutExtension(f))
                     .Where(tag => !result.ExcelTags.Contains(tag, StringComparer.OrdinalIgnoreCase)));
 
-            // Check dimensions for each tag
+            // Vérifier les dimensions pour chaque tag
+            CheckDimensions(result);
+
+            // Déterminer si le QC passe
+            result.QcPass = !result.MissingDxf.Any() &&
+                    !result.ExtraDxf.Any() &&
+                    !result.DimensionMismatches.Any() &&
+                    result.TagQuantities.All(kv => kv.Value > 0);
+
+            return result;
+        }
+
+        // Vérifier les dimensions pour tous les tags
+        private void CheckDimensions(ValidationResultDimension result)
+        {
             foreach (var tag in result.ExcelTags)
             {
                 if (result.DxfFiles.Contains($"{NormalizeFileName(tag)}.dxf"))
@@ -383,7 +400,7 @@ namespace Application_Cyrell.LogiqueBouttonsExcel
 
                         if (!widthMatch || !heightMatch)
                         {
-                            // Try swapped dimensions
+                            // Essayer avec les dimensions inversées
                             bool swappedWidthMatch = Math.Truncate(excelDimensions.Width) == Math.Truncate(dxfDimensions.height);
                             bool swappedHeightMatch = Math.Truncate(excelDimensions.Height) == Math.Truncate(dxfDimensions.width);
 
@@ -399,27 +416,22 @@ namespace Application_Cyrell.LogiqueBouttonsExcel
                     }
                 }
             }
-
-            result.QcPass = !result.MissingDxf.Any() &&
-                    !result.ExtraDxf.Any() &&
-                    !result.DimensionMismatches.Any() &&  // Added check for dimension mismatches
-                    result.TagQuantities.All(kv => kv.Value > 0);
-
-            return result;
         }
 
+        // Afficher le rapport de validation
         private void ShowValidationReport(ValidationResultDimension result)
         {
             var sb = new StringBuilder();
-            sb.AppendLine("=== Validation Report ===");
-            sb.AppendLine($"Total pieces count: {result.TotalCount}");
-            sb.AppendLine($"Unique references in Excel: {result.ExcelTags.Count}");
-            sb.AppendLine($"DXF files found: {result.DxfFiles.Count}");
+            sb.AppendLine("=== Rapport de Validation ===");
+            sb.AppendLine($"Nombre total de pièces: {result.TotalCount}");
+            sb.AppendLine($"Références uniques dans Excel: {result.ExcelTags.Count}");
+            sb.AppendLine($"Fichiers DXF trouvés: {result.DxfFiles.Count}");
             sb.AppendLine();
 
+            // Vérifier les quantités invalides
             if (result.TagQuantities.Any(kv => kv.Value <= 0))
             {
-                sb.AppendLine("Tags with invalid quantities:");
+                sb.AppendLine("Tags avec quantités invalides:");
                 foreach (var kv in result.TagQuantities.Where(kv => kv.Value <= 0))
                 {
                     sb.AppendLine($"- {kv.Key}: {kv.Value}");
@@ -427,9 +439,10 @@ namespace Application_Cyrell.LogiqueBouttonsExcel
                 sb.AppendLine();
             }
 
+            // Vérifier les DXF manquants
             if (result.MissingDxf.Any())
             {
-                sb.AppendLine("Missing DXF files:");
+                sb.AppendLine("Fichiers DXF manquants:");
                 foreach (var tag in result.MissingDxf.OrderBy(x => x))
                 {
                     sb.AppendLine($"- {tag}");
@@ -437,9 +450,10 @@ namespace Application_Cyrell.LogiqueBouttonsExcel
                 sb.AppendLine();
             }
 
+            // Vérifier les DXF supplémentaires
             if (result.ExtraDxf.Any())
             {
-                sb.AppendLine("Extra DXF files (not in Excel):");
+                sb.AppendLine("Fichiers DXF supplémentaires (pas dans Excel):");
                 foreach (var tag in result.ExtraDxf.OrderBy(x => x))
                 {
                     sb.AppendLine($"- {tag}");
@@ -447,26 +461,34 @@ namespace Application_Cyrell.LogiqueBouttonsExcel
                 sb.AppendLine();
             }
 
+            // Vérifier les différences de dimensions
             if (result.DimensionMismatches.Any())
             {
-                sb.AppendLine("Files with dimension mismatches:");
+                sb.AppendLine("Fichiers avec différences de dimensions:");
                 foreach (var tag in result.DimensionMismatches.OrderBy(x => x))
                 {
                     var excelDim = result.TagDimensions[tag];
                     var dxfDim = DxfDimensionExtractor.GetDxfDimensions(Path.Combine(pathDxf, $"{NormalizeFileName(tag)}.dxf"));
                     sb.AppendLine($"- {tag}:");
-                    sb.AppendLine($"  Excel: W={excelDim.Width:F2}, H={excelDim.Height:F2}");
-                    sb.AppendLine($"  DXF:   W={dxfDim.width:F2}, H={dxfDim.height:F2}");
+                    sb.AppendLine($"  Excel: L={excelDim.Width:F2}, H={excelDim.Height:F2}");
+                    sb.AppendLine($"  DXF:   L={dxfDim.width:F2}, H={dxfDim.height:F2}");
                 }
                 sb.AppendLine();
             }
 
-            sb.AppendLine($"QC Check Result: {(result.QcPass ? "PASS" : "FAIL")}");
+            sb.AppendLine($"Résultat du Contrôle Qualité: {(result.QcPass ? "RÉUSSI" : "ÉCHOUÉ")}");
 
+            // Créer et afficher le formulaire de rapport
+            CreateAndShowReportForm(sb.ToString());
+        }
+
+        // Créer et afficher le formulaire de rapport
+        private void CreateAndShowReportForm(string reportText)
+        {
             var reportForm = new Form()
             {
-                Text = "Validation Report",
-                Size = new Size(200, 400),
+                Text = "Rapport de Validation",
+                Size = new Size(600, 400),
                 StartPosition = FormStartPosition.CenterScreen
             };
 
@@ -476,7 +498,7 @@ namespace Application_Cyrell.LogiqueBouttonsExcel
                 ReadOnly = true,
                 ScrollBars = ScrollBars.Vertical,
                 Dock = DockStyle.Fill,
-                Text = sb.ToString()
+                Text = reportText
             };
 
             var buttonPanel = new Panel()
@@ -495,8 +517,8 @@ namespace Application_Cyrell.LogiqueBouttonsExcel
 
             var detailsButton = new Button()
             {
-                Text = "Show Details",
-                Width = 90,
+                Text = "Afficher Détails",
+                Width = 120,
                 Left = 90,
                 Top = 8
             };
@@ -513,6 +535,7 @@ namespace Application_Cyrell.LogiqueBouttonsExcel
             reportForm.ShowDialog();
         }
 
+        // Obtenir les fichiers par extension
         private HashSet<string> GetFilesByExtension(string directoryPath, string extension)
         {
             var files = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
@@ -534,14 +557,15 @@ namespace Application_Cyrell.LogiqueBouttonsExcel
             }
             catch (Exception ex) when (ex is UnauthorizedAccessException || ex is PathTooLongException)
             {
-                // Handle exceptions silently but return empty set
+                // Gérer les exceptions silencieusement mais retourner un ensemble vide
             }
 
             return files;
         }
 
+        // Lire les valeurs de colonnes de la feuille PROJET
         private (HashSet<string> uniqueValues, int totalCount, Dictionary<string, int> tagQuantities, Dictionary<string, (double Width, double Height, int Row)> tagDimensions)
-    ReadColumnValuesFromProjetSheet(string filePath)
+        ReadColumnValuesFromProjetSheet(string filePath)
         {
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             HashSet<string> uniqueValues = new HashSet<string>();
@@ -559,7 +583,7 @@ namespace Application_Cyrell.LogiqueBouttonsExcel
                         throw new Exception("La feuille 'PROJET' n'a pas été trouvée.");
                     }
 
-                    // Determine header location
+                    // Déterminer l'emplacement de l'en-tête
                     int startRow, column;
                     var headerD26 = worksheet.Cells[26, 4].Value?.ToString()?.Trim();
                     var headerC17 = worksheet.Cells[17, 3].Value?.ToString()?.Trim();
@@ -579,10 +603,10 @@ namespace Application_Cyrell.LogiqueBouttonsExcel
                         throw new Exception("En-tête 'TAG #' introuvable dans D26 ou C17");
                     }
 
+                    // Trouver la dernière ligne avec des données
                     int endRow = worksheet.Dimension?.End.Row ?? 1000;
                     int actualLastRow = startRow;
 
-                    // Find last row with data
                     for (int row = startRow; row <= endRow; row++)
                     {
                         var cell = worksheet.Cells[row, column].Value;
@@ -592,57 +616,8 @@ namespace Application_Cyrell.LogiqueBouttonsExcel
                         }
                     }
 
-                    // Process data
-                    for (int row = startRow; row <= actualLastRow; row++)
-                    {
-                        if (row == 501) continue;
-
-                        var mainCell = worksheet.Cells[row, column].Value;
-                        var quantityCell = worksheet.Cells[row, column + 1].Value;
-                        var widthCell = worksheet.Cells[row, column + 2].Value;
-                        var heightCell = worksheet.Cells[row, column + 3].Value;
-
-                        if (mainCell != null && !string.IsNullOrWhiteSpace(mainCell.ToString()))
-                        {
-                            string value = mainCell.ToString().Trim();
-                            if (value == "0") continue;
-                            int quantity = 0;
-                            double width = 0;
-                            double height = 0;
-
-                            // Parse quantity
-                            if (quantityCell != null)
-                            {
-                                if (int.TryParse(quantityCell.ToString(), out int parsedQuantity))
-                                {
-                                    quantity = parsedQuantity;
-                                }
-                                else if (quantityCell.ToString().Contains("*"))
-                                {
-                                    string[] factors = quantityCell.ToString().Split('*');
-                                    quantity = factors.All(f => int.TryParse(f, out int n))
-                                        ? factors.Select(int.Parse).Aggregate((a, b) => a * b)
-                                        : 0;
-                                }
-                            }
-
-                            // Parse width and height
-                            if (widthCell != null && double.TryParse(widthCell.ToString(), out double parsedWidth))
-                            {
-                                width = parsedWidth;
-                            }
-
-                            if (heightCell != null && double.TryParse(heightCell.ToString(), out double parsedHeight))
-                            {
-                                height = parsedHeight;
-                            }
-
-                            uniqueValues.Add(value);
-                            tagQuantities[value] = quantity;
-                            tagDimensions[value] = (width, height, row); // Include the row number in the tuple
-                            totalCount += quantity;
-                        }
-                    }
+                    // Traiter les données
+                    ProcessExcelData(worksheet, startRow, actualLastRow, column, uniqueValues, tagQuantities, tagDimensions, ref totalCount);
                 }
             }
             catch (Exception ex)
@@ -653,12 +628,76 @@ namespace Application_Cyrell.LogiqueBouttonsExcel
             return (uniqueValues, totalCount, tagQuantities, tagDimensions);
         }
 
+        // Traiter les données du fichier Excel
+        private void ProcessExcelData(ExcelWorksheet worksheet, int startRow, int actualLastRow, int column,
+                                    HashSet<string> uniqueValues, Dictionary<string, int> tagQuantities,
+                                    Dictionary<string, (double Width, double Height, int Row)> tagDimensions, ref int totalCount)
+        {
+            for (int row = startRow; row <= actualLastRow; row++)
+            {
+                if (row == 501) continue; // Ligne à ignorer
+
+                var mainCell = worksheet.Cells[row, column].Value;
+                var quantityCell = worksheet.Cells[row, column + 1].Value;
+                var widthCell = worksheet.Cells[row, column + 2].Value;
+                var heightCell = worksheet.Cells[row, column + 3].Value;
+
+                if (mainCell != null && !string.IsNullOrWhiteSpace(mainCell.ToString()))
+                {
+                    string value = mainCell.ToString().Trim();
+                    if (value == "0") continue;
+
+                    // Analyser la quantité
+                    int quantity = ParseQuantity(quantityCell);
+
+                    // Analyser la largeur et la hauteur
+                    double width = 0, height = 0;
+                    if (widthCell != null && double.TryParse(widthCell.ToString(), out double parsedWidth))
+                    {
+                        width = parsedWidth;
+                    }
+
+                    if (heightCell != null && double.TryParse(heightCell.ToString(), out double parsedHeight))
+                    {
+                        height = parsedHeight;
+                    }
+
+                    uniqueValues.Add(value);
+                    tagQuantities[value] = quantity;
+                    tagDimensions[value] = (width, height, row); // Inclure le numéro de ligne dans le tuple
+                    totalCount += quantity;
+                }
+            }
+        }
+
+        // Analyser la quantité à partir d'une cellule Excel
+        private int ParseQuantity(object quantityCell)
+        {
+            if (quantityCell == null)
+                return 0;
+
+            if (int.TryParse(quantityCell.ToString(), out int parsedQuantity))
+            {
+                return parsedQuantity;
+            }
+            else if (quantityCell.ToString().Contains("*"))
+            {
+                string[] factors = quantityCell.ToString().Split('*');
+                return factors.All(f => int.TryParse(f, out int n))
+                    ? factors.Select(int.Parse).Aggregate((a, b) => a * b)
+                    : 0;
+            }
+
+            return 0;
+        }
+
+        // Normaliser le nom de fichier
         private string NormalizeFileName(string fileName)
         {
             if (string.IsNullOrEmpty(fileName))
                 return fileName;
 
-            // Remove any spaces before the extension
+            // Supprimer les espaces avant l'extension
             int extensionIndex = fileName.LastIndexOf('.');
             if (extensionIndex > 0)
             {
