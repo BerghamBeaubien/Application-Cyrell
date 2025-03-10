@@ -2,13 +2,9 @@ C:\Users\mouad.khalladi\Desktop\Alpha.0.6\Application Cyrell.exe
 C:\Users\mouad.khalladi\Desktop\Alpha.0.6\Application Cyrell.exe.config
 C:\Users\mouad.khalladi\Desktop\Alpha.0.6\Application Cyrell.pdb
 C:\Users\mouad.khalladi\Desktop\Alpha.0.6\ACadSharp.dll
-C:\Users\mouad.khalladi\Desktop\Alpha.0.6\EPPlus.dll
-C:\Users\mouad.khalladi\Desktop\Alpha.0.6\EPPlus.Interfaces.dll
-C:\Users\mouad.khalladi\Desktop\Alpha.0.6\EPPlus.System.Drawing.dll
-C:\Users\mouad.khalladi\Desktop\Alpha.0.6\Microsoft.IO.RecyclableMemoryStream.dll
+C:\Users\mouad.khalladi\Desktop\Alpha.0.6\ExcelDataReader.dll
+C:\Users\mouad.khalladi\Desktop\Alpha.0.6\ExcelDataReader.DataSet.dll
 C:\Users\mouad.khalladi\Desktop\Alpha.0.6\System.Buffers.dll
-C:\Users\mouad.khalladi\Desktop\Alpha.0.6\System.ComponentModel.Annotations.dll
-C:\Users\mouad.khalladi\Desktop\Alpha.0.6\System.Drawing.Common.dll
 C:\Users\mouad.khalladi\Desktop\Alpha.0.6\System.Memory.dll
 C:\Users\mouad.khalladi\Desktop\Alpha.0.6\System.Numerics.Vectors.dll
 C:\Users\mouad.khalladi\Desktop\Alpha.0.6\System.Runtime.CompilerServices.Unsafe.dll

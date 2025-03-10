@@ -54,9 +54,13 @@
               "target": "Package",
               "version": "[1.0.6, )"
             },
-            "EPPlus": {
+            "ExcelDataReader": {
               "target": "Package",
-              "version": "[7.5.3, )"
+              "version": "[3.7.0, )"
+            },
+            "ExcelDataReader.DataSet": {
+              "target": "Package",
+              "version": "[3.7.0, )"
             },
             "System.Threading.Tasks": {
               "target": "Package",

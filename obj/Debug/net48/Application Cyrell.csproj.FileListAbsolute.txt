@@ -16,13 +16,7 @@ C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Debug\net48\A
 C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Debug\net48\Application Cyrell.exe
 C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Debug\net48\Application Cyrell.pdb
 C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Debug\net48\ACadSharp.dll
-C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Debug\net48\EPPlus.dll
-C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Debug\net48\EPPlus.Interfaces.dll
-C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Debug\net48\EPPlus.System.Drawing.dll
-C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Debug\net48\Microsoft.IO.RecyclableMemoryStream.dll
 C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Debug\net48\System.Buffers.dll
-C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Debug\net48\System.ComponentModel.Annotations.dll
-C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Debug\net48\System.Drawing.Common.dll
 C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Debug\net48\System.Memory.dll
 C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Debug\net48\System.Numerics.Vectors.dll
 C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Debug\net48\System.Runtime.CompilerServices.Unsafe.dll
@@ -69,3 +63,5 @@ C:\Users\mouad.khalladi\source\repos\Application Cyrell\firstCSMacro\bin\Debug\n
 C:\Users\mouad.khalladi\source\repos\Application Cyrell\firstCSMacro\bin\Debug\net48\Interop.SolidEdge.xml
 C:\Users\mouad.khalladi\source\repos\Application Cyrell\firstCSMacro\obj\Debug\net48\Applicat.DBA0CFAF.Up2Date
 C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\obj\Debug\net48\Application Cyrell.sourcelink.json
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Debug\net48\ExcelDataReader.dll
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Debug\net48\ExcelDataReader.DataSet.dll

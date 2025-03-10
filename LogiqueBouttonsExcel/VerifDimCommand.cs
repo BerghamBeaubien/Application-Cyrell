@@ -2,18 +2,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Application_Cyrell.LogiqueBouttonsSolidEdge;
-using OfficeOpenXml;
-using LicenseContext = OfficeOpenXml.LicenseContext;
+using ExcelDataReader;
 using Path = System.IO.Path;
 
 namespace Application_Cyrell.LogiqueBouttonsExcel
 {
+    // ValidationResultDimension class remains unchanged
     public class ValidationResultDimension
     {
         public HashSet<string> ExcelTags { get; set; } = new HashSet<string>();
@@ -28,6 +29,7 @@ namespace Application_Cyrell.LogiqueBouttonsExcel
         public Dictionary<string, bool> SwappedDimensions { get; set; } = new Dictionary<string, bool>();
     }
 
+    // DetailedComparisonFormDimension class remains unchanged
     public class DetailedComparisonFormDimension : Form
     {
         private readonly string _pathDxf;
@@ -563,11 +565,10 @@ namespace Application_Cyrell.LogiqueBouttonsExcel
             return files;
         }
 
-        // Lire les valeurs de colonnes de la feuille PROJET
+        // Lire les valeurs de colonnes de la feuille PROJET - Converti pour ClosedXML
         private (HashSet<string> uniqueValues, int totalCount, Dictionary<string, int> tagQuantities, Dictionary<string, (double Width, double Height, int Row)> tagDimensions)
         ReadColumnValuesFromProjetSheet(string filePath)
         {
-            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             HashSet<string> uniqueValues = new HashSet<string>();
             Dictionary<string, int> tagQuantities = new Dictionary<string, int>();
             Dictionary<string, (double Width, double Height, int Row)> tagDimensions = new Dictionary<string, (double Width, double Height, int Row)>();
@@ -575,49 +576,69 @@ namespace Application_Cyrell.LogiqueBouttonsExcel
 
             try
             {
-                using (var package = new ExcelPackage(new FileInfo(filePath)))
+                using (var stream = File.Open(filePath, FileMode.Open, FileAccess.Read))
                 {
-                    var worksheet = package.Workbook.Worksheets["PROJET"];
-                    if (worksheet == null)
+                    using (var reader = ExcelReaderFactory.CreateReader(stream))
                     {
-                        throw new Exception("La feuille 'PROJET' n'a pas été trouvée.");
-                    }
-
-                    // Déterminer l'emplacement de l'en-tête
-                    int startRow, column;
-                    var headerD26 = worksheet.Cells[26, 4].Value?.ToString()?.Trim();
-                    var headerC17 = worksheet.Cells[17, 3].Value?.ToString()?.Trim();
-
-                    if (headerD26 == "TAG #")
-                    {
-                        startRow = 28;
-                        column = 4;
-                    }
-                    else if (headerC17 == "TAG #")
-                    {
-                        startRow = 19;
-                        column = 3;
-                    }
-                    else
-                    {
-                        throw new Exception("En-tête 'TAG #' introuvable dans D26 ou C17");
-                    }
-
-                    // Trouver la dernière ligne avec des données
-                    int endRow = worksheet.Dimension?.End.Row ?? 1000;
-                    int actualLastRow = startRow;
-
-                    for (int row = startRow; row <= endRow; row++)
-                    {
-                        var cell = worksheet.Cells[row, column].Value;
-                        if (cell != null && !string.IsNullOrWhiteSpace(cell.ToString()))
+                        var result = reader.AsDataSet(new ExcelDataSetConfiguration()
                         {
-                            actualLastRow = row;
-                        }
-                    }
+                            ConfigureDataTable = (_) => new ExcelDataTableConfiguration() { UseHeaderRow = false }
+                        });
 
-                    // Traiter les données
-                    ProcessExcelData(worksheet, startRow, actualLastRow, column, uniqueValues, tagQuantities, tagDimensions, ref totalCount);
+                        // Chercher la feuille PROJET
+                        DataTable worksheet = null;
+                        foreach (DataTable table in result.Tables)
+                        {
+                            if (table.TableName.Equals("PROJET", StringComparison.OrdinalIgnoreCase))
+                            {
+                                worksheet = table;
+                                break;
+                            }
+                        }
+
+                        if (worksheet == null)
+                        {
+                            throw new Exception("La feuille 'PROJET' n'a pas été trouvée.");
+                        }
+
+                        // Déterminer l'emplacement de l'en-tête
+                        int startRow, column;
+                        var headerD26 = worksheet.Rows[25][3]?.ToString().Trim() ?? string.Empty;
+                        var headerC17 = worksheet.Rows[16][2]?.ToString().Trim() ?? string.Empty;
+
+                        if (headerD26 == "TAG #")
+                        {
+                            startRow = 27; // 0-based indexing
+                            column = 3;  // 0-based indexing
+                        }
+                        else if (headerC17 == "TAG #")
+                        {
+                            startRow = 18; // 0-based indexing
+                            column = 2;  // 0-based indexing
+                        }
+                        else
+                        {
+                            throw new Exception("En-tête 'TAG #' introuvable dans D26 ou C17");
+                        }
+
+                        // Trouver la dernière ligne avec des données
+                        int lastRow = worksheet.Rows.Count - 1;
+                        int actualLastRow = startRow;
+
+                        for (int row = startRow; row <= lastRow; row++)
+                        {
+                            if (row >= worksheet.Rows.Count) break;
+
+                            var cell = worksheet.Rows[row][column];
+                            if (cell != null && !string.IsNullOrWhiteSpace(cell.ToString()))
+                            {
+                                actualLastRow = row;
+                            }
+                        }
+
+                        // Traiter les données
+                        ProcessExcelData(worksheet, startRow, actualLastRow, column, uniqueValues, tagQuantities, tagDimensions, ref totalCount);
+                    }
                 }
             }
             catch (Exception ex)
@@ -628,19 +649,20 @@ namespace Application_Cyrell.LogiqueBouttonsExcel
             return (uniqueValues, totalCount, tagQuantities, tagDimensions);
         }
 
-        // Traiter les données du fichier Excel
-        private void ProcessExcelData(ExcelWorksheet worksheet, int startRow, int actualLastRow, int column,
+        // Traiter les données du fichier Excel - Adapté pour ExcelDataReader
+        private void ProcessExcelData(DataTable worksheet, int startRow, int actualLastRow, int column,
                                     HashSet<string> uniqueValues, Dictionary<string, int> tagQuantities,
                                     Dictionary<string, (double Width, double Height, int Row)> tagDimensions, ref int totalCount)
         {
             for (int row = startRow; row <= actualLastRow; row++)
             {
-                if (row == 501) continue; // Ligne à ignorer
+                if (row == 500) continue; // Ligne à ignorer (500 pour 0-based indexing)
+                if (row >= worksheet.Rows.Count) break;
 
-                var mainCell = worksheet.Cells[row, column].Value;
-                var quantityCell = worksheet.Cells[row, column + 1].Value;
-                var widthCell = worksheet.Cells[row, column + 2].Value;
-                var heightCell = worksheet.Cells[row, column + 3].Value;
+                var mainCell = worksheet.Rows[row][column];
+                var quantityCell = worksheet.Rows[row][column + 1];
+                var widthCell = worksheet.Rows[row][column + 2];
+                var heightCell = worksheet.Rows[row][column + 3];
 
                 if (mainCell != null && !string.IsNullOrWhiteSpace(mainCell.ToString()))
                 {
@@ -664,30 +686,24 @@ namespace Application_Cyrell.LogiqueBouttonsExcel
 
                     uniqueValues.Add(value);
                     tagQuantities[value] = quantity;
-                    tagDimensions[value] = (width, height, row); // Inclure le numéro de ligne dans le tuple
+                    tagDimensions[value] = (width, height, row + 1); // Convertir en 1-based pour correspondre à l'indexation Excel
                     totalCount += quantity;
                 }
             }
         }
 
-        // Analyser la quantité à partir d'une cellule Excel
-        private int ParseQuantity(object quantityCell)
+        // Méthode auxiliaire pour analyser la quantité
+        private int ParseQuantity(object cellValue)
         {
-            if (quantityCell == null)
-                return 0;
+            if (cellValue == null) return 0;
 
-            if (int.TryParse(quantityCell.ToString(), out int parsedQuantity))
-            {
-                return parsedQuantity;
-            }
-            else if (quantityCell.ToString().Contains("*"))
-            {
-                string[] factors = quantityCell.ToString().Split('*');
-                return factors.All(f => int.TryParse(f, out int n))
-                    ? factors.Select(int.Parse).Aggregate((a, b) => a * b)
-                    : 0;
-            }
+            var valueStr = cellValue.ToString();
+            if (string.IsNullOrWhiteSpace(valueStr)) return 0;
 
+            if (int.TryParse(valueStr, out int quantity))
+            {
+                return quantity;
+            }
             return 0;
         }
 

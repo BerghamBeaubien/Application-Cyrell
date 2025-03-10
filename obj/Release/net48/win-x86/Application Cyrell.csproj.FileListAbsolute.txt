@@ -2,13 +2,7 @@ C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Release\net48
 C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Release\net48\win-x86\Application Cyrell.exe
 C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Release\net48\win-x86\Application Cyrell.pdb
 C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Release\net48\win-x86\ACadSharp.dll
-C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Release\net48\win-x86\EPPlus.dll
-C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Release\net48\win-x86\EPPlus.Interfaces.dll
-C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Release\net48\win-x86\EPPlus.System.Drawing.dll
-C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Release\net48\win-x86\Microsoft.IO.RecyclableMemoryStream.dll
 C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Release\net48\win-x86\System.Buffers.dll
-C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Release\net48\win-x86\System.ComponentModel.Annotations.dll
-C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Release\net48\win-x86\System.Drawing.Common.dll
 C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Release\net48\win-x86\System.Memory.dll
 C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Release\net48\win-x86\System.Numerics.Vectors.dll
 C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Release\net48\win-x86\System.Runtime.CompilerServices.Unsafe.dll
@@ -34,3 +28,5 @@ C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\obj\Release\net48
 C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\obj\Release\net48\win-x86\Application Cyrell.exe
 C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\obj\Release\net48\win-x86\Application Cyrell.pdb
 C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\obj\Release\net48\win-x86\Application Cyrell.sourcelink.json
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Release\net48\win-x86\ExcelDataReader.dll
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Release\net48\win-x86\ExcelDataReader.DataSet.dll
