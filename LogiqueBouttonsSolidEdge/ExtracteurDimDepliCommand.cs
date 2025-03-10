@@ -156,7 +156,7 @@ namespace Application_Cyrell.LogiqueBouttonsSolidEdge
             worksheet.Cells[row, 3] = Math.Round(height, 3);
             Range cellColE = (Range)worksheet.Cells[row, 5];
             if (height >= 72 && width >= 72) { worksheet.Cells[row, 5] = "Dim > 72"; cellColE.Interior.Color = ColorTranslator.ToOle(Color.Yellow); }
-            else if (height >= 156 || width >= 156) { worksheet.Cells[row, 5] = "Dim > 152"; cellColE.Interior.Color = ColorTranslator.ToOle(Color.Red); }
+            else if (height >= 156 || width >= 156) { worksheet.Cells[row, 5] = "Dim > 156"; cellColE.Interior.Color = ColorTranslator.ToOle(Color.Red); }
             row++;
             worksheet.Columns.AutoFit();
         }
@@ -225,7 +225,7 @@ namespace Application_Cyrell.LogiqueBouttonsSolidEdge
                 worksheet.Cells[row, 4] = Math.Round(valueInInchesZ, 3);
                 Range cellColE = (Range)worksheet.Cells[row, 5];
                 if (valueInInchesX >= 72 && valueInInchesY >= 72) { worksheet.Cells[row, 5] = "Dim > 72"; cellColE.Interior.Color = ColorTranslator.ToOle(Color.Yellow); }
-                else if (valueInInchesX >= 156 || valueInInchesY >= 156) { worksheet.Cells[row, 5] = "Dim > 152"; cellColE.Interior.Color = ColorTranslator.ToOle(Color.Red); }
+                else if (valueInInchesX >= 156 || valueInInchesY >= 156) { worksheet.Cells[row, 5] = "Dim > 156"; cellColE.Interior.Color = ColorTranslator.ToOle(Color.Red); }
                 row++;
                 worksheet.Columns.AutoFit();
             }
