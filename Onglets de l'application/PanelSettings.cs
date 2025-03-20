@@ -31,6 +31,10 @@ namespace firstCSMacro
         private BouttonToggle chkBoxDim2;
         private TextBox dftTxt3;
         private BouttonToggle chkBoxDft3;
+        private TextBox dftTxt4;
+        private BouttonToggle chkBoxDft4;
+        private TextBox dftTxt5;
+        private BouttonToggle chkBoxDft5;
         private PanelSE _panelSe;
 
         public PanelSettings()
@@ -50,6 +54,10 @@ namespace firstCSMacro
             this.chkBoxDft1 = new Application_Cyrell.Utils.BouttonToggle();
             this.dftTxt2 = new System.Windows.Forms.TextBox();
             this.chkBoxDft2 = new Application_Cyrell.Utils.BouttonToggle();
+            this.dftTxt3 = new System.Windows.Forms.TextBox();
+            this.chkBoxDft3 = new Application_Cyrell.Utils.BouttonToggle();
+            this.dftTxt4 = new System.Windows.Forms.TextBox();
+            this.chkBoxDft4 = new Application_Cyrell.Utils.BouttonToggle();
             this.textBox5 = new System.Windows.Forms.TextBox();
             this.textBox6 = new System.Windows.Forms.TextBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
@@ -58,8 +66,8 @@ namespace firstCSMacro
             this.chkBoxDim1 = new Application_Cyrell.Utils.BouttonToggle();
             this.txtDim2 = new System.Windows.Forms.TextBox();
             this.chkBoxDim2 = new Application_Cyrell.Utils.BouttonToggle();
-            this.dftTxt3 = new System.Windows.Forms.TextBox();
-            this.chkBoxDft3 = new Application_Cyrell.Utils.BouttonToggle();
+            this.dftTxt5 = new System.Windows.Forms.TextBox();
+            this.chkBoxDft5 = new Application_Cyrell.Utils.BouttonToggle();
             this.flpDxf.SuspendLayout();
             this.flpDft.SuspendLayout();
             this.flpDim.SuspendLayout();
@@ -140,9 +148,13 @@ namespace firstCSMacro
             this.flpDft.Controls.Add(this.chkBoxDft2);
             this.flpDft.Controls.Add(this.dftTxt3);
             this.flpDft.Controls.Add(this.chkBoxDft3);
+            this.flpDft.Controls.Add(this.dftTxt4);
+            this.flpDft.Controls.Add(this.chkBoxDft4);
+            this.flpDft.Controls.Add(this.dftTxt5);
+            this.flpDft.Controls.Add(this.chkBoxDft5);
             this.flpDft.Location = new System.Drawing.Point(89, 476);
             this.flpDft.Name = "flpDft";
-            this.flpDft.Size = new System.Drawing.Size(976, 123);
+            this.flpDft.Size = new System.Drawing.Size(976, 204);
             this.flpDft.TabIndex = 4;
             // 
             // dftTxt1
@@ -157,7 +169,7 @@ namespace firstCSMacro
             this.dftTxt1.Name = "dftTxt1";
             this.dftTxt1.Size = new System.Drawing.Size(807, 32);
             this.dftTxt1.TabIndex = 0;
-            this.dftTxt1.Text = "Generer Parts List pour piece unique:";
+            this.dftTxt1.Text = "Générer Nomenclature (ASM & PAR):";
             // 
             // chkBoxDft1
             // 
@@ -205,6 +217,66 @@ namespace firstCSMacro
             this.chkBoxDft2.TabIndex = 14;
             this.chkBoxDft2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.chkBoxDft2.UseVisualStyleBackColor = true;
+            // 
+            // dftTxt3
+            // 
+            this.dftTxt3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
+            this.dftTxt3.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dftTxt3.Cursor = System.Windows.Forms.Cursors.Default;
+            this.dftTxt3.Dock = System.Windows.Forms.DockStyle.Top;
+            this.dftTxt3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dftTxt3.ForeColor = System.Drawing.Color.NavajoWhite;
+            this.dftTxt3.Location = new System.Drawing.Point(3, 83);
+            this.dftTxt3.Name = "dftTxt3";
+            this.dftTxt3.Size = new System.Drawing.Size(807, 32);
+            this.dftTxt3.TabIndex = 15;
+            this.dftTxt3.Text = "Générer Vue Isométrique:";
+            // 
+            // chkBoxDft3
+            // 
+            this.chkBoxDft3.Checked = true;
+            this.chkBoxDft3.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkBoxDft3.Location = new System.Drawing.Point(816, 83);
+            this.chkBoxDft3.MinimumSize = new System.Drawing.Size(45, 22);
+            this.chkBoxDft3.Name = "chkBoxDft3";
+            this.chkBoxDft3.OffBackColor = System.Drawing.Color.Gray;
+            this.chkBoxDft3.OffToggleColor = System.Drawing.Color.Gainsboro;
+            this.chkBoxDft3.OnBackColor = System.Drawing.Color.LimeGreen;
+            this.chkBoxDft3.OnToggleColor = System.Drawing.Color.WhiteSmoke;
+            this.chkBoxDft3.Size = new System.Drawing.Size(77, 32);
+            this.chkBoxDft3.TabIndex = 16;
+            this.chkBoxDft3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.chkBoxDft3.UseVisualStyleBackColor = true;
+            // 
+            // dftTxt4
+            // 
+            this.dftTxt4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
+            this.dftTxt4.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dftTxt4.Cursor = System.Windows.Forms.Cursors.Default;
+            this.dftTxt4.Dock = System.Windows.Forms.DockStyle.Top;
+            this.dftTxt4.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dftTxt4.ForeColor = System.Drawing.Color.NavajoWhite;
+            this.dftTxt4.Location = new System.Drawing.Point(3, 121);
+            this.dftTxt4.Name = "dftTxt4";
+            this.dftTxt4.Size = new System.Drawing.Size(807, 32);
+            this.dftTxt4.TabIndex = 17;
+            this.dftTxt4.Text = "Générer Vue Flat:";
+            // 
+            // chkBoxDft4
+            // 
+            this.chkBoxDft4.Checked = true;
+            this.chkBoxDft4.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkBoxDft4.Location = new System.Drawing.Point(816, 121);
+            this.chkBoxDft4.MinimumSize = new System.Drawing.Size(45, 22);
+            this.chkBoxDft4.Name = "chkBoxDft4";
+            this.chkBoxDft4.OffBackColor = System.Drawing.Color.Gray;
+            this.chkBoxDft4.OffToggleColor = System.Drawing.Color.Gainsboro;
+            this.chkBoxDft4.OnBackColor = System.Drawing.Color.LimeGreen;
+            this.chkBoxDft4.OnToggleColor = System.Drawing.Color.WhiteSmoke;
+            this.chkBoxDft4.Size = new System.Drawing.Size(77, 32);
+            this.chkBoxDft4.TabIndex = 18;
+            this.chkBoxDft4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.chkBoxDft4.UseVisualStyleBackColor = true;
             // 
             // textBox5
             // 
@@ -311,35 +383,36 @@ namespace firstCSMacro
             this.chkBoxDim2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.chkBoxDim2.UseVisualStyleBackColor = true;
             // 
-            // dftTxt3
+            // dftTxt5
             // 
-            this.dftTxt3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
-            this.dftTxt3.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dftTxt3.Cursor = System.Windows.Forms.Cursors.Default;
-            this.dftTxt3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.dftTxt3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dftTxt3.ForeColor = System.Drawing.Color.NavajoWhite;
-            this.dftTxt3.Location = new System.Drawing.Point(3, 83);
-            this.dftTxt3.Name = "dftTxt3";
-            this.dftTxt3.Size = new System.Drawing.Size(807, 32);
-            this.dftTxt3.TabIndex = 15;
-            this.dftTxt3.Text = "Generer Bend Tables:";
+            this.dftTxt5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
+            this.dftTxt5.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dftTxt5.Cursor = System.Windows.Forms.Cursors.Default;
+            this.dftTxt5.Dock = System.Windows.Forms.DockStyle.Top;
+            this.dftTxt5.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dftTxt5.ForeColor = System.Drawing.Color.NavajoWhite;
+            this.dftTxt5.Location = new System.Drawing.Point(3, 159);
+            this.dftTxt5.MinimumSize = new System.Drawing.Size(807, 36);
+            this.dftTxt5.Name = "dftTxt5";
+            this.dftTxt5.Size = new System.Drawing.Size(807, 36);
+            this.dftTxt5.TabIndex = 19;
+            this.dftTxt5.Text = "Générer Bend Tables:";
             // 
-            // chkBoxDft3
+            // chkBoxDft5
             // 
-            this.chkBoxDft3.Checked = true;
-            this.chkBoxDft3.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkBoxDft3.Location = new System.Drawing.Point(816, 83);
-            this.chkBoxDft3.MinimumSize = new System.Drawing.Size(45, 22);
-            this.chkBoxDft3.Name = "chkBoxDft3";
-            this.chkBoxDft3.OffBackColor = System.Drawing.Color.Gray;
-            this.chkBoxDft3.OffToggleColor = System.Drawing.Color.Gainsboro;
-            this.chkBoxDft3.OnBackColor = System.Drawing.Color.LimeGreen;
-            this.chkBoxDft3.OnToggleColor = System.Drawing.Color.WhiteSmoke;
-            this.chkBoxDft3.Size = new System.Drawing.Size(77, 32);
-            this.chkBoxDft3.TabIndex = 16;
-            this.chkBoxDft3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.chkBoxDft3.UseVisualStyleBackColor = true;
+            this.chkBoxDft5.Checked = true;
+            this.chkBoxDft5.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkBoxDft5.Location = new System.Drawing.Point(816, 159);
+            this.chkBoxDft5.MinimumSize = new System.Drawing.Size(45, 22);
+            this.chkBoxDft5.Name = "chkBoxDft5";
+            this.chkBoxDft5.OffBackColor = System.Drawing.Color.Gray;
+            this.chkBoxDft5.OffToggleColor = System.Drawing.Color.Gainsboro;
+            this.chkBoxDft5.OnBackColor = System.Drawing.Color.LimeGreen;
+            this.chkBoxDft5.OnToggleColor = System.Drawing.Color.WhiteSmoke;
+            this.chkBoxDft5.Size = new System.Drawing.Size(77, 32);
+            this.chkBoxDft5.TabIndex = 20;
+            this.chkBoxDft5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.chkBoxDft5.UseVisualStyleBackColor = true;
             // 
             // PanelSettings
             // 
@@ -407,6 +480,30 @@ namespace firstCSMacro
         public bool paramDft3()
         {
             if (chkBoxDft3.Checked)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool paramDft4()
+        {
+            if (chkBoxDft4.Checked)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool paramDft5()
+        {
+            if (chkBoxDft4.Checked)
             {
                 return true;
             }

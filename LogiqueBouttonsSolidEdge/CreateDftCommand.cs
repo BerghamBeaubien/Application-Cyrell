@@ -32,7 +32,9 @@ public class CreateDftCommand : SolidEdgeCommandBase
 
         bool paramParListPieceSolo = _panelSettings.paramDft1();
         bool paramDftIndividuelAssemblage = _panelSettings.paramDft2();
-        bool paramBendTableToggle = _panelSettings.paramDft3();
+        bool paramIsoView = _panelSettings.paramDft3();
+        bool paramFlatView = _panelSettings.paramDft4();
+        bool paramBendTableToggle = _panelSettings.paramDft5();
 
         SolidEdgeFramework.Application seApp = null;
         SolidEdgeFramework.Documents seDocs = null;
@@ -109,10 +111,68 @@ public class CreateDftCommand : SolidEdgeCommandBase
                     y: .10
                     );
 
+                if (paramIsoView)
+                {
+                    // Create an isometric view
+                    SolidEdgeDraft.DrawingView isoView = dwgViews.AddPartView(
+                        From: modelLink,
+                        Orientation: SolidEdgeDraft.ViewOrientationConstants.igTopFrontRightView,
+                        Scale: .1,
+                        x: 0.36195,
+                        y: 0.2286,
+                        ViewType: SolidEdgeDraft.PartDrawingViewTypeConstants.sePartDesignedView
+                    );
+                }
+
+                // Add dimensions to the views
+                try
+                {
+                    //// Create dimensions collections for each view
+                    //SolidEdgeDraft.Dimensions topDimensions = dwgView.Dimensions;
+                    //SolidEdgeDraft.Dimensions rightDimensions = rSideView.Dimensions;
+                    //SolidEdgeDraft.Dimensions bottomDimensions = bottomView.Dimensions;
+                    //SolidEdgeDraft.dim
+
+                    //// Use SmartDimension to automatically place critical dimensions
+                    //// For top view
+                    //SolidEdgeDraft.SmartDimension topSmartDim = sheet.SmartDimensions;
+                    //topSmartDim.Create(
+                    //    View: dwgView,
+                    //    Type: SolidEdgeDraft.SmartDimensionConstants.igSmartDimensionHorizontal,
+                    //    AddBends: false,
+                    //    AddAngles: false,
+                    //    StaggerOffset: 0.01);
+
+                    //// For right side view
+                    //SolidEdgeDraft.SmartDimension rightSmartDim = sheet.SmartDimensions;
+                    //rightSmartDim.Create(
+                    //    View: rSideView,
+                    //    Type: SolidEdgeDraft.SmartDimensionConstants.igSmartDimensionVertical,
+                    //    AddBends: false,
+                    //    AddAngles: false,
+                    //    StaggerOffset: 0.01);
+
+                    //// For bottom view
+                    //SolidEdgeDraft.SmartDimension bottomSmartDim = sheet.SmartDimensions;
+                    //bottomSmartDim.Create(
+                    //    View: bottomView,
+                    //    Type: SolidEdgeDraft.SmartDimensionConstants.igSmartDimensionAll,
+                    //    AddBends: false,
+                    //    AddAngles: false,
+                    //    StaggerOffset: 0.01);
+
+                    //// Process the dimensions to ensure they're properly placed
+                    //sheet.ProcessAll();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error adding dimensions to views for {sheet.Name}: {ex.Message}",
+                        "Dimension Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+
                 if ((paramParListPieceSolo && (fullPath.EndsWith(".asm", StringComparison.OrdinalIgnoreCase) ||
                                  fullPath.EndsWith(".par", StringComparison.OrdinalIgnoreCase) ||
-                                 fullPath.EndsWith(".psm", StringComparison.OrdinalIgnoreCase))) ||
-                    (!paramParListPieceSolo && fullPath.EndsWith(".asm", StringComparison.OrdinalIgnoreCase)))
+                                 fullPath.EndsWith(".psm", StringComparison.OrdinalIgnoreCase))))
                 {
                     // Ensure we're working with the current sheet's view
                     dwgViews = sheet.DrawingViews;
@@ -133,7 +193,7 @@ public class CreateDftCommand : SolidEdgeCommandBase
                     partsList.SetOrigin(.00635, .27305);
                 }
 
-                if ((paramBendTableToggle && fullPath.EndsWith(".par", StringComparison.OrdinalIgnoreCase) ||
+                if ((paramFlatView && fullPath.EndsWith(".par", StringComparison.OrdinalIgnoreCase) ||
                                  fullPath.EndsWith(".psm", StringComparison.OrdinalIgnoreCase)))
                 {
                     try
@@ -147,19 +207,41 @@ public class CreateDftCommand : SolidEdgeCommandBase
                             SolidEdgeDraft.SheetMetalDrawingViewTypeConstants.seSheetMetalFlatView
                         );
 
-                        SolidEdgeDraft.DraftBendTables bendTables = seDraftDoc.DraftBendTables;
+                        if(paramBendTableToggle)
+                        {
+                            SolidEdgeDraft.DraftBendTables bendTables = seDraftDoc.DraftBendTables;
 
-                        SolidEdgeDraft.DraftBendTable bendTable = bendTables.Add(
-                            DrawingView: dwgViewFlat,
-                            SavedSettings: "Normal",
-                            AutoBalloon: 1,
-                            CreateDraftBendTable: 1
-                        );
+                            SolidEdgeDraft.DrawingView bendFlatView = dwgViews.AddSheetMetalView(
+                                From: modelLink,
+                                Orientation: SolidEdgeDraft.ViewOrientationConstants.igFrontView,
+                                Scale: .1,
+                                x: .5,
+                                y: .5,
+                                SolidEdgeDraft.SheetMetalDrawingViewTypeConstants.seSheetMetalFlatView
+                            );
 
-                        bendTable.SetOrigin(
-                            x: .005,
-                            y: .1
-                        );
+                            SolidEdgeDraft.DraftBendTable bendTable = bendTables.Add(
+                                DrawingView: bendFlatView,
+                                SavedSettings: "Normal",
+                                AutoBalloon: 1,
+                                CreateDraftBendTable: 1
+                            );
+
+                            SolidEdgeDraft.DraftBendTable bendTable2 = bendTables.Add(
+                                DrawingView: dwgViewFlat,
+                                SavedSettings: "Normal",
+                                AutoBalloon: 1,
+                                CreateDraftBendTable: 1
+                            );
+
+                            bendTable.SetOrigin(
+                                x: .005,
+                                y: 0.27559/2
+                            );
+
+                            bendTable2.Delete();
+                            bendFlatView.Delete();
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -287,7 +369,7 @@ public class CreateDftCommand : SolidEdgeCommandBase
                                         string updatedName = kvp.Key.Text; // Get updated name from CheckBox
                                         string occurrencePath = kvp.Value.OccurrenceFileName;
 
-                                        dftIndividual(seDraftDoc, occurrencePath, updatedName);
+                                        dftIndividual(seDraftDoc, occurrencePath, updatedName, paramFlatView, paramBendTableToggle);
                                     }
                                 }
                             }
@@ -316,7 +398,7 @@ public class CreateDftCommand : SolidEdgeCommandBase
         }
     }
 
-    private void dftIndividual(DraftDocument draftDoc, string fullPath, string sheetName)
+    private void dftIndividual(DraftDocument draftDoc, string fullPath, string sheetName, bool flat, bool bend)
     {
         SolidEdgeDraft.Sheets sheets = draftDoc.Sheets;
         try
@@ -367,29 +449,34 @@ public class CreateDftCommand : SolidEdgeCommandBase
                 y: 0.1
             );
 
-            SolidEdgeDraft.DrawingView dwgViewFlat = dwgViews.AddSheetMetalView(
-                From: modelLink,
-                Orientation: SolidEdgeDraft.ViewOrientationConstants.igTopView,
-                Scale: .1,
-                x: .20,
-                y: .05,
-                SolidEdgeDraft.SheetMetalDrawingViewTypeConstants.seSheetMetalFlatView
-            );
+            if (flat)
+            {
+                SolidEdgeDraft.DrawingView dwgViewFlat = dwgViews.AddSheetMetalView(
+                    From: modelLink,
+                    Orientation: SolidEdgeDraft.ViewOrientationConstants.igTopView,
+                    Scale: .1,
+                    x: .20,
+                    y: .05,
+                    SolidEdgeDraft.SheetMetalDrawingViewTypeConstants.seSheetMetalFlatView
+                );
 
-            SolidEdgeDraft.DraftBendTables bendTables = draftDoc.DraftBendTables;
+                if (bend)
+                {
+                    SolidEdgeDraft.DraftBendTables bendTables = draftDoc.DraftBendTables;
+                    SolidEdgeDraft.DraftBendTable bendTable = bendTables.Add(
+                        DrawingView: dwgViewFlat,
+                        SavedSettings: "Normal",
+                        AutoBalloon: 1,
+                        CreateDraftBendTable: 1
+                    );
+                    bendTable.SetOrigin(
+                        x: .005,
+                        y: .1
+                    );
+                }
+            }
 
-            SolidEdgeDraft.DraftBendTable bendTable = bendTables.Add(
-                DrawingView: dwgViewFlat,
-                SavedSettings: "Normal",
-                AutoBalloon: 1,
-                CreateDraftBendTable: 1
-            );
-
-            bendTable.SetOrigin(
-                x: .005,
-                y: .1
-            );
-
+            
         }
         catch (Exception ex)
         {
