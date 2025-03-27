@@ -54,6 +54,10 @@
               "target": "Package",
               "version": "[1.0.6, )"
             },
+            "ClosedXML": {
+              "target": "Package",
+              "version": "[0.104.2, )"
+            },
             "ExcelDataReader": {
               "target": "Package",
               "version": "[3.7.0, )"

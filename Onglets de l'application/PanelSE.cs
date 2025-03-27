@@ -47,6 +47,8 @@ namespace firstCSMacro
         private CustomTooltipForm customTooltipDft;
         private PictureBox picBoxArrow;
         private Label labelUnlock;
+        private Label labelSelectedFiles;
+        private Label labelSelectedFilesCount;
         private Dictionary<string, bool> extensionFilters = new Dictionary<string, bool>()
         {
             { ".asm", true },
@@ -71,15 +73,17 @@ namespace firstCSMacro
             this.button10 = new System.Windows.Forms.Button();
             this.buttonKillSe = new System.Windows.Forms.Button();
             this.filterPanel = new System.Windows.Forms.FlowLayoutPanel();
-            this.btnSettings = new System.Windows.Forms.Button();
-            this.btnBrowseSe = new System.Windows.Forms.Button();
             this.buttonTagDxf = new System.Windows.Forms.Button();
             this.buttonOuvrirFichiers = new System.Windows.Forms.Button();
             this.buttonExportDim = new System.Windows.Forms.Button();
             this.buttonSaveDxfStep = new System.Windows.Forms.Button();
             this.buttonGenererDFT = new System.Windows.Forms.Button();
-            this.picBoxArrow = new System.Windows.Forms.PictureBox();
             this.labelUnlock = new System.Windows.Forms.Label();
+            this.picBoxArrow = new System.Windows.Forms.PictureBox();
+            this.btnBrowseSe = new System.Windows.Forms.Button();
+            this.btnSettings = new System.Windows.Forms.Button();
+            this.labelSelectedFiles = new System.Windows.Forms.Label();
+            this.labelSelectedFilesCount = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.picBoxArrow)).BeginInit();
             this.SuspendLayout();
             // 
@@ -90,12 +94,13 @@ namespace firstCSMacro
             this.listBoxDxfFiles.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listBoxDxfFiles.ForeColor = System.Drawing.Color.White;
             this.listBoxDxfFiles.FormattingEnabled = true;
-            this.listBoxDxfFiles.ItemHeight = 25;
+            this.listBoxDxfFiles.ItemHeight = 36;
             this.listBoxDxfFiles.Location = new System.Drawing.Point(84, 184);
             this.listBoxDxfFiles.Name = "listBoxDxfFiles";
             this.listBoxDxfFiles.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.listBoxDxfFiles.Size = new System.Drawing.Size(902, 450);
+            this.listBoxDxfFiles.Size = new System.Drawing.Size(902, 432);
             this.listBoxDxfFiles.TabIndex = 4;
+            this.listBoxDxfFiles.SelectedIndexChanged += ListBoxDxfFiles_SelectedIndexChanged;
             // 
             // textBoxFolderPath
             // 
@@ -105,7 +110,7 @@ namespace firstCSMacro
             this.textBoxFolderPath.ForeColor = System.Drawing.Color.White;
             this.textBoxFolderPath.Location = new System.Drawing.Point(84, 134);
             this.textBoxFolderPath.Name = "textBoxFolderPath";
-            this.textBoxFolderPath.Size = new System.Drawing.Size(902, 19);
+            this.textBoxFolderPath.Size = new System.Drawing.Size(902, 28);
             this.textBoxFolderPath.TabIndex = 5;
             // 
             // button10
@@ -144,40 +149,6 @@ namespace firstCSMacro
             this.filterPanel.Name = "filterPanel";
             this.filterPanel.Size = new System.Drawing.Size(420, 25);
             this.filterPanel.TabIndex = 0;
-            // 
-            // btnSettings
-            // 
-            this.btnSettings.BackColor = System.Drawing.Color.Transparent;
-            this.btnSettings.BackgroundImage = global::Application_Cyrell.Properties.Resources.logoParam;
-            this.btnSettings.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btnSettings.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnSettings.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
-            this.btnSettings.FlatAppearance.BorderSize = 0;
-            this.btnSettings.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
-            this.btnSettings.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
-            this.btnSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSettings.Location = new System.Drawing.Point(998, 685);
-            this.btnSettings.Name = "btnSettings";
-            this.btnSettings.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.btnSettings.Size = new System.Drawing.Size(74, 74);
-            this.btnSettings.TabIndex = 1;
-            this.btnSettings.UseVisualStyleBackColor = false;
-            this.btnSettings.Click += new System.EventHandler(this.btnSettings_Click);
-            // 
-            // btnBrowseSe
-            // 
-            this.btnBrowseSe.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnBrowseSe.BackgroundImage = global::Application_Cyrell.Properties.Resources.search_in_folder;
-            this.btnBrowseSe.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnBrowseSe.FlatAppearance.BorderSize = 0;
-            this.btnBrowseSe.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnBrowseSe.Location = new System.Drawing.Point(998, 109);
-            this.btnBrowseSe.Name = "btnBrowseSe";
-            this.btnBrowseSe.Size = new System.Drawing.Size(65, 65);
-            this.btnBrowseSe.TabIndex = 13;
-            this.btnBrowseSe.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnBrowseSe.UseVisualStyleBackColor = true;
-            this.btnBrowseSe.Click += new System.EventHandler(this.btnBrowseSe_Click);
             // 
             // buttonTagDxf
             // 
@@ -265,6 +236,17 @@ namespace firstCSMacro
             this.buttonGenererDFT.MouseEnter += new System.EventHandler(this.btnGenererDft_MouseEnter);
             this.buttonGenererDFT.MouseLeave += new System.EventHandler(this.btnGenererDft_MouseLeave);
             // 
+            // labelUnlock
+            // 
+            this.labelUnlock.AutoSize = true;
+            this.labelUnlock.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F);
+            this.labelUnlock.ForeColor = System.Drawing.Color.LightCyan;
+            this.labelUnlock.Location = new System.Drawing.Point(41, 9);
+            this.labelUnlock.Name = "labelUnlock";
+            this.labelUnlock.Size = new System.Drawing.Size(1441, 82);
+            this.labelUnlock.TabIndex = 21;
+            this.labelUnlock.Text = "Veiullez Choisir un répértoire pour continuer";
+            // 
             // picBoxArrow
             // 
             this.picBoxArrow.BackgroundImage = global::Application_Cyrell.Properties.Resources.logoArrow;
@@ -275,21 +257,70 @@ namespace firstCSMacro
             this.picBoxArrow.TabIndex = 20;
             this.picBoxArrow.TabStop = false;
             // 
-            // labelUnlock
+            // btnBrowseSe
             // 
-            this.labelUnlock.AutoSize = true;
-            this.labelUnlock.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F);
-            this.labelUnlock.ForeColor = System.Drawing.Color.LightCyan;
-            this.labelUnlock.Location = new System.Drawing.Point(41, 9);
-            this.labelUnlock.Name = "labelUnlock";
-            this.labelUnlock.Size = new System.Drawing.Size(960, 55);
-            this.labelUnlock.TabIndex = 21;
-            this.labelUnlock.Text = "Veiullez Choisir un répértoire pour continuer";
+            this.btnBrowseSe.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnBrowseSe.BackgroundImage = global::Application_Cyrell.Properties.Resources.search_in_folder;
+            this.btnBrowseSe.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnBrowseSe.FlatAppearance.BorderSize = 0;
+            this.btnBrowseSe.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnBrowseSe.Location = new System.Drawing.Point(998, 109);
+            this.btnBrowseSe.Name = "btnBrowseSe";
+            this.btnBrowseSe.Size = new System.Drawing.Size(65, 65);
+            this.btnBrowseSe.TabIndex = 13;
+            this.btnBrowseSe.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnBrowseSe.UseVisualStyleBackColor = true;
+            this.btnBrowseSe.Click += new System.EventHandler(this.btnBrowseSe_Click);
+            // 
+            // btnSettings
+            // 
+            this.btnSettings.BackColor = System.Drawing.Color.Transparent;
+            this.btnSettings.BackgroundImage = global::Application_Cyrell.Properties.Resources.logoParam;
+            this.btnSettings.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnSettings.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnSettings.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
+            this.btnSettings.FlatAppearance.BorderSize = 0;
+            this.btnSettings.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
+            this.btnSettings.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
+            this.btnSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSettings.Location = new System.Drawing.Point(979, 674);
+            this.btnSettings.Name = "btnSettings";
+            this.btnSettings.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.btnSettings.Size = new System.Drawing.Size(93, 85);
+            this.btnSettings.TabIndex = 1;
+            this.btnSettings.UseVisualStyleBackColor = false;
+            this.btnSettings.Click += new System.EventHandler(this.btnSettings_Click);
+            // 
+            // labelSelectedFiles
+            // 
+            this.labelSelectedFiles.AutoSize = true;
+            this.labelSelectedFiles.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F);
+            this.labelSelectedFiles.ForeColor = System.Drawing.Color.GhostWhite;
+            this.labelSelectedFiles.Location = new System.Drawing.Point(84, 642);
+            this.labelSelectedFiles.Name = "labelSelectedFiles";
+            this.labelSelectedFiles.Size = new System.Drawing.Size(243, 37);
+            this.labelSelectedFiles.TabIndex = 22;
+            this.labelSelectedFiles.Visible = false;
+            this.labelSelectedFiles.Text = "Fichiers Choisis :";
+            // 
+            // labelSelectedFilesCount
+            // 
+            this.labelSelectedFilesCount.AutoSize = true;
+            this.labelSelectedFilesCount.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(30)))), ((int)(((byte)(54)))));
+            this.labelSelectedFilesCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F);
+            this.labelSelectedFilesCount.ForeColor = System.Drawing.Color.GhostWhite;
+            this.labelSelectedFilesCount.Location = new System.Drawing.Point(260, 642);
+            this.labelSelectedFilesCount.Name = "labelSelectedFilesCount";
+            this.labelSelectedFilesCount.Size = new System.Drawing.Size(0, 37);
+            this.labelSelectedFilesCount.TabIndex = 24;
+            this.labelSelectedFilesCount.Visible = false;
             // 
             // PanelSE
             // 
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
             this.ClientSize = new System.Drawing.Size(1123, 798);
+            this.Controls.Add(this.labelSelectedFilesCount);
+            this.Controls.Add(this.labelSelectedFiles);
             this.Controls.Add(this.labelUnlock);
             this.Controls.Add(this.picBoxArrow);
             this.Controls.Add(this.buttonGenererDFT);
@@ -391,9 +422,15 @@ namespace firstCSMacro
             {
                 listBoxDxfFiles.Items.Add(Path.GetFileName(file));
             }
+            int selectedCount = listBoxDxfFiles.SelectedItems.Count;
+            labelSelectedFilesCount.Text = selectedCount.ToString();
         }
 
-
+        private void ListBoxDxfFiles_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int selectedCount = listBoxDxfFiles.SelectedItems.Count;
+            labelSelectedFilesCount.Text = selectedCount.ToString();
+        }
 
         private void button10_Click(object sender, EventArgs e)
         {
@@ -435,6 +472,9 @@ namespace firstCSMacro
                 buttonOuvrirFichiers.Visible = true;
                 buttonSaveDxfStep.Visible = true;
                 buttonTagDxf.Visible = true;
+                labelSelectedFiles.Visible = true;
+                labelSelectedFilesCount.Visible = true;
+                labelSelectedFilesCount.Text = "0";
             }
         }
 

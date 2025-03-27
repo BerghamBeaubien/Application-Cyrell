@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.IO;
@@ -28,6 +29,9 @@ namespace Application_Cyrell.LogiqueBouttonsSolidEdge
         private bool paramTagDxf;
         private bool paramChangeName;
         private bool paramFabbrica;
+        private bool paramMacroDen;
+        private bool paramOnlyDxf;
+        private bool paramOnlyStep;
 
         public SaveDxfStepCommand(ListBox listBoxDxfFiles, TextBox textBoxFolderPath)
         {
@@ -45,6 +49,14 @@ namespace Application_Cyrell.LogiqueBouttonsSolidEdge
                     paramTagDxf = form.TagDxf;
                     paramChangeName = form.ChangeName;
                     paramFabbrica = form.Fabbrica;
+                    paramMacroDen = form.MacroDen;
+                    paramOnlyDxf = form.OnlyDxf;
+                    paramOnlyStep = form.OnlyStep;
+                    if (_outputFolderPath == "")
+                    {
+                        MessageBox.Show("Choisissez un répértoire de sortie pour continuer");
+                        return false;
+                    }
                     return true;
                 }
                 return false;
@@ -148,10 +160,6 @@ namespace Application_Cyrell.LogiqueBouttonsSolidEdge
         {
             try
             {
-                SolidEdgePart.Models models = activeDocument.Models;
-                SolidEdgePart.Model model = models.Item(1);
-                SolidEdgePart.FlatPatternModels flatPatternModels = activeDocument.FlatPatternModels;
-
                 // Définition du nom par défaut du document
                 string docName = Path.GetFileNameWithoutExtension(activeDocument.FullName);
 
@@ -172,7 +180,7 @@ namespace Application_Cyrell.LogiqueBouttonsSolidEdge
                     {
                         saveFileDialog.Filter = "DXF files (*.dxf)|*.dxf|STEP files (*.stp)|*.stp";
                         saveFileDialog.Title = "Enregistrer sous";
-                        saveFileDialog.FileName = docName; // Utilise le nom modifié si `paramFabbrica` est vrai
+                        saveFileDialog.FileName = docName;
 
                         if (saveFileDialog.ShowDialog() == DialogResult.OK)
                         {
@@ -185,70 +193,115 @@ namespace Application_Cyrell.LogiqueBouttonsSolidEdge
                 string activeDxfPath = Path.Combine(_outputFolderPath, $"{docName}.dxf");
                 string activeStepPath = Path.Combine(_outputFolderPath, $"{docName}.stp");
 
-                if (flatPatternModels.Count == 0)
+                // Macro Den update if required
+                if (paramMacroDen)
                 {
-                    MessageBox.Show($"Le document {docName} n'est pas aplati. Impossible de générer un DXF.");
+                    seApp.Visible = true;
+                    UpdatePartVariables();
+                    seApp.Visible = false;
+                }
+                // Handling export based on parameters
+                if (paramOnlyStep && !paramOnlyDxf)
+                {
+                    // Only STEP export - no need to check flat pattern
                     activeDocument.SaveAs(activeStepPath);
                     activeDocument.Close();
                     return;
                 }
 
-                if (flatPatternModels.Count > 0)
+                // For DXF, check flat pattern
+                SolidEdgePart.Models models = activeDocument.Models;
+                SolidEdgePart.FlatPatternModels flatPatternModels = activeDocument.FlatPatternModels;
+
+                if (flatPatternModels.Count == 0)
                 {
-                    SolidEdgePart.FlatPatternModel flatPatternModel = null;
-                    bool flatPatternIsUpToDate = false;
+                    MessageBox.Show($"Le document {docName} n'est pas aplati. Impossible de générer un DXF.");
 
-                    for (int i = 1; i <= flatPatternModels.Count; i++)
+                    // If DXF can't be created, save STEP if not paramOnlyDxf
+                    if (!paramOnlyDxf)
                     {
-                        flatPatternModel = flatPatternModels.Item(i);
-                        if (flatPatternModel.IsUpToDate)
-                        {
-                            flatPatternIsUpToDate = true;
-                            break;
-                        }
+                        activeDocument.SaveAs(activeStepPath);
                     }
 
-                    if (!flatPatternIsUpToDate)
+                    activeDocument.Close();
+                    return;
+                }
+
+                // Check if flat pattern is up to date
+                bool flatPatternIsUpToDate = false;
+                for (int i = 1; i <= flatPatternModels.Count; i++)
+                {
+                    var flatPatternModel = flatPatternModels.Item(i);
+                    if (flatPatternModel.IsUpToDate)
                     {
-                        MessageBox.Show($"Le Flat Pattern de la piece {docName} existe mais n'est pas à jour. Impossible de générer un DXF.");
-                        return;
+                        flatPatternIsUpToDate = true;
+                        break;
+                    }
+                }
+
+                if (!flatPatternIsUpToDate)
+                {
+                    MessageBox.Show($"Le Flat Pattern de la piece {docName} existe mais n'est pas à jour. Impossible de générer un DXF.");
+
+                    // If DXF can't be created, save STEP if not paramOnlyDxf
+                    if (!paramOnlyDxf)
+                    {
+                        activeDocument.SaveAs(activeStepPath);
                     }
 
-                    // Save as DXF
+                    activeDocument.Close();
+                    return;
+                }
+
+                // Export logic
+                if (paramOnlyDxf)
+                {
+                    // Only DXF export
+                    models.SaveAsFlatDXFEx(activeDxfPath, null, null, null, true);
+                    LesAffaires(seApp, activeDxfPath);
+                    activeDocument.Close();
+                }
+                else
+                {
+                    // Both DXF and STEP export
                     models.SaveAsFlatDXFEx(activeDxfPath, null, null, null, true);
                     activeDocument.SaveAs(activeStepPath);
                     activeDocument.Close();
-
-                    // Open the saved DXF to add callout annotation
-                    var draftDoc = seApp.Documents.Open(activeDxfPath) as DraftDocument;
-                    if (draftDoc != null && paramTagDxf == true)
-                    {
-                        try
-                        {
-                            // Add callout annotation or any other modifications
-                            AddCalloutAnnotation(draftDoc, activeDxfPath);
-
-                            // Delete the existing file if it exists
-                            if (File.Exists(activeDxfPath))
-                            {
-                                File.SetAttributes(activeDxfPath, FileAttributes.Normal);
-                                File.Delete(activeDxfPath);
-                            }
-
-                            // Save the document
-                            draftDoc.SaveAs(activeDxfPath);
-                        }
-                        finally
-                        {
-                            // Release the COM object
-                            Marshal.ReleaseComObject(draftDoc);
-                        }
-                    }
+                    LesAffaires(seApp, activeDxfPath);
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Erreur du traitement du fichier: {activeDocument.FullName}\nErreur: {ex.ToString()}");
+            }
+        }
+
+        private void LesAffaires(dynamic seApp,string activeDxfPath)
+        {
+            // Open the saved DXF to add callout annotation
+            var draftDoc = seApp.Documents.Open(activeDxfPath) as DraftDocument;
+            if (draftDoc != null && paramTagDxf == true)
+            {
+                try
+                {
+                    // Add callout annotation or any other modifications
+                    AddCalloutAnnotation(draftDoc, activeDxfPath);
+
+                    // Delete the existing file if it exists
+                    if (File.Exists(activeDxfPath))
+                    {
+                        File.SetAttributes(activeDxfPath, FileAttributes.Normal);
+                        File.Delete(activeDxfPath);
+                    }
+
+                    // Save the document
+                    draftDoc.SaveAs(activeDxfPath);
+                }
+                finally
+                {
+                    // Release the COM object
+                    Marshal.ReleaseComObject(draftDoc);
+                }
             }
         }
 
@@ -307,12 +360,93 @@ namespace Application_Cyrell.LogiqueBouttonsSolidEdge
 
             return (x1, y1);
         }
-    }
 
+        private void UpdatePartVariables()
+        {
+            try
+            {
+                // Start the process
+                Process appProcess = Process.Start(@"P:\Informatique\SOLID EDGE\DenMarForr7.exe");
+
+                // Wait for the process to fully initialize
+                if (appProcess != null)
+                {
+                    // Wait for the main window to be ready
+                    appProcess.WaitForInputIdle();
+
+                    // Additional safeguard to ensure app is fully loaded
+                    System.Threading.Thread.Sleep(500);
+
+                    SendKeys.SendWait("{TAB}");
+
+                    // Send initial ENTER
+                    SendKeys.SendWait("{ENTER}");
+
+                    // Wait for confirmation dialog
+                    WaitForConfirmationDialog();
+
+                    System.Threading.Thread.Sleep(1000);
+
+                    // Send final ENTER to complete process
+                    SendKeys.SendWait("{ENTER}");
+                }
+                else
+                {
+                    throw new Exception("Failed to start the application process.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error updating part variables: {ex.Message}");
+            }
+        }
+
+        private void WaitForConfirmationDialog()
+        {
+            // Maximum wait time (in milliseconds)
+            int maxWaitTime = 30000; // 30 seconds
+            int waitInterval = 500;  // Check every 500 ms
+            int elapsedTime = 0;
+
+            // Keep checking for the confirmation dialog
+            while (elapsedTime < maxWaitTime)
+            {
+                // Check if the confirmation dialog is present
+                // This is a placeholder - you'll need to replace with actual dialog detection
+                if (IsConfirmationDialogVisible())
+                {
+                    return; // Dialog found, proceed
+                }
+
+                // Wait a short interval
+                System.Threading.Thread.Sleep(waitInterval);
+                elapsedTime += waitInterval;
+            }
+
+            // If we reach here, timeout occurred
+            throw new TimeoutException("Confirmation dialog did not appear within the expected time.");
+        }
+
+        private bool IsConfirmationDialogVisible()
+        {
+            // Use Windows API to find a window with the title "Project1"
+            IntPtr dialogHandle = Win32ApiHelper.FindWindow(null, "Project1");
+            return dialogHandle != IntPtr.Zero;
+        }
+
+        public static class Win32ApiHelper
+        {
+            [DllImport("user32.dll", SetLastError = true)]
+            public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+        }
+    }
     public class FolderSelectionForm : Form
     {
         private TextBox txtOutputPath;
         private CheckBox chkTagDxf;
+        private CheckBox chkOnlyDxf;
+        private CheckBox chkOnlyStep;
+        private CheckBox chkMacroDen;
         private CheckBox chkChangeName;
         private CheckBox chkFabbrica;
         private Button btnBrowseOutput;
@@ -323,6 +457,9 @@ namespace Application_Cyrell.LogiqueBouttonsSolidEdge
         public bool TagDxf => chkTagDxf.Checked;
         public bool ChangeName => chkChangeName.Checked;
         public bool Fabbrica => chkFabbrica.Checked;
+        public bool MacroDen => chkMacroDen.Checked;
+        public bool OnlyDxf => chkOnlyDxf.Checked;
+        public bool OnlyStep => chkOnlyStep.Checked;
 
         public FolderSelectionForm()
         {
@@ -332,81 +469,166 @@ namespace Application_Cyrell.LogiqueBouttonsSolidEdge
         private void InitializeComponents()
         {
             this.Text = "Sélection du répertoire de sortie";
-            this.Size = new Size(500, 170);
+            this.Size = new Size(600, 200);
             this.FormBorderStyle = FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.StartPosition = FormStartPosition.CenterParent;
+
+            // Consistent margins and spacing
+            int leftMargin = 20;
+            int verticalSpacing = 10;
+            int controlHeight = 25;
 
             // Output Path Controls
             Label lblOutput = new Label
             {
                 Text = "Répertoire de sortie (DXF et STEP):",
-                Location = new System.Drawing.Point(10, 15),
+                Location = new System.Drawing.Point(leftMargin, 15),
                 AutoSize = true
             };
 
             txtOutputPath = new TextBox
             {
-                Location = new System.Drawing.Point(10, 35),
-                Width = 380,
+                Location = new System.Drawing.Point(leftMargin, lblOutput.Bottom + verticalSpacing),
+                Width = this.ClientSize.Width - (leftMargin * 2 + 40),
+                Height = controlHeight,
                 ReadOnly = true
             };
 
             btnBrowseOutput = new Button
             {
                 Text = "...",
-                Location = new System.Drawing.Point(400, 34),
-                Width = 30
+                Location = new System.Drawing.Point(txtOutputPath.Right + 10, txtOutputPath.Top - 1),
+                Width = 30,
+                Height = controlHeight
             };
             btnBrowseOutput.Click += (s, e) => BrowseFolder(txtOutputPath);
 
-            // Checkbox options
+            // Checkbox options - aligned in a row
+            int checkboxTopPosition = txtOutputPath.Bottom + verticalSpacing * 2;
+            int checkboxLeftSpacing = 10;
+
             chkTagDxf = new CheckBox
             {
                 Text = "Tag DXF",
-                Location = new System.Drawing.Point(10, 75),
+                Location = new System.Drawing.Point(leftMargin, checkboxTopPosition),
                 AutoSize = true
             };
 
             chkChangeName = new CheckBox
             {
                 Text = "Changer le nom",
-                Location = new System.Drawing.Point(80, 75),
+                Location = new System.Drawing.Point(chkTagDxf.Right + checkboxLeftSpacing, checkboxTopPosition),
                 AutoSize = true
             };
 
             chkFabbrica = new CheckBox
             {
                 Text = "Fabbrica",
-                Location = new System.Drawing.Point(180, 75),
+                Location = new System.Drawing.Point(chkChangeName.Right + checkboxLeftSpacing, checkboxTopPosition),
                 AutoSize = true
             };
 
-            // Buttons
+            chkMacroDen = new CheckBox
+            {
+                Text = "Executer Macro(DenMar)",
+                Location = new System.Drawing.Point(chkFabbrica.Right + checkboxLeftSpacing, checkboxTopPosition),
+                AutoSize = true
+            };
+
+            chkOnlyDxf = new CheckBox
+            {
+                Text = "Générer Seulement DXF",
+                Location = new System.Drawing.Point(leftMargin, checkboxTopPosition+30),
+                AutoSize = true
+            };
+
+            chkOnlyStep = new CheckBox
+            {
+                Text = "Générer Seulement STEP",
+                Location = new System.Drawing.Point(chkOnlyDxf.Right + checkboxLeftSpacing+30, checkboxTopPosition + 30),
+                AutoSize = true
+            };
+
+            chkOnlyDxf.CheckedChanged += (s, e) =>
+            {
+                if (chkOnlyDxf.Checked)
+                {
+                    chkOnlyStep.Checked = false;
+                }
+            };
+
+            chkOnlyStep.CheckedChanged += (s, e) =>
+            {
+                if (chkOnlyStep.Checked)
+                {
+                    chkOnlyDxf.Checked = false;
+                }
+            };
+
+            chkFabbrica.CheckedChanged += (s, e) =>
+            {
+                if (chkFabbrica.Checked)
+                {
+                    chkChangeName.Checked = false;
+                }
+            };
+
+            chkChangeName.CheckedChanged += (s, e) =>
+            {
+                if (chkChangeName.Checked)
+                {
+                    chkFabbrica.Checked = false;
+                }
+            };
+
+            // Buttons - aligned to the right
+            int buttonWidth = 80;
+            int buttonHeight = 30;
+            int buttonBottomMargin = 20;
+
             btnContinue = new Button
             {
                 Text = "Continuer",
                 DialogResult = DialogResult.OK,
-                Location = new System.Drawing.Point(280, 75),
-                Width = 80
+                Location = new System.Drawing.Point(this.ClientSize.Width - (buttonWidth * 2 + 30), chkTagDxf.Bottom + verticalSpacing * 2),
+                Width = buttonWidth,
+                Height = buttonHeight
+            };
+
+            FormClosing += (s, e) =>
+            {
+                if (this.DialogResult == DialogResult.OK && string.IsNullOrWhiteSpace(txtOutputPath.Text))
+                {
+                    MessageBox.Show("Veuillez sélectionner un répertoire de sortie pour continuer.",
+                                   "Répertoire requis",
+                                   MessageBoxButtons.OK,
+                                   MessageBoxIcon.Warning);
+                    e.Cancel = true;
+                }
             };
 
             btnCancel = new Button
             {
                 Text = "Annuler",
                 DialogResult = DialogResult.Cancel,
-                Location = new System.Drawing.Point(370, 75),
-                Width = 80
+                Location = new System.Drawing.Point(btnContinue.Right + 10, btnContinue.Top),
+                Width = buttonWidth,
+                Height = buttonHeight
             };
 
+            // Add controls
             this.Controls.AddRange(new Control[] {
                 lblOutput, txtOutputPath, btnBrowseOutput,
-                chkTagDxf, chkChangeName, chkFabbrica,
-                btnContinue, btnCancel
+                chkTagDxf, chkChangeName, chkFabbrica, chkMacroDen,
+                chkOnlyDxf, chkOnlyStep, btnContinue, btnCancel
             });
 
             this.AcceptButton = btnContinue;
             this.CancelButton = btnCancel;
+
+            // Adjust form height based on controls
+            this.ClientSize = new Size(this.ClientSize.Width, btnCancel.Bottom + buttonBottomMargin);
         }
 
         private void BrowseFolder(TextBox textBox)

@@ -30,3 +30,13 @@ C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\obj\Release\net48
 C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\obj\Release\net48\Application Cyrell.sourcelink.json
 C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Release\net48\ExcelDataReader.dll
 C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Release\net48\ExcelDataReader.DataSet.dll
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Release\net48\ClosedXML.dll
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Release\net48\ClosedXML.Parser.dll
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Release\net48\DocumentFormat.OpenXml.dll
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Release\net48\DocumentFormat.OpenXml.Framework.dll
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Release\net48\ExcelNumberFormat.dll
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Release\net48\Microsoft.Bcl.HashCode.dll
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Release\net48\RBush.dll
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Release\net48\SixLabors.Fonts.dll
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\obj\Release\net48\Application Cyrell.csproj.SuggestedBindingRedirects.cache
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\obj\Release\net48\Application Cyrell.exe.config

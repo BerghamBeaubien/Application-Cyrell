@@ -96,12 +96,16 @@ namespace Application_Cyrell.LogiqueBouttonsSolidEdge
 
                     // Ouvrir le fichier en tant que pièce avec le bon template
                     SolidEdgePart.PartDocument partDoc = (SolidEdgePart.PartDocument)seApp.Documents.OpenWithTemplate(fullPath, _partTemplatePath);
-                    partDoc.Name = Path.GetFileNameWithoutExtension(fullPath);
+                    string newPath = Path.Combine(Path.GetDirectoryName(fullPath),
+                                     Path.GetFileNameWithoutExtension(fullPath) + ".par");
+                    partDoc.SaveAs(newPath);
                 }
                 else
                 {
                     // Garde le nom de l'assemblage si c'est bien un assemblage
-                    asmDoc.Name = Path.GetFileNameWithoutExtension(fullPath);
+                    string newPath = Path.Combine(Path.GetDirectoryName(fullPath),
+                                     Path.GetFileNameWithoutExtension(fullPath) + ".asm");
+                    asmDoc.SaveAs(newPath);
                 }
             }
             catch (Exception ex)
