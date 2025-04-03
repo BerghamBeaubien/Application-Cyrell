@@ -30,7 +30,7 @@ namespace Application_Cyrell.LogiqueBouttonsSolidEdge
         {
             if (_listBoxDxfFiles.SelectedItems.Count == 0)
             {
-                MessageBox.Show("Please select at least one file.");
+                MessageBox.Show("Veuillez Choisir au moins un fichier PAR, PSM ou DXF à traiter.");
                 return;
             }
 
@@ -46,7 +46,7 @@ namespace Application_Cyrell.LogiqueBouttonsSolidEdge
                 excelApp = new Microsoft.Office.Interop.Excel.Application();
                 if (excelApp == null)
                 {
-                    MessageBox.Show("Excel is not properly installed on your system.");
+                    MessageBox.Show("Excel n'est pas bien installé sur votre système.");
                     return;
                 }
 
@@ -65,7 +65,7 @@ namespace Application_Cyrell.LogiqueBouttonsSolidEdge
 
                 workbook = excelApp.Workbooks.Add();
                 worksheet = (Worksheet)workbook.Worksheets[1];
-                worksheet.Name = "Combined Dimensions";
+                worksheet.Name = "Dimensions Combinés";
 
                 // Write Excel headers
                 worksheet.Cells[1, 1] = "File Name";
@@ -104,7 +104,7 @@ namespace Application_Cyrell.LogiqueBouttonsSolidEdge
                 savePath = GetUniqueFileName(savePath);
 
                 workbook.SaveAs(savePath);
-                MessageBox.Show($"Dimensions exported successfully to {savePath}");
+                MessageBox.Show($"Dimensions exportées avec succès à ce lien {savePath}");
             }
             catch (Exception ex)
             {

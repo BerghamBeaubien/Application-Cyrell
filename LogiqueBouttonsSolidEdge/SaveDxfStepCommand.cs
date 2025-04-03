@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using ACadSharp;
 using ACadSharp.Entities;
 using ACadSharp.IO;
+using Application_Cyrell.Utils;
 using SolidEdgeCommunity;
 using SolidEdgeDraft;
 using SolidEdgeFramework;
@@ -41,7 +42,7 @@ namespace Application_Cyrell.LogiqueBouttonsSolidEdge
 
         private bool PromptForFolder()
         {
-            using (var form = new FolderSelectionForm())
+            using (var form = new FormulaireDxfStep())
             {
                 if (form.ShowDialog() == DialogResult.OK)
                 {
@@ -215,16 +216,27 @@ namespace Application_Cyrell.LogiqueBouttonsSolidEdge
 
                 if (flatPatternModels.Count == 0)
                 {
-                    MessageBox.Show($"Le document {docName} n'est pas aplati. Impossible de générer un DXF.");
+                    DialogResult result = MessageBox.Show(
+                        $"Le document {docName} n'est pas aplati. Impossible de générer un DXF.\nVoulez-vous en créer un ?",
+                        "Confirmation",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Warning
+                    );
 
-                    // If DXF can't be created, save STEP if not paramOnlyDxf
-                    if (!paramOnlyDxf)
+                    if (result == DialogResult.Yes)
                     {
-                        activeDocument.SaveAs(activeStepPath);
+                        FlatGenerator.GenerateFlat(seApp, activeDocument);
                     }
+                    else
+                    {
+                        if (!paramOnlyDxf)
+                        {
+                            activeDocument.SaveAs(activeStepPath);
+                        }
 
-                    activeDocument.Close();
-                    return;
+                        activeDocument.Close();
+                        return;
+                    }                    
                 }
 
                 // Check if flat pattern is up to date
@@ -438,214 +450,6 @@ namespace Application_Cyrell.LogiqueBouttonsSolidEdge
         {
             [DllImport("user32.dll", SetLastError = true)]
             public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
-        }
-    }
-    public class FolderSelectionForm : Form
-    {
-        private TextBox txtOutputPath;
-        private CheckBox chkTagDxf;
-        private CheckBox chkOnlyDxf;
-        private CheckBox chkOnlyStep;
-        private CheckBox chkMacroDen;
-        private CheckBox chkChangeName;
-        private CheckBox chkFabbrica;
-        private Button btnBrowseOutput;
-        private Button btnContinue;
-        private Button btnCancel;
-
-        public string OutputPath => txtOutputPath.Text;
-        public bool TagDxf => chkTagDxf.Checked;
-        public bool ChangeName => chkChangeName.Checked;
-        public bool Fabbrica => chkFabbrica.Checked;
-        public bool MacroDen => chkMacroDen.Checked;
-        public bool OnlyDxf => chkOnlyDxf.Checked;
-        public bool OnlyStep => chkOnlyStep.Checked;
-
-        public FolderSelectionForm()
-        {
-            InitializeComponents();
-        }
-
-        private void InitializeComponents()
-        {
-            this.Text = "Sélection du répertoire de sortie";
-            this.Size = new Size(600, 200);
-            this.FormBorderStyle = FormBorderStyle.FixedDialog;
-            this.MaximizeBox = false;
-            this.StartPosition = FormStartPosition.CenterParent;
-
-            // Consistent margins and spacing
-            int leftMargin = 20;
-            int verticalSpacing = 10;
-            int controlHeight = 25;
-
-            // Output Path Controls
-            Label lblOutput = new Label
-            {
-                Text = "Répertoire de sortie (DXF et STEP):",
-                Location = new System.Drawing.Point(leftMargin, 15),
-                AutoSize = true
-            };
-
-            txtOutputPath = new TextBox
-            {
-                Location = new System.Drawing.Point(leftMargin, lblOutput.Bottom + verticalSpacing),
-                Width = this.ClientSize.Width - (leftMargin * 2 + 40),
-                Height = controlHeight,
-                ReadOnly = true
-            };
-
-            btnBrowseOutput = new Button
-            {
-                Text = "...",
-                Location = new System.Drawing.Point(txtOutputPath.Right + 10, txtOutputPath.Top - 1),
-                Width = 30,
-                Height = controlHeight
-            };
-            btnBrowseOutput.Click += (s, e) => BrowseFolder(txtOutputPath);
-
-            // Checkbox options - aligned in a row
-            int checkboxTopPosition = txtOutputPath.Bottom + verticalSpacing * 2;
-            int checkboxLeftSpacing = 10;
-
-            chkTagDxf = new CheckBox
-            {
-                Text = "Tag DXF",
-                Location = new System.Drawing.Point(leftMargin, checkboxTopPosition),
-                AutoSize = true
-            };
-
-            chkChangeName = new CheckBox
-            {
-                Text = "Changer le nom",
-                Location = new System.Drawing.Point(chkTagDxf.Right + checkboxLeftSpacing, checkboxTopPosition),
-                AutoSize = true
-            };
-
-            chkFabbrica = new CheckBox
-            {
-                Text = "Fabbrica",
-                Location = new System.Drawing.Point(chkChangeName.Right + checkboxLeftSpacing, checkboxTopPosition),
-                AutoSize = true
-            };
-
-            chkMacroDen = new CheckBox
-            {
-                Text = "Executer Macro(DenMar)",
-                Location = new System.Drawing.Point(chkFabbrica.Right + checkboxLeftSpacing, checkboxTopPosition),
-                AutoSize = true
-            };
-
-            chkOnlyDxf = new CheckBox
-            {
-                Text = "Générer Seulement DXF",
-                Location = new System.Drawing.Point(leftMargin, checkboxTopPosition+30),
-                AutoSize = true
-            };
-
-            chkOnlyStep = new CheckBox
-            {
-                Text = "Générer Seulement STEP",
-                Location = new System.Drawing.Point(chkOnlyDxf.Right + checkboxLeftSpacing+30, checkboxTopPosition + 30),
-                AutoSize = true
-            };
-
-            chkOnlyDxf.CheckedChanged += (s, e) =>
-            {
-                if (chkOnlyDxf.Checked)
-                {
-                    chkOnlyStep.Checked = false;
-                }
-            };
-
-            chkOnlyStep.CheckedChanged += (s, e) =>
-            {
-                if (chkOnlyStep.Checked)
-                {
-                    chkOnlyDxf.Checked = false;
-                }
-            };
-
-            chkFabbrica.CheckedChanged += (s, e) =>
-            {
-                if (chkFabbrica.Checked)
-                {
-                    chkChangeName.Checked = false;
-                }
-            };
-
-            chkChangeName.CheckedChanged += (s, e) =>
-            {
-                if (chkChangeName.Checked)
-                {
-                    chkFabbrica.Checked = false;
-                }
-            };
-
-            // Buttons - aligned to the right
-            int buttonWidth = 80;
-            int buttonHeight = 30;
-            int buttonBottomMargin = 20;
-
-            btnContinue = new Button
-            {
-                Text = "Continuer",
-                DialogResult = DialogResult.OK,
-                Location = new System.Drawing.Point(this.ClientSize.Width - (buttonWidth * 2 + 30), chkTagDxf.Bottom + verticalSpacing * 2),
-                Width = buttonWidth,
-                Height = buttonHeight
-            };
-
-            FormClosing += (s, e) =>
-            {
-                if (this.DialogResult == DialogResult.OK && string.IsNullOrWhiteSpace(txtOutputPath.Text))
-                {
-                    MessageBox.Show("Veuillez sélectionner un répertoire de sortie pour continuer.",
-                                   "Répertoire requis",
-                                   MessageBoxButtons.OK,
-                                   MessageBoxIcon.Warning);
-                    e.Cancel = true;
-                }
-            };
-
-            btnCancel = new Button
-            {
-                Text = "Annuler",
-                DialogResult = DialogResult.Cancel,
-                Location = new System.Drawing.Point(btnContinue.Right + 10, btnContinue.Top),
-                Width = buttonWidth,
-                Height = buttonHeight
-            };
-
-            // Add controls
-            this.Controls.AddRange(new Control[] {
-                lblOutput, txtOutputPath, btnBrowseOutput,
-                chkTagDxf, chkChangeName, chkFabbrica, chkMacroDen,
-                chkOnlyDxf, chkOnlyStep, btnContinue, btnCancel
-            });
-
-            this.AcceptButton = btnContinue;
-            this.CancelButton = btnCancel;
-
-            // Adjust form height based on controls
-            this.ClientSize = new Size(this.ClientSize.Width, btnCancel.Bottom + buttonBottomMargin);
-        }
-
-        private void BrowseFolder(TextBox textBox)
-        {
-            using (OpenFileDialog dialog = new OpenFileDialog())
-            {
-                dialog.CheckFileExists = false;
-                dialog.CheckPathExists = true;
-                dialog.ValidateNames = false;
-                dialog.FileName = "Folder Selection."; // Placeholder text
-
-                if (dialog.ShowDialog() == DialogResult.OK)
-                {
-                    string selectedPath = Path.GetDirectoryName(dialog.FileName);
-                    textBox.Text = selectedPath;
-                }
-            }
         }
     }
 }

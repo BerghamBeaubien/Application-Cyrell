@@ -27,6 +27,10 @@ public class ProcessDxfCommand : SolidEdgeCommandBase
             return;
         }
 
+        DialogResult dialogResult = MessageBox.Show("Voulez-vous Vraiment taguer les fichiers selectionnes \n" +
+                "Attention, Cette action est irreversible", "Confirmation", MessageBoxButtons.YesNoCancel);
+        if (dialogResult != DialogResult.Yes) return;
+
         bool paramGarderSEOuvert = _panelSettings.paramTag();
 
         SolidEdgeFramework.Application seApp = null;

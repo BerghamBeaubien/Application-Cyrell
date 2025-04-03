@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 using Application_Cyrell.LogiqueBouttonsExcel;
 
@@ -46,7 +47,7 @@ namespace firstCSMacro
             // 
             // textBox1
             // 
-            this.textBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
+            this.textBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(47)))), ((int)(((byte)(86)))));
             this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBox1.Cursor = System.Windows.Forms.Cursors.Default;
             this.textBox1.Enabled = false;
@@ -138,7 +139,7 @@ namespace firstCSMacro
             // 
             // buttonVerifDim
             // 
-            this.buttonVerifDim.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(30)))), ((int)(((byte)(54)))));
+            this.buttonVerifDim.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
             this.buttonVerifDim.FlatAppearance.BorderSize = 0;
             this.buttonVerifDim.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonVerifDim.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -153,7 +154,7 @@ namespace firstCSMacro
             // 
             // buttonVerifQte
             // 
-            this.buttonVerifQte.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(30)))), ((int)(((byte)(54)))));
+            this.buttonVerifQte.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
             this.buttonVerifQte.FlatAppearance.BorderSize = 0;
             this.buttonVerifQte.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonVerifQte.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -206,7 +207,7 @@ namespace firstCSMacro
             this.btnRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRefresh.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnRefresh.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btnRefresh.Location = new System.Drawing.Point(916, 430);
+            this.btnRefresh.Location = new System.Drawing.Point(904, 444);
             this.btnRefresh.Name = "btnRefresh";
             this.btnRefresh.Size = new System.Drawing.Size(99, 38);
             this.btnRefresh.TabIndex = 23;
@@ -216,7 +217,7 @@ namespace firstCSMacro
             // 
             // PanelXlQc
             // 
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(47)))), ((int)(((byte)(86)))));
             this.ClientSize = new System.Drawing.Size(1123, 798);
             this.Controls.Add(this.btnRefresh);
             this.Controls.Add(this.label3);
@@ -285,6 +286,11 @@ namespace firstCSMacro
             xlJobPathTxtBox.Text = "";
             dxfPathTxtBox.Text = "";
             stepPathTxtBox.Text = "";
+        }
+
+        private void buttonOuvrirFichiers_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

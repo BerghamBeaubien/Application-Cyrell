@@ -19,6 +19,9 @@
     <Compile Update="Utils\BouttonToggle.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Update="Utils\FormulaireFaceAndEdge.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Utils\CustomTooltipForm.cs">
       <SubType>Form</SubType>
     </Compile>

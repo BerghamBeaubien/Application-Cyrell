@@ -53,6 +53,12 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Update="Utils\FlatPatternPromptForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Utils\FormulaireDxfStep.cs">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>

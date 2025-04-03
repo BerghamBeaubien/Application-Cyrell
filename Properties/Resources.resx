@@ -127,9 +127,6 @@
   <data name="logoParam" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\imageedit_4_9043604981.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="logoCyrellBlanc" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\logoCyrellBlanc.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="gifTagDxf" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\gifTagDxf.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -138,5 +135,8 @@
   </data>
   <data name="logoArrow" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\kindpng_4853621.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="logoCyrellBlanc" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\logoCyrellBlanc.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

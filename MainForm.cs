@@ -12,17 +12,6 @@ using firstCSMacro;
 
 namespace Application_Cyrell
 {
-    //static class Program
-    //{
-    //    [STAThread]
-    //    static void Main()
-    //    {
-    //        System.Windows.Forms.Application.EnableVisualStyles();
-    //        System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(false);
-    //        System.Windows.Forms.Application.Run(new MainForm());
-    //    }
-    //}
-
     public partial class MainForm : Form
     {
         private Panel panelMenu;
@@ -385,7 +374,7 @@ namespace Application_Cyrell
             this.panelContainer.Controls.Add(this.labelAcceuil1);
             this.panelContainer.Location = new System.Drawing.Point(266, 61);
             this.panelContainer.Name = "panelContainer";
-            this.panelContainer.Size = new System.Drawing.Size(1123, 801);
+            this.panelContainer.Size = new System.Drawing.Size(1123, 798);
             this.panelContainer.TabIndex = 1;
             // 
             // labelAcceuil2
@@ -395,7 +384,7 @@ namespace Application_Cyrell
             this.labelAcceuil2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(126)))), ((int)(((byte)(249)))));
             this.labelAcceuil2.Location = new System.Drawing.Point(162, 156);
             this.labelAcceuil2.Name = "labelAcceuil2";
-            this.labelAcceuil2.Size = new System.Drawing.Size(1250, 83);
+            this.labelAcceuil2.Size = new System.Drawing.Size(837, 55);
             this.labelAcceuil2.TabIndex = 3;
             this.labelAcceuil2.Text = "Veuillez choisir un onlget à gauche";
             // 
@@ -406,7 +395,7 @@ namespace Application_Cyrell
             this.labelAcceuil1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(126)))), ((int)(((byte)(249)))));
             this.labelAcceuil1.Location = new System.Drawing.Point(94, 101);
             this.labelAcceuil1.Name = "labelAcceuil1";
-            this.labelAcceuil1.Size = new System.Drawing.Size(1440, 83);
+            this.labelAcceuil1.Size = new System.Drawing.Size(965, 55);
             this.labelAcceuil1.TabIndex = 2;
             this.labelAcceuil1.Text = "Bienvenue dans l\'application Cyrell AMP";
             // 
@@ -453,7 +442,7 @@ namespace Application_Cyrell
             // MainForm
             // 
             this.AutoSize = true;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(47)))), ((int)(((byte)(86)))));
             this.ClientSize = new System.Drawing.Size(1389, 856);
             this.Controls.Add(this.panelBarreMenu);
             this.Controls.Add(this.panelContainer);
