@@ -35,14 +35,14 @@ public class ProcessPsmCommand : SolidEdgeCommandBase
 
         SolidEdgePart.Models models = null;
         SolidEdgePart.Model model = null;
-        bool useForm = true;
+        bool autoMod = true;
         bool closeDoc = false;
 
         using (var form = new FlatPatternPromptForm())
         {
             if (form.ShowDialog() == DialogResult.OK)
             {
-                if (form.IsAutomatic) useForm = false;
+                if (form.IsAutomatic) autoMod = false;
                 if (form.CloseDocument) closeDoc = true; 
             }
             else return;
@@ -92,6 +92,7 @@ public class ProcessPsmCommand : SolidEdgeCommandBase
                 else
                 {
                     MessageBox.Show("Active document is not a PartDocument or SheetMetalDocument.", "Erreur");
+                    dynamicDoc.Close();
                     continue;
                 }
 
@@ -146,6 +147,7 @@ public class ProcessPsmCommand : SolidEdgeCommandBase
                     if (result == DialogResult.Cancel)
                     {
                         Console.WriteLine("🚪 Programme arrêté par l'utilisateur.");
+                        dynamicDoc.Close();
                         continue;
                     }
                 }
@@ -182,23 +184,24 @@ public class ProcessPsmCommand : SolidEdgeCommandBase
                 // Continuer le programme normalement ici
                 Console.WriteLine("➡️ Continuation du programme...");
 
-                if (useForm)
+                if (autoMod)
                 {
-                    using (FormulaireFaceAndEdge selectionForm = new FormulaireFaceAndEdge(seApp, dynamicDoc, model))
+                    seApp.StartCommand((SolidEdgeCommandConstants)45066);
+                    seApp.StartCommand((SolidEdgeCommandConstants)45070);
+                    seApp.StartCommand((SolidEdgeCommandConstants)45063);
+                    MessageBox.Show(
+                            "Veuillez Choisir une Face et une Arête.\n" +
+                            "Appuyez sur OK quand vous aurez terminer",
+                            "Choisir Face et Arête",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Information
+                        );
+                    dynamicDoc.Save();
+                    if (closeDoc)
                     {
-                        if (selectionForm.ShowDialog() == DialogResult.OK)
-                        {
-                            face = selectionForm.SelectedFace;
-                            edge = selectionForm.SelectedEdge;
-                            Console.WriteLine($"User selected Edge {edge.ID} on Face {face.ID}");
-                        }
-                        else
-                        {
-                            Console.WriteLine("User canceled selection for flat pattern.");
-                            dynamicDoc.Save();
-                            continue;
-                        }
+                        dynamicDoc.Close();
                     }
+                    continue;
                 }
                 else
                 {
@@ -222,7 +225,6 @@ public class ProcessPsmCommand : SolidEdgeCommandBase
                 vertex = (SolidEdgeGeometry.Vertex)edge.StartVertex;
                 flatPatternModel.FlatPatterns.Add(edge, face, vertex, SolidEdgeConstants.FlattenPatternModelTypeConstants.igFlattenPatternModelTypeFlattenAnything);
                 Console.WriteLine("✅ Flat pattern created successfully.");
-                flatPatternModel.UpdateCutSize();
                 dynamicDoc.Save();
                 if (closeDoc)
                 {
@@ -244,6 +246,7 @@ public class ProcessPsmCommand : SolidEdgeCommandBase
                 SolidEdgeCommunity.OleMessageFilter.Unregister();
                 seApp = null;
             }
+            MessageBox.Show("Traitement Terminé.");
         }
     }
 

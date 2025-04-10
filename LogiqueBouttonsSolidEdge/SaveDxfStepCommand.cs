@@ -12,6 +12,7 @@ using ACadSharp.Entities;
 using ACadSharp.IO;
 using Application_Cyrell.Utils;
 using SolidEdgeCommunity;
+using SolidEdgeConstants;
 using SolidEdgeDraft;
 using SolidEdgeFramework;
 using SolidEdgeGeometry;
@@ -46,13 +47,13 @@ namespace Application_Cyrell.LogiqueBouttonsSolidEdge
             {
                 if (form.ShowDialog() == DialogResult.OK)
                 {
-                    _outputFolderPath = form.OutputPath;
-                    paramTagDxf = form.TagDxf;
-                    paramChangeName = form.ChangeName;
-                    paramFabbrica = form.Fabbrica;
-                    paramMacroDen = form.MacroDen;
-                    paramOnlyDxf = form.OnlyDxf;
-                    paramOnlyStep = form.OnlyStep;
+                    this._outputFolderPath = form.OutputPath;
+                    this.paramTagDxf = form.TagDxf;
+                    this.paramChangeName = form.ChangeName;
+                    this.paramFabbrica = form.Fabbrica;
+                    this.paramMacroDen = form.MacroDen;
+                    this.paramOnlyDxf = form.OnlyDxf;
+                    this.paramOnlyStep = form.OnlyStep;
                     if (_outputFolderPath == "")
                     {
                         MessageBox.Show("Choisissez un répértoire de sortie pour continuer");
@@ -140,7 +141,7 @@ namespace Application_Cyrell.LogiqueBouttonsSolidEdge
                     MessageBox.Show("Error during cleanup: " + cleanupEx.Message);
                 }
 
-                MessageBox.Show("All operations are complete.");
+                MessageBox.Show("Traitement Terminé.");
 
             }
         }
@@ -298,6 +299,7 @@ namespace Application_Cyrell.LogiqueBouttonsSolidEdge
                 {
                     // Add callout annotation or any other modifications
                     AddCalloutAnnotation(draftDoc, activeDxfPath);
+                    seApp.StartCommand(DetailCommandConstants.DetailViewFit);
 
                     // Delete the existing file if it exists
                     if (File.Exists(activeDxfPath))

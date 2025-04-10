@@ -53,10 +53,6 @@ namespace Application_Cyrell.LogiqueBouttonsSolidEdge
                     {
                         _listBoxDxfFiles.Items.Add(Path.GetFileName(file));
                     }
-
-                    // Display the number of files in the ListBox
-                    //int fileCount = _listBoxDxfFiles.Items.Count;
-                    //MessageBox.Show($"{fileCount} files loaded into the list.");
                 }
             }
         }

@@ -37,8 +37,16 @@ C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Debug\net48\A
 C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Debug\net48\Application Cyrell.exe
 C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Debug\net48\Application Cyrell.pdb
 C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Debug\net48\ACadSharp.dll
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Debug\net48\ClosedXML.dll
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Debug\net48\ClosedXML.Parser.dll
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Debug\net48\DocumentFormat.OpenXml.dll
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Debug\net48\DocumentFormat.OpenXml.Framework.dll
 C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Debug\net48\ExcelDataReader.dll
 C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Debug\net48\ExcelDataReader.DataSet.dll
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Debug\net48\ExcelNumberFormat.dll
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Debug\net48\Microsoft.Bcl.HashCode.dll
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Debug\net48\RBush.dll
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Debug\net48\SixLabors.Fonts.dll
 C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Debug\net48\System.Buffers.dll
 C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Debug\net48\System.Memory.dll
 C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Debug\net48\System.Numerics.Vectors.dll
@@ -48,6 +56,8 @@ C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Debug\net48\I
 C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Debug\net48\SolidEdge.Community.dll
 C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Debug\net48\Interop.SolidEdge.xml
 C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\obj\Debug\net48\Application Cyrell.csproj.AssemblyReference.cache
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\obj\Debug\net48\Application Cyrell.csproj.SuggestedBindingRedirects.cache
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\obj\Debug\net48\Application Cyrell.exe.config
 C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\obj\Debug\net48\Interop.Microsoft.Office.Interop.Excel.dll
 C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\obj\Debug\net48\Application Cyrell.csproj.ResolveComReference.cache
 C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\obj\Debug\net48\Application_Cyrell.MainForm.resources
@@ -65,13 +75,3 @@ C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\obj\Debug\net48\A
 C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\obj\Debug\net48\Applicat.DBA0CFAF.Up2Date
 C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\obj\Debug\net48\Application Cyrell.exe
 C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\obj\Debug\net48\Application Cyrell.pdb
-C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Debug\net48\ClosedXML.dll
-C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Debug\net48\ClosedXML.Parser.dll
-C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Debug\net48\DocumentFormat.OpenXml.dll
-C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Debug\net48\DocumentFormat.OpenXml.Framework.dll
-C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Debug\net48\ExcelNumberFormat.dll
-C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Debug\net48\Microsoft.Bcl.HashCode.dll
-C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Debug\net48\RBush.dll
-C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Debug\net48\SixLabors.Fonts.dll
-C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\obj\Debug\net48\Application Cyrell.csproj.SuggestedBindingRedirects.cache
-C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\obj\Debug\net48\Application Cyrell.exe.config

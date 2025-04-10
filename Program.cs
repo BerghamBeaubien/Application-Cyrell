@@ -13,9 +13,16 @@ namespace Application_Cyrell
         [STAThread]
         static void Main()
         {
-            System.Windows.Forms.Application.EnableVisualStyles();
-            System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(false);
-            System.Windows.Forms.Application.Run(new MainForm());
+            try
+            {
+                System.Windows.Forms.Application.EnableVisualStyles();
+                System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(false);
+                System.Windows.Forms.Application.Run(new MainForm());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Startup error:\n" + ex.ToString(), "Error");
+            }
         }
     }
 }

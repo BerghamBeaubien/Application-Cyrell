@@ -1,0 +1,42 @@
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Release\net48\win-x64\Application Cyrell.exe.config
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Release\net48\win-x64\Application Cyrell.exe
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Release\net48\win-x64\Application Cyrell.pdb
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Release\net48\win-x64\ACadSharp.dll
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Release\net48\win-x64\ClosedXML.dll
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Release\net48\win-x64\ClosedXML.Parser.dll
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Release\net48\win-x64\DocumentFormat.OpenXml.dll
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Release\net48\win-x64\DocumentFormat.OpenXml.Framework.dll
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Release\net48\win-x64\ExcelDataReader.dll
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Release\net48\win-x64\ExcelDataReader.DataSet.dll
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Release\net48\win-x64\ExcelNumberFormat.dll
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Release\net48\win-x64\Microsoft.Bcl.HashCode.dll
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Release\net48\win-x64\RBush.dll
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Release\net48\win-x64\SixLabors.Fonts.dll
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Release\net48\win-x64\System.Buffers.dll
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Release\net48\win-x64\System.Memory.dll
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Release\net48\win-x64\System.Numerics.Vectors.dll
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Release\net48\win-x64\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Release\net48\win-x64\System.ValueTuple.dll
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Release\net48\win-x64\Interop.SolidEdge.dll
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Release\net48\win-x64\SolidEdge.Community.dll
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\bin\Release\net48\win-x64\Interop.SolidEdge.xml
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\obj\Release\net48\win-x64\Application Cyrell.csproj.AssemblyReference.cache
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\obj\Release\net48\win-x64\Application Cyrell.csproj.SuggestedBindingRedirects.cache
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\obj\Release\net48\win-x64\Application Cyrell.exe.config
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\obj\Release\net48\win-x64\Interop.Microsoft.Office.Interop.Excel.dll
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\obj\Release\net48\win-x64\Application Cyrell.csproj.ResolveComReference.cache
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\obj\Release\net48\win-x64\Application_Cyrell.MainForm.resources
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\obj\Release\net48\win-x64\Application_Cyrell.Onglets_de_l_application.PanelSE.resources
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\obj\Release\net48\win-x64\Application_Cyrell.Onglets_de_l_application.PanelSettings.resources
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\obj\Release\net48\win-x64\Application_Cyrell.Onglets_de_l_application.PanelXlQc.resources
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\obj\Release\net48\win-x64\Application_Cyrell.Program.resources
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\obj\Release\net48\win-x64\Application_Cyrell.Properties.Resources.resources
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\obj\Release\net48\win-x64\Application Cyrell.csproj.GenerateResource.cache
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\obj\Release\net48\win-x64\Application Cyrell.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\obj\Release\net48\win-x64\Application Cyrell.AssemblyInfoInputs.cache
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\obj\Release\net48\win-x64\Application Cyrell.AssemblyInfo.cs
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\obj\Release\net48\win-x64\Application Cyrell.csproj.CoreCompileInputs.cache
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\obj\Release\net48\win-x64\Application Cyrell.sourcelink.json
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\obj\Release\net48\win-x64\Applicat.DBA0CFAF.Up2Date
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\obj\Release\net48\win-x64\Application Cyrell.exe
+C:\Users\mouad.khalladi\source\repos\firstCSMacro\firstCSMacro\obj\Release\net48\win-x64\Application Cyrell.pdb

@@ -15,48 +15,57 @@ using Environment = System.Environment;
 using System.Diagnostics;
 using System.Collections.Concurrent;
 using ClosedXML.Excel;
+using SolidEdgeCommunity;
+using SolidEdgeConstants;
+using SolidEdgeCommunity.Extensions;
 
 public class CreateDftCommand : SolidEdgeCommandBase
 {
     private readonly string _draftTemplatePath = "P:\\Informatique\\SOLID EDGE\\TEMPLATE\\Normal.dft";
-    private readonly PanelSettings _panelSettings;
     private ConcurrentDictionary<string, HashSet<string>> _globalPartNames = new ConcurrentDictionary<string, HashSet<string>>();
 
+    private bool paramParListPieceSolo;
+    private bool paramDftIndividuelAssemblage;
+    private bool paramIsoView;
+    private bool paramFlatView;
+    private bool paramBendTableToggle;
+    private bool paramRefVars;
+    private bool paramCountParts;
+    private bool paramAutoScale;
+    private double paramScale;
 
-    public CreateDftCommand(TextBox textBoxFolderPath, ListBox listBoxDxfFiles, PanelSettings pnlSettings)
+    List<bool> parametres = new List<bool>();
+    List<double> valNum = new List<double>();
+
+
+    public CreateDftCommand(TextBox textBoxFolderPath, ListBox listBoxDxfFiles, List<bool> parametres, List<double> valNum)
         : base(textBoxFolderPath, listBoxDxfFiles)
     {
-        _panelSettings = pnlSettings;
+        this.parametres = parametres;
+        this.valNum = valNum;
     }
 
     public override void Execute()
     {
-        if (_listBoxDxfFiles.SelectedItems.Count == 0)
-        {
-            MessageBox.Show("Veuillez Choisir au moins un fichier PAR, PSM ou ASM à traiter");
-            return;
-        }
+        this.paramParListPieceSolo = parametres[0];
+        this.paramDftIndividuelAssemblage = parametres[1];
+        this.paramIsoView = parametres[2];
+        this.paramFlatView = parametres[3];
+        this.paramBendTableToggle = parametres[4];
+        this.paramRefVars = parametres[5];
+        this.paramCountParts = parametres[6];
+        this.paramAutoScale = parametres[7];
+        this.paramScale = valNum[0];
 
-        DialogResult result = MessageBox.Show(
-            "Il existe des paramètres que vous pouvez modifier selon vos préférences.\nAppuyez sur Annuler pour les modifier ou sur OK pour continuer.",
-            "Confirmation des paramètres",
-            MessageBoxButtons.OKCancel,
-            MessageBoxIcon.Information
-        );
-
-        if (result == DialogResult.Cancel)
-        {
-            // Ouvrir les param�tres
-            return;
-        }
-
-        bool paramParListPieceSolo = _panelSettings.paramDft1();
-        bool paramDftIndividuelAssemblage = _panelSettings.paramDft2();
-        bool paramIsoView = _panelSettings.paramDft3();
-        bool paramFlatView = _panelSettings.paramDft4();
-        bool paramBendTableToggle = _panelSettings.paramDft5();
-        bool paramRefVars = _panelSettings.paramDft6();
-        bool paramCountParts = _panelSettings.paramDft7();
+        Debug.WriteLine($"paramParListPieceSolo: {paramParListPieceSolo}");
+        Debug.WriteLine($"paramDftIndividuelAssemblage: {paramDftIndividuelAssemblage}");
+        Debug.WriteLine($"paramIsoView: {paramIsoView}");
+        Debug.WriteLine($"paramFlatView: {paramFlatView}");
+        Debug.WriteLine($"paramBendTableToggle: {paramBendTableToggle}");
+        Debug.WriteLine($"paramRefVars: {paramRefVars}");
+        Debug.WriteLine($"paramCountParts: {paramCountParts}");
+        Debug.WriteLine($"paramAutoScale: {paramAutoScale}");
+        Debug.WriteLine($"paramScale: {paramScale}");
 
         SolidEdgeFramework.Application seApp = null;
         SolidEdgeFramework.Documents seDocs = null;
@@ -65,6 +74,7 @@ public class CreateDftCommand : SolidEdgeCommandBase
         try
         {
             // Get the Solid Edge application object
+            OleMessageFilter.Register();
             seApp = SolidEdgeCommunity.SolidEdgeUtils.Connect(true);
             seApp.Visible = true;
             seDocs = seApp.Documents;
@@ -131,28 +141,80 @@ public class CreateDftCommand : SolidEdgeCommandBase
                 // Add the model link and create the view
                 SolidEdgeDraft.ModelLinks modelLinks = seDraftDoc.ModelLinks;
                 SolidEdgeDraft.ModelLink modelLink = modelLinks.Add(fullPath);
+
+                dynamic docActif = modelLink.ModelDocument;
+                var scale = 0.1; // Default scale
+
+                if (paramAutoScale)
+                {
+                    var flatPatternModels = docActif.FlatPatternModels;
+                    if (flatPatternModels.Count < 1)
+                    {
+                        Debug.WriteLine("No flat models. Using default scale 0.1.");
+                    }
+                    else
+                    {
+                        var flatPatternModel = flatPatternModels.Item(1);
+                        var flatPattern = flatPatternModel.FlatPatterns.Item(1);
+
+                        double minX, minY, maxX, maxY, minZ, maxZ;
+                        try
+                        {
+                            flatPattern.Range(out minX, out minY, out minZ, out maxX, out maxY, out maxZ);
+
+                            var xRange = maxX - minX;
+                            var yRange = maxY - minY;
+
+                            var tallDrawing = (xRange < yRange);
+
+                            var xScale = 16 / (xRange * 39.3701);
+                            var yScale = 7 / (yRange * 39.3701);
+
+                            if (tallDrawing)
+                            {
+                                xScale = 7 / (xRange * 39.3701);
+                                yScale = 16 / (yRange * 39.3701);
+                            }
+
+                            scale = Math.Round(Math.Min(xScale, yScale) * 0.8, 5);
+
+                            Debug.Print($"{docActif.Name} Scale: {scale}");
+                        }
+                        catch (NullReferenceException ex)
+                        {
+                            Debug.WriteLine(ex);
+                            Debug.WriteLine("Error calculating range. Using default scale 0.1.");
+                        }
+                    }
+                }
+                else
+                {
+                    scale = paramScale;
+                }
+
+
                 SolidEdgeDraft.DrawingViews dwgViews = sheet.DrawingViews;
                 SolidEdgeDraft.DrawingView dwgView = dwgViews.AddPartView(
                     From: modelLink,
-                    Orientation: SolidEdgeDraft.ViewOrientationConstants.igTopView,
-                    Scale: .1,
+                    Orientation: SolidEdgeDraft.ViewOrientationConstants.igFrontView,
+                    Scale: scale,
                     x: 0.203,
-                    y: 0.1543,
+                    y: 0.203,
                     ViewType: SolidEdgeDraft.PartDrawingViewTypeConstants.sePartDesignedView
                 );
 
                 SolidEdgeDraft.DrawingView rSideView = dwgViews.AddByFold(
                     From: dwgView,
                     foldDir: SolidEdgeDraft.FoldTypeConstants.igFoldRight,
-                    x: .3,
-                    y: .1543
+                    x: .35,
+                    y: .203
                     );
 
                 SolidEdgeDraft.DrawingView bottomView = dwgViews.AddByFold(
                     From: dwgView,
                     foldDir: SolidEdgeDraft.FoldTypeConstants.igFoldDown,
                     x: .203,
-                    y: .10
+                    y: .09525
                     );
 
                 if (paramIsoView)
@@ -161,57 +223,11 @@ public class CreateDftCommand : SolidEdgeCommandBase
                     SolidEdgeDraft.DrawingView isoView = dwgViews.AddPartView(
                         From: modelLink,
                         Orientation: SolidEdgeDraft.ViewOrientationConstants.igTopFrontRightView,
-                        Scale: .1,
+                        Scale: scale/1.5,
                         x: 0.36195,
                         y: 0.2286,
                         ViewType: SolidEdgeDraft.PartDrawingViewTypeConstants.sePartDesignedView
                     );
-                }
-
-                // Add dimensions to the views
-                try
-                {
-                    //// Create dimensions collections for each view
-                    //SolidEdgeDraft.Dimensions topDimensions = dwgView.Dimensions;
-                    //SolidEdgeDraft.Dimensions rightDimensions = rSideView.Dimensions;
-                    //SolidEdgeDraft.Dimensions bottomDimensions = bottomView.Dimensions;
-                    //SolidEdgeDraft.dim
-
-                    //// Use SmartDimension to automatically place critical dimensions
-                    //// For top view
-                    //SolidEdgeDraft.SmartDimension topSmartDim = sheet.SmartDimensions;
-                    //topSmartDim.Create(
-                    //    View: dwgView,
-                    //    Type: SolidEdgeDraft.SmartDimensionConstants.igSmartDimensionHorizontal,
-                    //    AddBends: false,
-                    //    AddAngles: false,
-                    //    StaggerOffset: 0.01);
-
-                    //// For right side view
-                    //SolidEdgeDraft.SmartDimension rightSmartDim = sheet.SmartDimensions;
-                    //rightSmartDim.Create(
-                    //    View: rSideView,
-                    //    Type: SolidEdgeDraft.SmartDimensionConstants.igSmartDimensionVertical,
-                    //    AddBends: false,
-                    //    AddAngles: false,
-                    //    StaggerOffset: 0.01);
-
-                    //// For bottom view
-                    //SolidEdgeDraft.SmartDimension bottomSmartDim = sheet.SmartDimensions;
-                    //bottomSmartDim.Create(
-                    //    View: bottomView,
-                    //    Type: SolidEdgeDraft.SmartDimensionConstants.igSmartDimensionAll,
-                    //    AddBends: false,
-                    //    AddAngles: false,
-                    //    StaggerOffset: 0.01);
-
-                    //// Process the dimensions to ensure they're properly placed
-                    //sheet.ProcessAll();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error adding dimensions to views for {sheet.Name}: {ex.Message}",
-                        "Dimension Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
 
                 if ((paramParListPieceSolo && (fullPath.EndsWith(".asm", StringComparison.OrdinalIgnoreCase) ||
@@ -289,8 +305,8 @@ public class CreateDftCommand : SolidEdgeCommandBase
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("Erreur durant la cr�ation de la table de pliage\n\n" +
-                            $"La pi�ce {sheet.Name} n'est pas d�pli�e\n\n {ex.Message}",
+                        MessageBox.Show("Erreur durant la création de la table de pliage\n\n" +
+                            $"La pièce {sheet.Name} n'est pas dépliée\n\n {ex.Message}",
                             "Erreur d'execution", MessageBoxButtons.OK);
                     }
                 }
@@ -426,6 +442,8 @@ public class CreateDftCommand : SolidEdgeCommandBase
                         MessageBox.Show($"Error processing assembly file {selectedFile}: {ex.Message}");
                     }
                 }
+
+                seApp.StartCommand(DetailCommandConstants.DetailViewFit);
             }
         }
         catch (Exception ex)
@@ -446,6 +464,8 @@ public class CreateDftCommand : SolidEdgeCommandBase
                 Marshal.ReleaseComObject(seApp);
                 seApp = null;
             }
+
+            MessageBox.Show("Traitement Terminé.");
         }
     }
 
@@ -474,7 +494,7 @@ public class CreateDftCommand : SolidEdgeCommandBase
             // Add the model link
             SolidEdgeDraft.ModelLinks modelLinks = draftDoc.ModelLinks;
             SolidEdgeDraft.ModelLink modelLink = modelLinks.Add(fullPath);
-
+            
             // Create views
             SolidEdgeDraft.DrawingViews dwgViews = sheet.DrawingViews;
             SolidEdgeDraft.DrawingView dwgView = dwgViews.AddPartView(
@@ -564,13 +584,13 @@ public class CreateDftCommand : SolidEdgeCommandBase
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Erreur durant la cr�ation de la table de pliage\n\n" +
-                        $"La pi�ce {sheet.Name} n'est pas d�pli�e\n\n {ex.Message}",
+                    MessageBox.Show("Erreur durant la création de la table de pliage\n\n" +
+                        $"La pièce {sheet.Name} n'est pas dépliée\n\n {ex.Message}",
                         "Erreur d'execution", MessageBoxButtons.OK);
                 }
             }
 
-
+            draftDoc.Application.StartCommand(DetailCommandConstants.DetailViewFit);
         }
         catch (Exception ex)
         {
@@ -587,7 +607,7 @@ public class CreateDftCommand : SolidEdgeCommandBase
             seDocs.Open(fullPath);
             dynamic docActuel = seDocs.Application.ActiveDocument;
             // Check if it's an assembly or part
-            if (seDocs.Application.ActiveDocument is PartDocument partDoc)
+            if (seDocs.Application.ActiveDocument is PartDocument || seDocs.Application.ActiveDocument is SheetMetalDocument)
             {
                 UpdatePartVariables(false);
             }

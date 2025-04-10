@@ -15,8 +15,8 @@ public class KillSECommand : SolidEdgeCommandBase
         SolidEdgeFramework.Application seApp = null;
 
         // Formulaire de confirmation
-        DialogResult result = MessageBox.Show("Tu veux VRAIMENT fermer Solid Edge? \n\n " +
-            "Les documents ne seront pas sauvgardés", "Message de Confirmation", MessageBoxButtons.YesNo);
+        DialogResult result = MessageBox.Show("Cette opération va fermer Solid Edge et \nles documents ne seront pas sauvgardés \n\n" +
+            "Voulez-vous continuer?", "Message de Confirmation", MessageBoxButtons.YesNo);
 
         if (result == DialogResult.Yes)
         {

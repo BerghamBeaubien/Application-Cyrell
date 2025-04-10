@@ -1,0 +1,22 @@
+C:\Users\mouad.khalladi\Desktop\Alpha.0.6\Application Cyrell.exe
+C:\Users\mouad.khalladi\Desktop\Alpha.0.6\Application Cyrell.exe.config
+C:\Users\mouad.khalladi\Desktop\Alpha.0.6\Application Cyrell.pdb
+C:\Users\mouad.khalladi\Desktop\Alpha.0.6\ACadSharp.dll
+C:\Users\mouad.khalladi\Desktop\Alpha.0.6\ClosedXML.dll
+C:\Users\mouad.khalladi\Desktop\Alpha.0.6\ClosedXML.Parser.dll
+C:\Users\mouad.khalladi\Desktop\Alpha.0.6\DocumentFormat.OpenXml.dll
+C:\Users\mouad.khalladi\Desktop\Alpha.0.6\DocumentFormat.OpenXml.Framework.dll
+C:\Users\mouad.khalladi\Desktop\Alpha.0.6\ExcelDataReader.dll
+C:\Users\mouad.khalladi\Desktop\Alpha.0.6\ExcelDataReader.DataSet.dll
+C:\Users\mouad.khalladi\Desktop\Alpha.0.6\ExcelNumberFormat.dll
+C:\Users\mouad.khalladi\Desktop\Alpha.0.6\Microsoft.Bcl.HashCode.dll
+C:\Users\mouad.khalladi\Desktop\Alpha.0.6\RBush.dll
+C:\Users\mouad.khalladi\Desktop\Alpha.0.6\SixLabors.Fonts.dll
+C:\Users\mouad.khalladi\Desktop\Alpha.0.6\System.Buffers.dll
+C:\Users\mouad.khalladi\Desktop\Alpha.0.6\System.Memory.dll
+C:\Users\mouad.khalladi\Desktop\Alpha.0.6\System.Numerics.Vectors.dll
+C:\Users\mouad.khalladi\Desktop\Alpha.0.6\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\mouad.khalladi\Desktop\Alpha.0.6\System.ValueTuple.dll
+C:\Users\mouad.khalladi\Desktop\Alpha.0.6\Interop.SolidEdge.dll
+C:\Users\mouad.khalladi\Desktop\Alpha.0.6\SolidEdge.Community.dll
+C:\Users\mouad.khalladi\Desktop\Alpha.0.6\Interop.SolidEdge.xml

@@ -3,6 +3,8 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using SolidEdgeCommunity;
+using SolidEdgeCommunity.Extensions;
+using SolidEdgeConstants;
 using SolidEdgeFramework;
 using SolidEdgeGeometry;
 using SolidEdgePart;
@@ -28,7 +30,7 @@ namespace Application_Cyrell.LogiqueBouttonsSolidEdge
         {
             if (_listBoxDxfFiles.SelectedItems.Count == 0)
             {
-                MessageBox.Show("Please select at least one file to open.");
+                MessageBox.Show("Veuillez Choisir au moins un fichier à traiter.");
                 return;
             }
 
@@ -59,7 +61,7 @@ namespace Application_Cyrell.LogiqueBouttonsSolidEdge
                     }
                 }
                 seApp.Visible = true;
-                MessageBox.Show("Selected files processed successfully.");
+                MessageBox.Show("Les fichiers ont été ouvert avec succès.");
             }
             catch (Exception ex)
             {
@@ -96,6 +98,7 @@ namespace Application_Cyrell.LogiqueBouttonsSolidEdge
 
                     // Ouvrir le fichier en tant que pièce avec le bon template
                     SolidEdgePart.PartDocument partDoc = (SolidEdgePart.PartDocument)seApp.Documents.OpenWithTemplate(fullPath, _partTemplatePath);
+                    seApp.StartCommand(PartCommandConstants.PartViewFit);
                     string newPath = Path.Combine(Path.GetDirectoryName(fullPath),
                                      Path.GetFileNameWithoutExtension(fullPath) + ".par");
                     partDoc.SaveAs(newPath);
@@ -103,6 +106,7 @@ namespace Application_Cyrell.LogiqueBouttonsSolidEdge
                 else
                 {
                     // Garde le nom de l'assemblage si c'est bien un assemblage
+                    seApp.StartCommand(AssemblyCommandConstants.AssemblyViewFit);
                     string newPath = Path.Combine(Path.GetDirectoryName(fullPath),
                                      Path.GetFileNameWithoutExtension(fullPath) + ".asm");
                     asmDoc.SaveAs(newPath);

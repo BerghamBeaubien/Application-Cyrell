@@ -12,6 +12,7 @@ using Application_Cyrell.Properties;
 using DocumentFormat.OpenXml.Bibliography;
 using DocumentFormat.OpenXml.Spreadsheet;
 using Control = System.Windows.Forms.Control;
+using System.Diagnostics;
 
 namespace firstCSMacro
 {
@@ -65,19 +66,12 @@ namespace firstCSMacro
             { ".psm", true },
             { ".SLDASM", true }
         };
-        readonly Image flechePic = Image.FromFile(Path.Combine("C:\\Users\\mouad.khalladi\\source\\repos\\firstCSMacro\\firstCSMacro", "Resources", "kindpng_4853621.png"));
-        readonly Image browsePic = Image.FromFile(Path.Combine("C:\\Users\\mouad.khalladi\\source\\repos\\firstCSMacro\\firstCSMacro", "Resources", "search-in-folder.png"));
-        readonly Image settingsPic = Image.FromFile(Path.Combine("C:\\Users\\mouad.khalladi\\source\\repos\\firstCSMacro\\firstCSMacro", "Resources", "imageedit_4_9043604981.png"));
 
         public PanelSE()
         {
             InitializeComponent();
             InitializeFilterControls();
             listBoxDxfFiles.SelectedIndexChanged += ListBoxDxfFiles_SelectedIndexChanged;
-            picBoxArrow.Image = flechePic;
-            btnBrowseSe.BackgroundImage = browsePic;
-            btnSettings.BackgroundImage = settingsPic;
-            picBoxArrow.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
         }
 
         private void InitializeComponent()
@@ -109,14 +103,14 @@ namespace firstCSMacro
             // 
             this.listBoxDxfFiles.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(38)))), ((int)(((byte)(70)))));
             this.listBoxDxfFiles.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.listBoxDxfFiles.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.listBoxDxfFiles.Font = new System.Drawing.Font("Tahoma", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listBoxDxfFiles.ForeColor = System.Drawing.Color.White;
             this.listBoxDxfFiles.FormattingEnabled = true;
-            this.listBoxDxfFiles.ItemHeight = 31;
+            this.listBoxDxfFiles.ItemHeight = 34;
             this.listBoxDxfFiles.Location = new System.Drawing.Point(250, 184);
             this.listBoxDxfFiles.Name = "listBoxDxfFiles";
             this.listBoxDxfFiles.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.listBoxDxfFiles.Size = new System.Drawing.Size(838, 422);
+            this.listBoxDxfFiles.Size = new System.Drawing.Size(838, 374);
             this.listBoxDxfFiles.TabIndex = 4;
             // 
             // textBoxFolderPath
@@ -127,7 +121,7 @@ namespace firstCSMacro
             this.textBoxFolderPath.ForeColor = System.Drawing.Color.White;
             this.textBoxFolderPath.Location = new System.Drawing.Point(250, 134);
             this.textBoxFolderPath.Name = "textBoxFolderPath";
-            this.textBoxFolderPath.Size = new System.Drawing.Size(782, 34);
+            this.textBoxFolderPath.Size = new System.Drawing.Size(782, 39);
             this.textBoxFolderPath.TabIndex = 5;
             // 
             // buttonSelectAll
@@ -154,11 +148,11 @@ namespace firstCSMacro
             this.buttonKillSe.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonKillSe.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.buttonKillSe.ForeColor = System.Drawing.Color.White;
-            this.buttonKillSe.Location = new System.Drawing.Point(20, 618);
+            this.buttonKillSe.Location = new System.Drawing.Point(20, 674);
             this.buttonKillSe.Name = "buttonKillSe";
             this.buttonKillSe.Size = new System.Drawing.Size(180, 45);
             this.buttonKillSe.TabIndex = 7;
-            this.buttonKillSe.Text = "FERMER SE";
+            this.buttonKillSe.Text = "Fermer Solid Edge";
             this.buttonKillSe.UseVisualStyleBackColor = false;
             this.buttonKillSe.Click += new System.EventHandler(this.buttonKillSe_Click);
             // 
@@ -277,7 +271,7 @@ namespace firstCSMacro
             this.buttonGenererDFT.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonGenererDFT.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.buttonGenererDFT.ForeColor = System.Drawing.Color.White;
-            this.buttonGenererDFT.Location = new System.Drawing.Point(20, 492);
+            this.buttonGenererDFT.Location = new System.Drawing.Point(20, 491);
             this.buttonGenererDFT.Name = "buttonGenererDFT";
             this.buttonGenererDFT.Size = new System.Drawing.Size(180, 45);
             this.buttonGenererDFT.TabIndex = 6;
@@ -294,13 +288,14 @@ namespace firstCSMacro
             this.labelUnlock.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(240)))), ((int)(((byte)(241)))));
             this.labelUnlock.Location = new System.Drawing.Point(448, 18);
             this.labelUnlock.Name = "labelUnlock";
-            this.labelUnlock.Size = new System.Drawing.Size(562, 54);
+            this.labelUnlock.Size = new System.Drawing.Size(677, 65);
             this.labelUnlock.TabIndex = 21;
             this.labelUnlock.Text = "Veuillez choisir un répertoire";
             // 
             // picBoxArrow
             // 
             this.picBoxArrow.BackColor = System.Drawing.Color.Transparent;
+            this.picBoxArrow.BackgroundImage = global::Application_Cyrell.Properties.Resources.logoArrow;
             this.picBoxArrow.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.picBoxArrow.Location = new System.Drawing.Point(1040, 40);
             this.picBoxArrow.Name = "picBoxArrow";
@@ -312,6 +307,7 @@ namespace firstCSMacro
             // 
             this.btnBrowseSe.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnBrowseSe.BackColor = System.Drawing.Color.Transparent;
+            this.btnBrowseSe.BackgroundImage = global::Application_Cyrell.Properties.Resources.search_in_folder;
             this.btnBrowseSe.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnBrowseSe.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnBrowseSe.FlatAppearance.BorderSize = 0;
@@ -327,6 +323,7 @@ namespace firstCSMacro
             // btnSettings
             // 
             this.btnSettings.BackColor = System.Drawing.Color.Transparent;
+            this.btnSettings.BackgroundImage = global::Application_Cyrell.Properties.Resources.logoParam;
             this.btnSettings.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnSettings.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnSettings.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(47)))), ((int)(((byte)(86)))));
@@ -349,7 +346,7 @@ namespace firstCSMacro
             this.labelSelectedFiles.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(240)))), ((int)(((byte)(241)))));
             this.labelSelectedFiles.Location = new System.Drawing.Point(250, 618);
             this.labelSelectedFiles.Name = "labelSelectedFiles";
-            this.labelSelectedFiles.Size = new System.Drawing.Size(194, 32);
+            this.labelSelectedFiles.Size = new System.Drawing.Size(223, 38);
             this.labelSelectedFiles.TabIndex = 22;
             this.labelSelectedFiles.Text = "Fichiers Choisis:";
             this.labelSelectedFiles.Visible = false;
@@ -362,7 +359,7 @@ namespace firstCSMacro
             this.labelSelectedFilesCount.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(204)))), ((int)(((byte)(113)))));
             this.labelSelectedFilesCount.Location = new System.Drawing.Point(400, 618);
             this.labelSelectedFilesCount.Name = "labelSelectedFilesCount";
-            this.labelSelectedFilesCount.Size = new System.Drawing.Size(0, 32);
+            this.labelSelectedFilesCount.Size = new System.Drawing.Size(0, 38);
             this.labelSelectedFilesCount.TabIndex = 24;
             this.labelSelectedFilesCount.Visible = false;
             // 
@@ -633,8 +630,51 @@ namespace firstCSMacro
 
         private void buttonGenererDFT_Click(object sender, EventArgs e)
         {
-            var createDft = new CreateDftCommand(textBoxFolderPath, listBoxDxfFiles, _panelSettings);
-            createDft.Execute();
+            if (listBoxDxfFiles.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("Veuillez Choisir au moins un fichier PAR, PSM ou ASM à traiter");
+                return;
+            }
+
+            // Example usage
+            FormulaireDFT form = new FormulaireDFT();
+            List<bool> parametres = new List<bool>();
+            List<double> valNum = new List<double>();
+
+            // Register handlers for both continue buttons
+            form.OnContinue1 += (parList, dftInd, isoView, flatView, bendTable, refVars, countParts, bendTableAdv, autoScale, scale, spacingX, spacingY) => {
+                parametres.Add(parList);
+                parametres.Add(dftInd);
+                parametres.Add(isoView);
+                parametres.Add(flatView);
+                parametres.Add(bendTable);
+                parametres.Add(refVars);
+                parametres.Add(countParts);
+                parametres.Add(autoScale);
+                valNum.Add(scale);
+
+                var createDft = new CreateDftCommand(textBoxFolderPath, listBoxDxfFiles, parametres, valNum);
+                createDft.Execute();
+                parametres.Clear();
+                valNum.Clear();
+            };
+
+            form.OnContinue2 += (parList, dftInd, isoView, flatView, bendTable, refVars, countParts, bendTableAdv, autoScale, scale, spacingX, spacingY) => {
+                parametres.Add(refVars);
+                parametres.Add(bendTableAdv);
+                parametres.Add(autoScale);
+                valNum.Add(scale);
+                valNum.Add(spacingX);
+                valNum.Add(spacingY);
+
+                var createDft = new CreateFlatDftCommand(textBoxFolderPath, listBoxDxfFiles, parametres, valNum);
+                createDft.Execute();
+                parametres.Clear();
+                valNum.Clear();
+            };
+
+            form.ShowDialog();
+            
         }
 
         private async void btnTaguerDxf_MouseEnter(object sender, EventArgs e)

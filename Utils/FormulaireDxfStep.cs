@@ -22,7 +22,7 @@ public class FormulaireDxfStep : Form
     public string OutputPath => txtOutputPath.Text;
     public bool TagDxf => chkTagDxf.Checked;
     public bool ChangeName => chkChangeName.Checked;
-    public bool Fabbrica => chkFabbrica.Checked && chkChangeName.Checked;
+    public bool Fabbrica => chkFabbrica.Checked;
     public bool MacroDen => chkMacroDen.Checked;
     public bool OnlyDxf => chkSingleFile.Checked && !fileTypeToggle.Checked;
     public bool OnlyStep => chkSingleFile.Checked && fileTypeToggle.Checked;

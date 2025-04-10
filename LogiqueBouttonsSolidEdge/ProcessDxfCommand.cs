@@ -2,6 +2,8 @@ using ACadSharp.IO;
 using Application_Cyrell.LogiqueBouttonsSolidEdge;
 using firstCSMacro;
 using SolidEdgeAssembly;
+using SolidEdgeCommunity.Extensions;
+using SolidEdgeConstants;
 using SolidEdgeDraft;
 using System;
 using System.IO;
@@ -57,6 +59,7 @@ public class ProcessDxfCommand : SolidEdgeCommandBase
                     if (seApp.ActiveDocument is DraftDocument draftDoc)
                     {
                         AddCalloutAnnotation(draftDoc, fullPath);
+                        seApp.StartCommand(DetailCommandConstants.DetailViewFit);
 
                         // Avoid file attribute change and deletion unless necessary
                         if (File.Exists(fullPath))
