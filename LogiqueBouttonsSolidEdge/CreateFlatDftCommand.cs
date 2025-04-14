@@ -28,6 +28,7 @@ public class CreateFlatDftCommand : SolidEdgeCommandBase
     private bool paramBendTableToggle;
     private bool paramRefVars;
     private bool paramAutoScale;
+    private bool paramPartsList;
     private double paramScale;
     private double paramSpaceX;
     private double paramSpaceY;
@@ -49,6 +50,7 @@ public class CreateFlatDftCommand : SolidEdgeCommandBase
         this.paramRefVars = parametres[0];
         this.paramBendTableToggle = parametres[1];
         this.paramAutoScale = parametres[2];
+        this.paramPartsList = parametres[3];
         this.paramScale = valNum[0];
         this.paramSpaceX = valNum[1] * 0.0254;
         this.paramSpaceY = valNum[2] * 0.0254;
@@ -107,7 +109,7 @@ public class CreateFlatDftCommand : SolidEdgeCommandBase
                     continue;
                 }
 
-                if (paramRefVars)
+                if (paramPartsList && paramRefVars)
                 {
                     UpdateDocumentVariables(fullPath, seDocs);
                 }
@@ -222,6 +224,27 @@ public class CreateFlatDftCommand : SolidEdgeCommandBase
 
                         bendTable2.Delete();
                         bendFlatView.Delete();
+                    }
+
+                    if (paramPartsList)
+                    {
+                        // Ensure we're working with the current sheet's view
+                        dwgViews = sheet.DrawingViews;
+                        dwgViewFlat = dwgViews.Item(1);
+
+                        // Create parts list using document's PartsLists collection
+                        SolidEdgeDraft.PartsLists partsLists = seDraftDoc.PartsLists;
+
+                        // Create the parts list on the active sheet
+                        SolidEdgeDraft.PartsList partsList = partsLists.Add(
+                            DrawingView: dwgViewFlat,
+                            SavedSettings: "ANSI",
+                            AutoBalloon: 1,
+                            CreatePartsList: 1
+                        );
+
+                        // Position the parts list on the current sheet
+                        partsList.SetOrigin(compteurX -.1, compteurY + .1);
                     }
                     compteurY = compteurY - paramSpaceY;
                     viewCounter++;

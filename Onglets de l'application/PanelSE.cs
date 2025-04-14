@@ -533,6 +533,7 @@ namespace firstCSMacro
                 .ToList();
 
             listBoxDxfFiles.Items.Clear();
+
             string[] allFiles = Directory.GetFiles(textBoxFolderPath.Text, "*.*")
                 .Where(file => activeExtensions.Any(ext =>
                     file.EndsWith(ext, StringComparison.OrdinalIgnoreCase)))
@@ -543,6 +544,7 @@ namespace firstCSMacro
             {
                 listBoxDxfFiles.Items.Add(Path.GetFileName(file));
             }
+
             int selectedCount = listBoxDxfFiles.SelectedItems.Count;
             labelSelectedFilesCount.Text = selectedCount.ToString();
         }
@@ -642,7 +644,7 @@ namespace firstCSMacro
             List<double> valNum = new List<double>();
 
             // Register handlers for both continue buttons
-            form.OnContinue1 += (parList, dftInd, isoView, flatView, bendTable, refVars, countParts, bendTableAdv, autoScale, scale, spacingX, spacingY) => {
+            form.OnContinue1 += (parList, dftInd, isoView, flatView, bendTable, refVars, countParts, bendTableAdv, partsListAdv, autoScale, scale, spacingX, spacingY) => {
                 parametres.Add(parList);
                 parametres.Add(dftInd);
                 parametres.Add(isoView);
@@ -659,10 +661,11 @@ namespace firstCSMacro
                 valNum.Clear();
             };
 
-            form.OnContinue2 += (parList, dftInd, isoView, flatView, bendTable, refVars, countParts, bendTableAdv, autoScale, scale, spacingX, spacingY) => {
+            form.OnContinue2 += (parList, dftInd, isoView, flatView, bendTable, refVars, countParts, bendTableAdv, partsListAdv, autoScale, scale, spacingX, spacingY) => {
                 parametres.Add(refVars);
                 parametres.Add(bendTableAdv);
                 parametres.Add(autoScale);
+                parametres.Add(partsListAdv);
                 valNum.Add(scale);
                 valNum.Add(spacingX);
                 valNum.Add(spacingY);

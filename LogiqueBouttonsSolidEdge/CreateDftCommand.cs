@@ -57,16 +57,6 @@ public class CreateDftCommand : SolidEdgeCommandBase
         this.paramAutoScale = parametres[7];
         this.paramScale = valNum[0];
 
-        Debug.WriteLine($"paramParListPieceSolo: {paramParListPieceSolo}");
-        Debug.WriteLine($"paramDftIndividuelAssemblage: {paramDftIndividuelAssemblage}");
-        Debug.WriteLine($"paramIsoView: {paramIsoView}");
-        Debug.WriteLine($"paramFlatView: {paramFlatView}");
-        Debug.WriteLine($"paramBendTableToggle: {paramBendTableToggle}");
-        Debug.WriteLine($"paramRefVars: {paramRefVars}");
-        Debug.WriteLine($"paramCountParts: {paramCountParts}");
-        Debug.WriteLine($"paramAutoScale: {paramAutoScale}");
-        Debug.WriteLine($"paramScale: {paramScale}");
-
         SolidEdgeFramework.Application seApp = null;
         SolidEdgeFramework.Documents seDocs = null;
         SolidEdgeDraft.DraftDocument seDraftDoc = null;

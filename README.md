@@ -20,15 +20,7 @@ L'application est divisée en **deux onglets principaux** :
 ## **Onglet 1 : Automatisation des Opérations sur Solid Edge**
 Cet onglet automatise la gestion des fichiers Solid Edge. Avant de commencer, **sélectionnez un répertoire** contenant les fichiers à traiter.
 
-### **1. Traitement des Fichiers DXF**
-![Bouton Annoter DXF (Tag)](https://github.com/BerghamBeaubien/Application-Cyrell/blob/main/Resources/btnTagDxf.png)
-Le bouton **"Annoter DXF (Tag)"** ajoute une annotation avec le nom du fichier dans les fichiers DXF choisis. 
-
-- Choisissez les fichiers à traiter.
-- Cliquez sur **"Annoter DXF (Tag)"**.
-- Les fichiers traités sont annotés et sauvegardés
-
-### **2. Ouvrir les fichiers sélectionnés**
+### **1. Ouvrir les fichiers sélectionnés**
 ![Bouton Ouvrir Fichiers Choisis](https://github.com/BerghamBeaubien/Application-Cyrell/blob/main/Resources/btnOpenSelFiles.png)
 Le bouton **"Ouvrir Fichiers Choisis"** permet d'ouvrir rapidement les fichiers choisis dans Solid Edge.
 
@@ -36,39 +28,57 @@ Le bouton **"Ouvrir Fichiers Choisis"** permet d'ouvrir rapidement les fichiers 
 - Cliquez sur **"Ouvrir Fichiers Choisis"**.
 - Les fichiers s'ouvrent dans Solid Edge.
 
+### **2. Traitement des Fichiers DXF**
+![Bouton Annoter DXF (Tag)](https://github.com/BerghamBeaubien/Application-Cyrell/blob/main/Resources/btnTagDxf.png)
+Le bouton **"Annoter DXF (Tag)"** ajoute une annotation avec le nom du fichier dans les fichiers DXF choisis. 
+
+- Choisissez les fichiers à traiter.
+- Cliquez sur **"Annoter DXF (Tag)"**.
+- Les fichiers traités sont annotés et sauvegardés
+
 ### **3. Exporter les dimensions**
 ![Bouton Exporter dimensions](https://github.com/BerghamBeaubien/Application-Cyrell/blob/main/Resources/btnExportDim.png)
-Le bouton **"Exporter les dimensions"** extrait les dimensions des fichiers sélectionnés et les enregistre dans un fichier Excel.
+Le bouton **"Exporter Dimensions"** extrait les dimensions des fichiers sélectionnés et les enregistre dans un fichier Excel.
 
 - Sélectionnez des fichiers **DXF, PAR, PSM**.
-- Cliquez sur **"Exporter dimensions"**.
+- Cliquez sur **"Exporter Dimensions"**.
 - Un fichier **Excel (Dimensions-Deplie.xlsx)** est créé avec les dimensions des fichiers.
 
+### **4. Créer Flat Pattern**
+![Bouton Créer Flat Pattern](https://github.com/BerghamBeaubien/Application-Cyrell/blob/main/Resources/btnFlatPattern.png)
+Le bouton **"Créer Flat Pattern"** crée un Flat Pattern des fichiers sélectionnés et les enregistre.
 
-### **4. Sauvegarder DXF/STEP**
+- Sélectionnez des fichiers **PAR/PSM**.
+- Cliquez sur **"Créer Flat Pattern"**.
+- Choisissez le mode de sélection de face.
+  - Mode Manuel: À chaque pièce vous devez cliquer sur la face et l'arête 
+  - Mode Automatique: La face la plus loin du centre de la pièce sera utilisée pour faire le déplié
+![Formulaire Sélection du mode](https://github.com/BerghamBeaubien/Application-Cyrell/blob/main/Resources/btnFlatForm.png)
+- Les fichiers sont dépliés.
+
+
+### **5. Sauvegarder DXF/STEP**
 ![Bouton Sauvegarder DXF & Step](https://github.com/BerghamBeaubien/Application-Cyrell/blob/main/Resources/btnSaveDxfStep.png)
 Le bouton **"Sauvegarder DXF/STEP"** convertit les fichiers sélectionnés en formats DXF **(si la pièce est dépliée)** et STEP.
 
 - Sélectionnez des fichiers **PAR/PSM**.
 - Cliquez sur **"Sauvegarder DXF/STEP"**.
-- Choisissez le dossier de destination.
+- Choisissez le dossier de destination et cochez les options spéciales (voir Explications Détaillées pour plus d’info).
+- ![Formulaire Sauvegarder DXF & Step](https://github.com/BerghamBeaubien/Application-Cyrell/blob/main/Resources/btnDxfStepForm.png)
 - Les fichiers sont convertis en DXF et STEP.
 
-### **5. Créer un fichier DFT**
+### **6. Créer un fichier DFT**
 ![Bouton Générer Dessins (DFT)](https://github.com/BerghamBeaubien/Application-Cyrell/blob/main/Resources/btnDft.png)
 Le bouton **"Créer un fichier DFT"** génère un fichier de dessin (DFT) à partir des fichiers sélectionnés.
 
 - Sélectionnez des fichiers **PAR, PSM ou ASM**.
 - Cliquez sur **"Créer un fichier DFT"**.
-- Si le fichier est un **ASM**, une fenêtre s'ouvre affichant toutes les pièces contenues dans l'assemblage.
-  - L'utilisateur peut cocher/décocher les pièces qu'il souhaite inclure dans le fichier DFT.
-  - Un clic droit sur une pièce permet de **modifier son nom**. 
-    ![Pic liste pieces asm](https://github.com/BerghamBeaubien/Application-Cyrell/blob/main/Resources/reName.png)
-    ![Pic rename](https://github.com/BerghamBeaubien/Application-Cyrell/blob/main/Resources/actualRename.png)
-  - **Attention** : une pièce ne peut pas avoir le même nom que l'assemblage.
+- Choisissez un des 2 modes et cochez les paramètres voulus
+![Fomulaire DFT Standard](https://github.com/BerghamBeaubien/Application-Cyrell/blob/main/Resources/standardDft.png)
+![Fomulaire DFT Custom](https://github.com/BerghamBeaubien/Application-Cyrell/blob/main/Resources/customDft.png)
 - Un fichier DFT est généré avec des vues automatiques et, si applicable, une nomenclature et une table de pliage.
 
-### **6. Paramètres**  
+### **7. Paramètres**  
 ![Pic bouton Parametres](https://github.com/BerghamBeaubien/Application-Cyrell/blob/main/Resources/btnParam.png)  
 ![Pic Parametres](https://github.com/BerghamBeaubien/Application-Cyrell/blob/main/Resources/params.png)
 
@@ -81,18 +91,17 @@ Ces paramètres permettent de contrôler certaines actions lors du traitement de
 - Si une pièce n'est pas dépliée, ses mesures retournées seront à 0. Cette option contrôle l'affichage d'un message pour chaque pièce non dépliée. *(Activé par défaut)*  
 - Garde les fichiers traités (*seulement PSM et PAR*) ouverts dans Solid Edge. *(Désactivé par défaut)*  
 
-#### **Générer DFT**  
-- Ajoute la nomenclature pour chaque pièce individuelle. *(Activé par défaut)*  
-- Pour les assemblages, permet de sélectionner les pièces à inclure dans une nouvelle page/onglet du document DFT. *(Activé par défaut)*  
-- Ajoute la table de pliage pour les pièces possédant un *Flat Pattern*. *(Activé par défaut)* 
-
-### **7. Autres Fonctionnalités**
+### **8. Autres Fonctionnalités**
 
 #### **Fermer Solid Edge**
 - Ferme toutes les instances de Solid Edge en cours d'exécution.
 
 #### **Select All**
 - Sélectionne tous les fichiers affichés.
+
+#### **Mode Sombre/Clair**
+- Ce bouton caché (encerclé en rouge) permet de passer entre les 2 modes.
+![Pic NightMode](https://github.com/BerghamBeaubien/Application-Cyrell/blob/main/Resources/NightMode.png)
 
 #### **Gestion des extensions**
 - **Clic droit sur une extension** : la coche seule.
@@ -120,8 +129,31 @@ Cet onglet permet de comparer les fichiers avec un document Excel pour assurer l
 ![Bouton Vérifier quantites](https://github.com/BerghamBeaubien/Application-Cyrell/blob/main/Resources/btnXlQte.png)
 
 ---
-
 ## **Explications Détaillées des Fonctionnalités Solid Edge**
+
+### Bouton : Ouvrir les fichiers choisis
+Ce bouton effectue les actions suivantes :
+
+1. **Vérification des fichiers sélectionnés** :
+   - Vérifie qu'au moins un fichier est sélectionné.
+   - Affiche un message d'erreur si aucun fichier n'est sélectionné.
+
+2. **Connexion à Solid Edge** :
+   - Se connecte à Solid Edge en mode silencieux (sans afficher l'interface utilisateur).
+   - Si Solid Edge n'est pas déjà ouvert, une nouvelle instance est démarrée.
+
+3. **Traitement des fichiers** :
+   - Pour chaque fichier sélectionné :
+     - Si le fichier est un fichier STEP/STP, il est ouvert en utilisant un modèle spécifique (`Normal.asm`).
+     - Si le fichier est un fichier DXF ou autre, il est ouvert directement dans Solid Edge.
+   - Le nom du document est conservé pour correspondre au nom du fichier d'origine.
+
+4. **Gestion des erreurs** :
+   - En cas d'erreur pendant l'ouverture des fichiers, un message d'erreur est affiché avec les détails.
+
+5. **Nettoyage et fin de l'opération** :
+   - Une fois les fichiers ouverts, Solid Edge devient visible.
+   - Un message de confirmation est affiché pour indiquer que les fichiers ont été traités avec succès.
 
 ### Bouton : Traiter les fichiers DXF
 Ce bouton effectue les actions suivantes :
@@ -147,30 +179,6 @@ Ce bouton effectue les actions suivantes :
 5. **Nettoyage et fin de l'opération** :
    - Ferme Solid Edge (sauf si l'utilisateur a choisi de le garder ouvert).
    - Affiche un message de confirmation une fois le traitement terminé.
-
-### Bouton : Ouvrir les fichiers choisis
-Ce bouton effectue les actions suivantes :
-
-1. **Vérification des fichiers sélectionnés** :
-   - Vérifie qu'au moins un fichier est sélectionné.
-   - Affiche un message d'erreur si aucun fichier n'est sélectionné.
-
-2. **Connexion à Solid Edge** :
-   - Se connecte à Solid Edge en mode silencieux (sans afficher l'interface utilisateur).
-   - Si Solid Edge n'est pas déjà ouvert, une nouvelle instance est démarrée.
-
-3. **Traitement des fichiers** :
-   - Pour chaque fichier sélectionné :
-     - Si le fichier est un fichier STEP/STP, il est ouvert en utilisant un modèle spécifique (`Normal.asm`).
-     - Si le fichier est un fichier DXF ou autre, il est ouvert directement dans Solid Edge.
-   - Le nom du document est conservé pour correspondre au nom du fichier d'origine.
-
-4. **Gestion des erreurs** :
-   - En cas d'erreur pendant l'ouverture des fichiers, un message d'erreur est affiché avec les détails.
-
-5. **Nettoyage et fin de l'opération** :
-   - Une fois les fichiers ouverts, Solid Edge devient visible.
-   - Un message de confirmation est affiché pour indiquer que les fichiers ont été traités avec succès.
 
 ### Bouton : Exporter dimensions
 Ce bouton effectue les actions suivantes :
@@ -237,13 +245,25 @@ Ce bouton effectue les actions suivantes :
    - Vérifie qu'au moins un fichier PAR, PSM ou ASM est sélectionné.
    - Affiche un message d'erreur si aucun fichier n'est sélectionné.
 
-2. **Création du fichier DFT** :
+2a. **Création du fichier DFT** Cas #1 (Mode Standard):
    - Ouvre Solid Edge et crée un nouveau document DFT basé sur un modèle prédéfini (`Normal.dft`).
-   - Pour chaque fichier sélectionné :
+   - Pour chaque fichier sélectionné:
      - Ajoute une nouvelle feuille dans le document DFT.
      - Crée des vues (vue de face, vue de côté, vue de dessous) à partir du fichier PAR, PSM ou ASM.
-     - Si le fichier est un assemblage (ASM), une nomenclature est générée automatiquement.
+     - Si le fichier est un assemblage (ASM), une nomenclature est générée automatiquement et une fenêtre s'ouvre affichant toutes les pièces contenues dans l'assemblage.
+        - L'utilisateur peut cocher/décocher les pièces qu'il souhaite inclure dans le fichier DFT:
+        - Un clic droit sur une pièce permet de **modifier son nom**. 
+        ![Pic liste pieces asm](https://github.com/BerghamBeaubien/Application-Cyrell/blob/main/Resources/reName.png)
+        ![Pic rename](https://github.com/BerghamBeaubien/Application-Cyrell/blob/main/Resources/actualRename.png)
+        - **Attention** : une pièce ne peut pas avoir le même nom que l'assemblage.
      - Si le fichier est une pièce en tôle (PAR ou PSM), une table de pliage est ajoutée.
+
+2b. **Création du fichier DFT** Cas #2 (Mode Avancé):
+   - Ouvre Solid Edge et crée un nouveau document DFT basé sur un modèle prédéfini (`Normal.dft`).
+   - Pour chaque fichier sélectionné (Dans la même page du document DFT):
+     - Crée la vue du déplié, la table de plie et la table de nomenclature (dépendamment des paramètres cochés).
+     - Crée un espace entre les différentes pièces pour que l'information soit lisible.
+   - Les fichiers ASM ne sont pas traités
 
 3. **Gestion des assemblages** :
    - Si l'option **Dessins individuels pour les assemblages** est activée, une fenêtre permet de sélectionner les composants à inclure dans des feuilles séparées.

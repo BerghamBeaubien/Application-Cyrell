@@ -8,6 +8,7 @@ public class FormulaireDFT : Form
     private TabControl tabControl;
     private TabPage tabStandard;
     private TabPage tabAvance;
+    private Label lblExplication;
 
     // Onglet Standard
     private BouttonToggle tglParListPieceSolo;
@@ -36,6 +37,7 @@ public class FormulaireDFT : Form
     private TextBox txtSpacingX;
     private TextBox txtSpacingY;
     private BouttonToggle tglRefVarsAvance;
+    private BouttonToggle tglParListPieceSoloAvance;
     private Label lblRefVarsAvance;
 
     // Boutons de validation
@@ -53,6 +55,7 @@ public class FormulaireDFT : Form
     public bool ParamCountParts => tglCountParts.Checked;
 
     public bool ParamBendTableToggleAvance => tglBendTableToggleAvance.Checked;
+    public bool ParamPartsListAvance => tglParListPieceSoloAvance.Checked;
     public bool IsAutoScaleStandard => tglScaleModeStandard.Checked;
     public double CustomScaleStandard => double.TryParse(txtCustomScaleStandard.Text, out double scaleStd) ? scaleStd : 0.5;
     public double CustomScale => double.TryParse(txtCustomScale.Text, out double scale) ? scale : 0.5;
@@ -62,7 +65,7 @@ public class FormulaireDFT : Form
 
     // Add delegates for the two continue buttons
     public delegate void ContinueHandler(bool parListPieceSolo, bool dftIndividuel, bool isoView, bool flatView, bool bendTable, bool refVars, bool countParts,
-        bool bendTableAdv, bool autoScale, double scale, double spacingX, double spacingY);
+        bool bendTableAdv, bool parListAvance, bool autoScale, double scale, double spacingX, double spacingY);
     public event ContinueHandler OnContinue1;
     public event ContinueHandler OnContinue2;
 
@@ -90,12 +93,17 @@ public class FormulaireDFT : Form
         // Set initial button visibility
         btnContinue.Visible = true;
         btnContinue2.Visible = false;
+
     }
 
+    private void TabControlDFT_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        AfficherExplication();
+    }
     private void InitializeComponents()
     {
         this.Text = "Paramètres DFT";
-        this.Size = new Size(600, 440); // Increased height to accommodate new controls
+        this.Size = new Size(600, 480); // Increased height to accommodate new controls
         this.FormBorderStyle = FormBorderStyle.FixedDialog;
         this.MaximizeBox = false;
         this.StartPosition = FormStartPosition.CenterParent;
@@ -106,7 +114,7 @@ public class FormulaireDFT : Form
         tabControl = new TabControl
         {
             Location = new Point(10, 10),
-            Size = new Size(570, 340), // Increased height
+            Size = new Size(570, 300), // Increased height
             Appearance = TabAppearance.FlatButtons,
             ItemSize = new Size(120, 30),
             SizeMode = TabSizeMode.Fixed
@@ -130,10 +138,10 @@ public class FormulaireDFT : Form
         btnContinue = new Button
         {
             Text = "Continuer",
-            Location = new Point(400, 360), // Adjusted position
+            Location = new Point(400, 380), // Adjusted position
             Size = new Size(90, 30),
             FlatStyle = FlatStyle.Flat,
-            BackColor = Color.DarkOrange,
+            BackColor = Color.Green,
             ForeColor = Color.White
         };
         btnContinue.FlatAppearance.BorderSize = 0;
@@ -142,7 +150,7 @@ public class FormulaireDFT : Form
         btnContinue2 = new Button
         {
             Text = "Continuer",
-            Location = new Point(400, 360), // Adjusted position
+            Location = new Point(400, 380), // Adjusted position
             Size = new Size(90, 30),
             FlatStyle = FlatStyle.Flat,
             BackColor = Color.SteelBlue,
@@ -155,7 +163,7 @@ public class FormulaireDFT : Form
         {
             Text = "Annuler",
             DialogResult = DialogResult.Cancel,
-            Location = new Point(500, 360), // Adjusted position
+            Location = new Point(500, 380), // Adjusted position
             Size = new Size(80, 30),
             FlatStyle = FlatStyle.Flat
         };
@@ -165,12 +173,47 @@ public class FormulaireDFT : Form
         tabControl.TabPages.Add(tabStandard);
         tabControl.TabPages.Add(tabAvance);
 
+        // Create the explanation box
+        lblExplication = new Label
+        {
+            BackColor = Color.White,
+            BorderStyle = BorderStyle.FixedSingle,
+            Font = new Font("Segoe UI", 10),
+            Size = new Size(540, 40),
+            Location = new Point(20, 320)
+        };
+
+        tabControl.SelectedIndexChanged += TabControlDFT_SelectedIndexChanged;
+        tabControl.SelectedIndex = 0;
+        AfficherExplication();
+
         this.Controls.Add(tabControl);
+        this.Controls.Add(lblExplication);
         this.Controls.Add(btnContinue);
         this.Controls.Add(btnContinue2);
         this.Controls.Add(btnCancel);
 
         this.CancelButton = btnCancel;
+    }
+
+    private void AfficherExplication()
+    {
+        string nomOnglet = tabControl.SelectedTab.Text;
+
+        if (nomOnglet == "Standard")
+        {
+            lblExplication.Text = "Le mode Standard permet de générer un dessin (DFT) de chaque pièce séléctionnée.\n" +
+                "Chaque pièce sera dans une page différente";
+        }
+        else if (nomOnglet == "Avancé")
+        {
+            lblExplication.Text = "Le mode Avancé permet de générer un dessin (DFT) contenant toutes les pièces séléctionnées. " +
+                "Chaque pièce est éspacée dans la page avec les valeurs spécifiées.";
+        }
+        else
+        {
+            lblExplication.Text = "";
+        }
     }
 
     private void BtnContinue1_Click(object sender, EventArgs e)
@@ -186,6 +229,7 @@ public class FormulaireDFT : Form
             ParamRefVars,
             ParamCountParts,
             ParamBendTableToggleAvance,
+            ParamPartsListAvance,
             IsAutoScaleStandard,
             scale,
             SpacingX,
@@ -207,6 +251,7 @@ public class FormulaireDFT : Form
             ParamRefVars,
             ParamCountParts,
             ParamBendTableToggleAvance,
+            ParamPartsListAvance,
             IsAutoScale,
             scale,
             SpacingX,
@@ -292,28 +337,28 @@ public class FormulaireDFT : Form
         tabStandard.Controls.Add(txtCustomScaleStandard);
 
         // Initialiser les couleurs des toggles
-        tglParListPieceSolo.OnBackColor = Color.DarkOrange;
+        tglParListPieceSolo.OnBackColor = Color.Green;
         tglParListPieceSolo.OffBackColor = Color.LightGray;
 
-        tglDftIndividuelAssemblage.OnBackColor = Color.DarkOrange;
+        tglDftIndividuelAssemblage.OnBackColor = Color.Green;
         tglDftIndividuelAssemblage.OffBackColor = Color.LightGray;
 
-        tglIsoView.OnBackColor = Color.DarkOrange;
+        tglIsoView.OnBackColor = Color.Green;
         tglIsoView.OffBackColor = Color.LightGray;
 
-        tglFlatView.OnBackColor = Color.DarkOrange;
+        tglFlatView.OnBackColor = Color.Green;
         tglFlatView.OffBackColor = Color.LightGray;
 
-        tglBendTableToggle.OnBackColor = Color.DarkOrange;
+        tglBendTableToggle.OnBackColor = Color.Green;
         tglBendTableToggle.OffBackColor = Color.LightGray;
 
-        tglRefVars.OnBackColor = Color.DarkOrange;
+        tglRefVars.OnBackColor = Color.Green;
         tglRefVars.OffBackColor = Color.LightGray;
 
-        tglCountParts.OnBackColor = Color.DarkOrange;
+        tglCountParts.OnBackColor = Color.Green;
         tglCountParts.OffBackColor = Color.LightGray;
 
-        tglScaleModeStandard.OnBackColor = Color.DarkOrange;
+        tglScaleModeStandard.OnBackColor = Color.Green;
         tglScaleModeStandard.OffBackColor = Color.LightGray;
 
         // La table de pliage ne devrait être visible que si FlatView est cochée
@@ -335,12 +380,29 @@ public class FormulaireDFT : Form
         CreateToggleWithLabel(tabAvance, "Générer Bend Table:", leftMargin, startY,
             out Label lblBendTableToggleAvance, out tglBendTableToggleAvance, 200);
 
-        // Add RefVars toggle to advanced tab
-        CreateToggleWithLabel(tabAvance, "Rouler macro DenMarForr7:", leftMargin, startY + verticalSpacing,
+        // Add ParListPieceSolo toggle to advanced tab (replacing RefVars position)
+        CreateToggleWithLabel(tabAvance, "Générer 'Nomenclature':", leftMargin, startY + verticalSpacing,
+            out Label lblParListPieceSoloAvance, out tglParListPieceSoloAvance, 200);
+
+        // Add RefVars toggle but 300 pixels to the right
+        CreateToggleWithLabel(tabAvance, "Rouler macro DenMarForr7:", 300, startY + verticalSpacing,
             out lblRefVarsAvance, out tglRefVarsAvance, 200);
+
+        // Set RefVars visibility to initially hidden - will be controlled by the ParList toggle
+        lblRefVarsAvance.Visible = false;
+        tglRefVarsAvance.Visible = false;
+
+        // Add event to control RefVars visibility based on ParList toggle state
+        tglParListPieceSoloAvance.CheckedChanged += (sender, e) => {
+            lblRefVarsAvance.Visible = tglParListPieceSoloAvance.Checked;
+            tglRefVarsAvance.Visible = tglParListPieceSoloAvance.Checked;
+        };
 
         tglBendTableToggleAvance.OnBackColor = Color.SteelBlue;
         tglBendTableToggleAvance.OffBackColor = Color.LightGray;
+
+        tglParListPieceSoloAvance.OnBackColor = Color.SteelBlue;
+        tglParListPieceSoloAvance.OffBackColor = Color.LightGray;
 
         tglRefVarsAvance.OnBackColor = Color.SteelBlue;
         tglRefVarsAvance.OffBackColor = Color.LightGray;
@@ -390,7 +452,7 @@ public class FormulaireDFT : Form
         {
             Text = "Espacement X (pouces):",
             Location = new Point(leftMargin, startY + verticalSpacing * 4),
-            Size = new Size(labelWidth+20, 25),
+            Size = new Size(labelWidth + 20, 25),
             TextAlign = ContentAlignment.MiddleLeft
         };
 
@@ -406,7 +468,7 @@ public class FormulaireDFT : Form
         {
             Text = "Espacement Y (pouces):",
             Location = new Point(leftMargin, startY + verticalSpacing * 5),
-            Size = new Size(labelWidth+20, 25),
+            Size = new Size(labelWidth + 20, 25),
             TextAlign = ContentAlignment.MiddleLeft
         };
 
@@ -420,6 +482,10 @@ public class FormulaireDFT : Form
         // Ajout des contrôles à l'onglet Avancé
         tabAvance.Controls.Add(lblBendTableToggleAvance);
         tabAvance.Controls.Add(tglBendTableToggleAvance);
+        tabAvance.Controls.Add(lblParListPieceSoloAvance);
+        tabAvance.Controls.Add(tglParListPieceSoloAvance);
+        tabAvance.Controls.Add(lblRefVarsAvance);
+        tabAvance.Controls.Add(tglRefVarsAvance);
         tabAvance.Controls.Add(lblCustomScale);
         tabAvance.Controls.Add(txtCustomScale);
         tabAvance.Controls.Add(lblSpacingX);
@@ -427,7 +493,6 @@ public class FormulaireDFT : Form
         tabAvance.Controls.Add(lblSpacingY);
         tabAvance.Controls.Add(txtSpacingY);
     }
-
     private void CreateToggleWithLabel(Control parent, string labelText, int x, int y,
                                      out Label label, out BouttonToggle toggle, int toggleOffsetX)
     {
@@ -470,7 +535,7 @@ public class FormulaireDFT : Form
         if (isSelected)
         {
             using (SolidBrush brush = new SolidBrush(isSelected ?
-                (tabPage == tabStandard ? Color.DarkOrange : Color.SteelBlue) : Color.Transparent))
+                (tabPage == tabStandard ? Color.Green : Color.SteelBlue) : Color.Transparent))
             {
                 g.FillRectangle(brush, tabBounds.X, tabBounds.Bottom - 3, tabBounds.Width, 3);
             }
@@ -484,9 +549,15 @@ public class FormulaireDFT : Form
         };
 
         // Dessiner le texte
-        using (SolidBrush brush = new SolidBrush(isSelected ? Color.Black : Color.Gray))
+        string tabText = tabControl.TabPages[e.Index].Text;
+        using (Brush textBrush = new SolidBrush(Color.Black))
         {
-            g.DrawString(tabPage.Text, tabPage.Font ?? this.Font, brush, tabBounds, stringFormat);
+            StringFormat sf = new StringFormat
+            {
+                Alignment = StringAlignment.Center,
+                LineAlignment = StringAlignment.Center
+            };
+            g.DrawString(tabText, this.Font, textBrush, tabBounds, sf);
         }
     }
 
