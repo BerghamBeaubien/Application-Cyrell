@@ -476,7 +476,7 @@ public class FormulaireDFT : Form
         {
             Location = new Point(leftMargin + labelWidth + 30, startY + verticalSpacing * 5),
             Size = new Size(textboxWidth, 25),
-            Text = "5" // Valeur par défaut
+            Text = "6" // Valeur par défaut
         };
 
         // Ajout des contrôles à l'onglet Avancé

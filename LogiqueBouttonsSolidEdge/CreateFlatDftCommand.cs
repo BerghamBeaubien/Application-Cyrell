@@ -65,7 +65,7 @@ public class CreateFlatDftCommand : SolidEdgeCommandBase
             double compteurX = 0.06;
             double compteurY = 0.4;
             int viewCounter = 0;
-            int maxViewsPerRow = 4;
+            int maxViewsPerRow = 3;
 
             // Get the Solid Edge application object
             OleMessageFilter.Register();
@@ -226,26 +226,27 @@ public class CreateFlatDftCommand : SolidEdgeCommandBase
                         bendFlatView.Delete();
                     }
 
-                    if (paramPartsList)
-                    {
-                        // Ensure we're working with the current sheet's view
-                        dwgViews = sheet.DrawingViews;
-                        dwgViewFlat = dwgViews.Item(1);
+                    // Ensure we're working with the current sheet's view
+                    dwgViews = sheet.DrawingViews;
+                    dwgViewFlat = dwgViews.Item(dwgViews.Count);
 
-                        // Create parts list using document's PartsLists collection
-                        SolidEdgeDraft.PartsLists partsLists = seDraftDoc.PartsLists;
+                    // Create parts list using document's PartsLists collection
+                    SolidEdgeDraft.PartsLists partsLists = seDraftDoc.PartsLists;
 
-                        // Create the parts list on the active sheet
-                        SolidEdgeDraft.PartsList partsList = partsLists.Add(
-                            DrawingView: dwgViewFlat,
-                            SavedSettings: "ANSI",
-                            AutoBalloon: 1,
-                            CreatePartsList: 1
-                        );
+                    // Create the parts list on the active sheet
+                    SolidEdgeDraft.PartsList partsList = partsLists.Add(
+                        DrawingView: dwgViewFlat,
+                        SavedSettings: "ANSI",
+                        AutoBalloon: 1,
+                        CreatePartsList: 1
+                    );
 
-                        // Position the parts list on the current sheet
-                        partsList.SetOrigin(compteurX -.1, compteurY + .1);
-                    }
+                    //Position the parts list on the current sheet
+                    partsList.SetOrigin(compteurX - .1, compteurY + .1);
+
+                    if (!paramPartsList)
+                        partsList.Delete();
+
                     compteurY = compteurY - paramSpaceY;
                     viewCounter++;
                 }
