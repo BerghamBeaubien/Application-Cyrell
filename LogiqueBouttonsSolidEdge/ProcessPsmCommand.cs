@@ -190,12 +190,12 @@ public class ProcessPsmCommand : SolidEdgeCommandBase
                     seApp.StartCommand((SolidEdgeCommandConstants)45070);
                     seApp.StartCommand((SolidEdgeCommandConstants)45063);
                     MessageBox.Show(
-                            "Veuillez Choisir une Face et une Arête.\n" +
-                            "Appuyez sur OK quand vous aurez terminer",
-                            "Choisir Face et Arête",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Information
-                        );
+                        "Veuillez Choisir une Face et une Arête.\n" +
+                        "Appuyez sur OK quand vous aurez terminer",
+                        "Choisir Face et Arête",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information
+                    );
                     dynamicDoc.Save();
                     if (closeDoc)
                     {
@@ -205,19 +205,48 @@ public class ProcessPsmCommand : SolidEdgeCommandBase
                 }
                 else
                 {
-
                     face = FlatPatternUtils.GetFaceFurthestFromCenter(body, faces);
 
-                    //// Manual face selection remplacer XXXX par l'ID de la face (Pour Débogage)
-                    //face = (Face)faces.Item(1);
-                    //for (int i =1; i <= faces.Count; i++)
-                    //{
-                    //    SolidEdgeGeometry.Face currentFace = (Face)faces.Item(i);
-                    //    if (currentFace.ID == XXXX) face = currentFace;
-                    //}
-                    //Console.WriteLine($"User selected Face {face.ID} - Area: {face.Area * 1550.0031} mm²");
+                    if (face == null)
+                    {
+                        DialogResult result = MessageBox.Show(
+                            "Problème lors de la détection automatique de face.\n\n" +
+                            "Souhaitez-vous sélectionner manuellement la face et l'arête ?\n\n" +
+                            "Si vous appuyez sur 'No', une face aléatoire sera choisie",
+                            "Sélection de face",
+                            MessageBoxButtons.YesNo,
+                            MessageBoxIcon.Question
+                        );
 
-                    //Automatic edge selections
+                        if (result == DialogResult.Yes)
+                        {
+                            // Mode manuel similaire à autoMod
+                            seApp.StartCommand((SolidEdgeCommandConstants)45066);
+                            seApp.StartCommand((SolidEdgeCommandConstants)45070);
+                            seApp.StartCommand((SolidEdgeCommandConstants)45063);
+                            MessageBox.Show(
+                                "Veuillez Choisir une Face et une Arête.\n" +
+                                "Appuyez sur OK quand vous aurez terminer",
+                                "Choisir Face et Arête",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Information
+                            );
+                            dynamicDoc.Save();
+                            if (closeDoc)
+                            {
+                                dynamicDoc.Close();
+                            }
+                            continue;
+                        }
+                        else
+                        {
+                            // Sélection aléatoire d'une face
+                            face = (Face)faces.Item(1);
+                            Console.WriteLine($"Face choisie aléatoirement: {face.ID}");
+                        }
+                    }
+
+                    // Automatic edge selections
                     edge = FlatPatternUtils.GetEdgeAlignedWithCoordinatesSystem(face);
                 }
 
@@ -234,8 +263,7 @@ public class ProcessPsmCommand : SolidEdgeCommandBase
         }
         catch (Exception ex)
         {
-            MessageBox.Show("Error opening or processing PSM files in Solid Edge: " + ex.Message);
-            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show(ex.Message, $"Erreur lors du traitement", MessageBoxButtons.OK, MessageBoxIcon.Error);
             Console.WriteLine(ex.Message);
         }
         finally

@@ -135,51 +135,58 @@ public class CreateDftCommand : SolidEdgeCommandBase
                 dynamic docActif = modelLink.ModelDocument;
                 var scale = 0.1; // Default scale
 
-                if (paramAutoScale)
+                if (paramAutoScale && !fullPath.EndsWith(".asm", StringComparison.OrdinalIgnoreCase))
                 {
-                    var flatPatternModels = docActif.FlatPatternModels;
-                    if (flatPatternModels.Count < 1)
+                    try
                     {
-                        Debug.WriteLine("No flat models. Using default scale 0.1.");
-                    }
-                    else
-                    {
-                        var flatPatternModel = flatPatternModels.Item(1);
-                        var flatPattern = flatPatternModel.FlatPatterns.Item(1);
-
-                        double minX, minY, maxX, maxY, minZ, maxZ;
-                        try
+                        var flatPatternModels = docActif.FlatPatternModels;
+                        if (flatPatternModels.Count < 1)
                         {
-                            flatPattern.Range(out minX, out minY, out minZ, out maxX, out maxY, out maxZ);
+                            Debug.WriteLine("No flat models. Using default scale 0.1.");
+                        }
+                        else
+                        {
+                            var flatPatternModel = flatPatternModels.Item(1);
+                            var flatPattern = flatPatternModel.FlatPatterns.Item(1);
 
-                            var xRange = maxX - minX;
-                            var yRange = maxY - minY;
-
-                            var tallDrawing = (xRange < yRange);
-
-                            var xScale = 16 / (xRange * 39.3701);
-                            var yScale = 7 / (yRange * 39.3701);
-
-                            if (tallDrawing)
+                            double minX, minY, maxX, maxY, minZ, maxZ;
+                            try
                             {
-                                xScale = 7 / (xRange * 39.3701);
-                                yScale = 16 / (yRange * 39.3701);
+                                flatPattern.Range(out minX, out minY, out minZ, out maxX, out maxY, out maxZ);
+
+                                var xRange = maxX - minX;
+                                var yRange = maxY - minY;
+
+                                var tallDrawing = (xRange < yRange);
+
+                                var xScale = 16 / (xRange * 39.3701);
+                                var yScale = 7 / (yRange * 39.3701);
+
+                                if (tallDrawing)
+                                {
+                                    xScale = 7 / (xRange * 39.3701);
+                                    yScale = 16 / (yRange * 39.3701);
+                                }
+
+                                scale = Math.Round(Math.Min(xScale, yScale) * 0.8, 5);
+
+                                Debug.Print($"{docActif.Name} Scale: {scale}");
                             }
-
-                            scale = Math.Round(Math.Min(xScale, yScale) * 0.8, 5);
-
-                            Debug.Print($"{docActif.Name} Scale: {scale}");
+                            catch (NullReferenceException ex)
+                            {
+                                Debug.WriteLine(ex);
+                                Debug.WriteLine("Error calculating range. Using default scale 0.1.");
+                            }
                         }
-                        catch (NullReferenceException ex)
-                        {
-                            Debug.WriteLine(ex);
-                            Debug.WriteLine("Error calculating range. Using default scale 0.1.");
-                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Erreur Lors du calcule de l'échelle: " + ex.Message);
                     }
                 }
                 else
                 {
-                    scale = paramScale;
+                    if (paramScale != 0) scale = paramScale;
                 }
 
 
@@ -588,6 +595,7 @@ public class CreateDftCommand : SolidEdgeCommandBase
         }
     }
 
+    #region Lancer Macro DenMarForr7
     public void UpdateDocumentVariables(string fullPath, SolidEdgeFramework.Documents seDocs)
     {
 
@@ -614,66 +622,120 @@ public class CreateDftCommand : SolidEdgeCommandBase
 
     private void UpdatePartVariables(bool assemblage)
     {
+        Process appProcess = null;
         try
         {
-            // Start the process
-            Process appProcess = Process.Start(@"P:\Informatique\SOLID EDGE\DenMarForr7.exe");
+            // Start the process with timeout protection
+            appProcess = Process.Start(@"P:\Informatique\SOLID EDGE\DenMarForr7.exe");
 
-            // Wait for the process to fully initialize
-            if (appProcess != null)
+            if (appProcess == null)
             {
-                // Wait for the main window to be ready
-                appProcess.WaitForInputIdle();
+                throw new Exception("Failed to start the application process.");
+            }
 
-                // Additional safeguard to ensure app is fully loaded
-                System.Threading.Thread.Sleep(500);
+            // Wait for the process to initialize with timeout
+            bool initialized = appProcess.WaitForInputIdle(10000); // 10 second timeout
+            if (!initialized)
+            {
+                throw new TimeoutException("Application failed to initialize within expected time.");
+            }
 
-                // Handle TAB based on assemblage flag
-                if (!assemblage)
-                {
-                    SendKeys.SendWait("{TAB}");
-                }
+            // Additional safeguard to ensure app is fully loaded
+            System.Threading.Thread.Sleep(500);
 
-                // Send initial ENTER
-                SendKeys.SendWait("{ENTER}");
+            // Handle TAB based on assemblage flag
+            if (!assemblage)
+            {
+                SendKeys.SendWait("{TAB}");
+            }
 
-                // Wait for confirmation dialog
+            // Send initial ENTER
+            SendKeys.SendWait("{ENTER}");
+
+            try
+            {
+                // Wait for confirmation dialog with its own error handling
                 WaitForConfirmationDialog();
 
                 System.Threading.Thread.Sleep(1000);
 
                 // Send final ENTER to complete process
                 SendKeys.SendWait("{ENTER}");
+
+                // Wait for process to exit with timeout
+                bool exited = appProcess.WaitForExit(30000); // 30 second timeout
+                if (!exited)
+                {
+                    throw new TimeoutException("Application did not exit within expected time.");
+                }
             }
-            else
+            catch (TimeoutException tex)
             {
-                throw new Exception("Failed to start the application process.");
+                Console.WriteLine($"Timeout occurred: {tex.Message}");
+                // Log the error but continue processing
+                // Force process termination if it's still running
+                if (!appProcess.HasExited)
+                {
+                    appProcess.Kill();
+                }
             }
         }
         catch (Exception ex)
         {
-            MessageBox.Show($"Error updating part variables: {ex.Message}");
+            // Log the error but don't throw it further to allow continuation
+            Console.WriteLine($"Error updating part variables: {ex.Message}");
+        }
+        finally
+        {
+            // Ensure process cleanup
+            if (appProcess != null && !appProcess.HasExited)
+            {
+                try
+                {
+                    appProcess.Kill();
+                }
+                catch
+                {
+                    // Ignore errors during cleanup
+                }
+                finally
+                {
+                    appProcess.Dispose();
+                }
+            }
         }
     }
 
     private void WaitForConfirmationDialog()
     {
         // Maximum wait time (in milliseconds)
-        int maxWaitTime = 30000; // 30 seconds
+        int maxWaitTime = 60000; // 60 seconds for large assemblies
         int waitInterval = 500;  // Check every 500 ms
         int elapsedTime = 0;
 
         // Keep checking for the confirmation dialog
         while (elapsedTime < maxWaitTime)
         {
-            // Check if the confirmation dialog is present
-            // This is a placeholder - you'll need to replace with actual dialog detection
-            if (IsConfirmationDialogVisible())
+            try
             {
-                return; // Dialog found, proceed
+                // Check if the confirmation dialog is present
+                IntPtr dialogHandle = Win32ApiHelper.FindWindow(null, "Project1");
+
+                if (dialogHandle != IntPtr.Zero)
+                {
+                    // Window found, add delay for rendering
+                    System.Threading.Thread.Sleep(500);
+                    Console.WriteLine("Dialog is now visible");
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log any unexpected errors but continue waiting
+                Console.WriteLine($"Error while checking for dialog: {ex.Message}");
             }
 
-            // Wait a short interval
+            // Wait before checking again
             System.Threading.Thread.Sleep(waitInterval);
             elapsedTime += waitInterval;
         }
@@ -682,20 +744,14 @@ public class CreateDftCommand : SolidEdgeCommandBase
         throw new TimeoutException("Confirmation dialog did not appear within the expected time.");
     }
 
-    private bool IsConfirmationDialogVisible()
-    {
-        // Use Windows API to find a window with the title "Project1"
-        IntPtr dialogHandle = Win32ApiHelper.FindWindow(null, "Project1");
-        return dialogHandle != IntPtr.Zero;
-    }
-
-    // You'll need to add a helper class for Windows API calls if not already present
     public static class Win32ApiHelper
     {
         [DllImport("user32.dll", SetLastError = true)]
         public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
     }
+    #endregion
 
+    #region Génerer Raport
     private void CollectPartNamesFromDocument(dynamic document, string fullPath, string sourceAssemblyName = null)
     {
         try
@@ -879,5 +935,5 @@ public class CreateDftCommand : SolidEdgeCommandBase
             MessageBox.Show($"Error exporting to Excel: {ex.Message}");
         }
     }
-
+    #endregion
 }

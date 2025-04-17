@@ -375,64 +375,119 @@ namespace Application_Cyrell.LogiqueBouttonsSolidEdge
             return (x1, y1);
         }
 
+        #region Lancer Macro DenMarForr7
         private void UpdatePartVariables()
         {
+            Process appProcess = null;
             try
             {
-                // Start the process
-                Process appProcess = Process.Start(@"P:\Informatique\SOLID EDGE\DenMarForr7.exe");
+                // Start the process with timeout protection
+                appProcess = Process.Start(@"P:\Informatique\SOLID EDGE\DenMarForr7.exe");
 
-                // Wait for the process to fully initialize
-                if (appProcess != null)
+                if (appProcess == null)
                 {
-                    // Wait for the main window to be ready
-                    appProcess.WaitForInputIdle();
+                    throw new Exception("Failed to start the application process.");
+                }
 
-                    // Additional safeguard to ensure app is fully loaded
-                    System.Threading.Thread.Sleep(500);
+                // Wait for the process to initialize with timeout
+                bool initialized = appProcess.WaitForInputIdle(10000); // 10 second timeout
+                if (!initialized)
+                {
+                    throw new TimeoutException("Application failed to initialize within expected time.");
+                }
 
-                    SendKeys.SendWait("{TAB}");
+                // Additional safeguard to ensure app is fully loaded
+                System.Threading.Thread.Sleep(500);
 
-                    // Send initial ENTER
-                    SendKeys.SendWait("{ENTER}");
+                SendKeys.SendWait("{TAB}");
 
-                    // Wait for confirmation dialog
+                // Send initial ENTER
+                SendKeys.SendWait("{ENTER}");
+
+                try
+                {
+                    // Wait for confirmation dialog with its own error handling
                     WaitForConfirmationDialog();
 
                     System.Threading.Thread.Sleep(1000);
 
                     // Send final ENTER to complete process
                     SendKeys.SendWait("{ENTER}");
+
+                    // Wait for process to exit with timeout
+                    bool exited = appProcess.WaitForExit(30000); // 30 second timeout
+                    if (!exited)
+                    {
+                        throw new TimeoutException("Application did not exit within expected time.");
+                    }
                 }
-                else
+                catch (TimeoutException tex)
                 {
-                    throw new Exception("Failed to start the application process.");
+                    Console.WriteLine($"Timeout occurred: {tex.Message}");
+                    // Log the error but continue processing
+                    // Force process termination if it's still running
+                    if (!appProcess.HasExited)
+                    {
+                        appProcess.Kill();
+                    }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error updating part variables: {ex.Message}");
+                // Log the error but don't throw it further to allow continuation
+                Console.WriteLine($"Error updating part variables: {ex.Message}");
+            }
+            finally
+            {
+                // Ensure process cleanup
+                if (appProcess != null && !appProcess.HasExited)
+                {
+                    try
+                    {
+                        appProcess.Kill();
+                    }
+                    catch
+                    {
+                        // Ignore errors during cleanup
+                    }
+                    finally
+                    {
+                        appProcess.Dispose();
+                    }
+                }
             }
         }
 
         private void WaitForConfirmationDialog()
         {
             // Maximum wait time (in milliseconds)
-            int maxWaitTime = 30000; // 30 seconds
+            int maxWaitTime = 60000; // 60 seconds for large assemblies
             int waitInterval = 500;  // Check every 500 ms
             int elapsedTime = 0;
 
             // Keep checking for the confirmation dialog
             while (elapsedTime < maxWaitTime)
             {
-                // Check if the confirmation dialog is present
-                // This is a placeholder - you'll need to replace with actual dialog detection
-                if (IsConfirmationDialogVisible())
+                try
                 {
-                    return; // Dialog found, proceed
+                    // Check if the confirmation dialog is present
+                    IntPtr dialogHandle = Win32ApiHelper.FindWindow(null, "Project1");
+
+                    if (dialogHandle != IntPtr.Zero)
+                    {
+                        // Window found, add delay for rendering
+                        System.Threading.Thread.Sleep(500);
+                        Console.WriteLine("Dialog is now visible");
+                        return;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Log any unexpected errors but continue waiting
+                    Console.WriteLine($"Error while checking for dialog: {ex.Message}");
                 }
 
-                // Wait a short interval
+                // Wait before checking again
                 System.Threading.Thread.Sleep(waitInterval);
                 elapsedTime += waitInterval;
             }
@@ -441,17 +496,11 @@ namespace Application_Cyrell.LogiqueBouttonsSolidEdge
             throw new TimeoutException("Confirmation dialog did not appear within the expected time.");
         }
 
-        private bool IsConfirmationDialogVisible()
-        {
-            // Use Windows API to find a window with the title "Project1"
-            IntPtr dialogHandle = Win32ApiHelper.FindWindow(null, "Project1");
-            return dialogHandle != IntPtr.Zero;
-        }
-
         public static class Win32ApiHelper
         {
             [DllImport("user32.dll", SetLastError = true)]
             public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
         }
+        #endregion
     }
 }
