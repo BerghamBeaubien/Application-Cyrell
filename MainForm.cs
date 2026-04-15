@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
@@ -22,7 +22,7 @@ namespace Application_Cyrell
         private Panel panelContainer;
         private Panel panelBarreMenu;
         private PictureBox pictureBox1;
-        private Button buttonAcceuil;
+        private Button buttonAccueil;
         private Button buttonSolidEdge;
         private Button buttonExcelQc;
         private Button btnClose;
@@ -40,8 +40,8 @@ namespace Application_Cyrell
         private CancellationTokenSource cancelTokenDim;
         private CustomTooltipForm customTooltipDimensions;
         private CancellationTokenSource cancelTokenDft;
-        private Label labelAcceuil2;
-        private Label labelAcceuil1;
+        private Label labelAccueil2;
+        private Label labelAccueil1;
         private CustomTooltipForm customTooltipDft;
 
         [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
@@ -68,12 +68,12 @@ namespace Application_Cyrell
         {
             InitializeComponent();
             Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, 25, 25));
-            PnlNav.Height = buttonAcceuil.Height;
-            PnlNav.Top = buttonAcceuil.Top;
-            PnlNav.Left = buttonAcceuil.Left;
-            buttonAcceuil.BackColor = Color.FromArgb(46, 51, 73);
+            PnlNav.Height = buttonAccueil.Height;
+            PnlNav.Top = buttonAccueil.Top;
+            PnlNav.Left = buttonAccueil.Left;
+            buttonAccueil.BackColor = Color.FromArgb(46, 51, 73);
 
-            InitializationTimerAcceuil();
+            InitializationTimerAccueil();
 
             MouseDown += MainForm_MouseDown;
             customizeDesign();
@@ -84,7 +84,7 @@ namespace Application_Cyrell
             pnlSe.InitializeSettings(pnlSettings);
         }
 
-        private void InitializationTimerAcceuil()
+        private void InitializationTimerAccueil()
         {
             labelTimeDate = new Label
             {
@@ -184,12 +184,12 @@ namespace Application_Cyrell
             this.panelSubSolideEdge = new System.Windows.Forms.Panel();
             this.PnlNav = new System.Windows.Forms.Panel();
             this.buttonSolidEdge = new System.Windows.Forms.Button();
-            this.buttonAcceuil = new System.Windows.Forms.Button();
+            this.buttonAccueil = new System.Windows.Forms.Button();
             this.panelLOGO = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panelContainer = new System.Windows.Forms.Panel();
-            this.labelAcceuil2 = new System.Windows.Forms.Label();
-            this.labelAcceuil1 = new System.Windows.Forms.Label();
+            this.labelAccueil2 = new System.Windows.Forms.Label();
+            this.labelAccueil1 = new System.Windows.Forms.Label();
             this.panelBarreMenu = new System.Windows.Forms.Panel();
             this.btnClose = new System.Windows.Forms.Button();
             this.btnReduce = new System.Windows.Forms.Button();
@@ -212,7 +212,7 @@ namespace Application_Cyrell
             this.panelMenu.Controls.Add(this.panelSubSolideEdge);
             this.panelMenu.Controls.Add(this.PnlNav);
             this.panelMenu.Controls.Add(this.buttonSolidEdge);
-            this.panelMenu.Controls.Add(this.buttonAcceuil);
+            this.panelMenu.Controls.Add(this.buttonAccueil);
             this.panelMenu.Controls.Add(this.panelLOGO);
             this.panelMenu.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelMenu.Location = new System.Drawing.Point(0, 0);
@@ -331,22 +331,22 @@ namespace Application_Cyrell
             this.buttonSolidEdge.Click += new System.EventHandler(this.btnSE_Click);
             this.buttonSolidEdge.Leave += new System.EventHandler(this.btnSE_Leave);
             // 
-            // buttonAcceuil
+            // buttonAccueil
             // 
-            this.buttonAcceuil.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(30)))), ((int)(((byte)(54)))));
-            this.buttonAcceuil.Dock = System.Windows.Forms.DockStyle.Top;
-            this.buttonAcceuil.FlatAppearance.BorderSize = 0;
-            this.buttonAcceuil.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonAcceuil.Font = new System.Drawing.Font("Nirmala UI", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonAcceuil.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(126)))), ((int)(((byte)(249)))));
-            this.buttonAcceuil.Location = new System.Drawing.Point(0, 144);
-            this.buttonAcceuil.Name = "buttonAcceuil";
-            this.buttonAcceuil.Size = new System.Drawing.Size(266, 52);
-            this.buttonAcceuil.TabIndex = 1;
-            this.buttonAcceuil.Text = "Acceuil";
-            this.buttonAcceuil.UseVisualStyleBackColor = false;
-            this.buttonAcceuil.Click += new System.EventHandler(this.btnAcceuil_Click);
-            this.buttonAcceuil.Leave += new System.EventHandler(this.btnAcceuil_Leave);
+            this.buttonAccueil.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(30)))), ((int)(((byte)(54)))));
+            this.buttonAccueil.Dock = System.Windows.Forms.DockStyle.Top;
+            this.buttonAccueil.FlatAppearance.BorderSize = 0;
+            this.buttonAccueil.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonAccueil.Font = new System.Drawing.Font("Nirmala UI", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonAccueil.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(126)))), ((int)(((byte)(249)))));
+            this.buttonAccueil.Location = new System.Drawing.Point(0, 144);
+            this.buttonAccueil.Name = "buttonAccueil";
+            this.buttonAccueil.Size = new System.Drawing.Size(266, 52);
+            this.buttonAccueil.TabIndex = 1;
+            this.buttonAccueil.Text = "Accueil";
+            this.buttonAccueil.UseVisualStyleBackColor = false;
+            this.buttonAccueil.Click += new System.EventHandler(this.btnAccueil_Click);
+            this.buttonAccueil.Leave += new System.EventHandler(this.btnAccueil_Leave);
             // 
             // panelLOGO
             // 
@@ -370,34 +370,34 @@ namespace Application_Cyrell
             // panelContainer
             // 
             this.panelContainer.BackColor = System.Drawing.Color.Transparent;
-            this.panelContainer.Controls.Add(this.labelAcceuil2);
-            this.panelContainer.Controls.Add(this.labelAcceuil1);
+            this.panelContainer.Controls.Add(this.labelAccueil2);
+            this.panelContainer.Controls.Add(this.labelAccueil1);
             this.panelContainer.Location = new System.Drawing.Point(266, 61);
             this.panelContainer.Name = "panelContainer";
             this.panelContainer.Size = new System.Drawing.Size(1123, 798);
             this.panelContainer.TabIndex = 1;
             // 
-            // labelAcceuil2
+            // labelAccueil2
             // 
-            this.labelAcceuil2.AutoSize = true;
-            this.labelAcceuil2.Font = new System.Drawing.Font("Arial Rounded MT Bold", 36F);
-            this.labelAcceuil2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(126)))), ((int)(((byte)(249)))));
-            this.labelAcceuil2.Location = new System.Drawing.Point(162, 156);
-            this.labelAcceuil2.Name = "labelAcceuil2";
-            this.labelAcceuil2.Size = new System.Drawing.Size(837, 55);
-            this.labelAcceuil2.TabIndex = 3;
-            this.labelAcceuil2.Text = "Veuillez choisir un onlget à gauche";
+            this.labelAccueil2.AutoSize = true;
+            this.labelAccueil2.Font = new System.Drawing.Font("Arial Rounded MT Bold", 36F);
+            this.labelAccueil2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(126)))), ((int)(((byte)(249)))));
+            this.labelAccueil2.Location = new System.Drawing.Point(162, 156);
+            this.labelAccueil2.Name = "labelAccueil2";
+            this.labelAccueil2.Size = new System.Drawing.Size(837, 55);
+            this.labelAccueil2.TabIndex = 3;
+            this.labelAccueil2.Text = "Veuillez choisir un onlget à gauche";
             // 
-            // labelAcceuil1
+            // labelAccueil1
             // 
-            this.labelAcceuil1.AutoSize = true;
-            this.labelAcceuil1.Font = new System.Drawing.Font("Arial Rounded MT Bold", 36F);
-            this.labelAcceuil1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(126)))), ((int)(((byte)(249)))));
-            this.labelAcceuil1.Location = new System.Drawing.Point(94, 101);
-            this.labelAcceuil1.Name = "labelAcceuil1";
-            this.labelAcceuil1.Size = new System.Drawing.Size(965, 55);
-            this.labelAcceuil1.TabIndex = 2;
-            this.labelAcceuil1.Text = "Bienvenue dans l\'application Cyrell AMP";
+            this.labelAccueil1.AutoSize = true;
+            this.labelAccueil1.Font = new System.Drawing.Font("Arial Rounded MT Bold", 36F);
+            this.labelAccueil1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(126)))), ((int)(((byte)(249)))));
+            this.labelAccueil1.Location = new System.Drawing.Point(94, 101);
+            this.labelAccueil1.Name = "labelAccueil1";
+            this.labelAccueil1.Size = new System.Drawing.Size(965, 55);
+            this.labelAccueil1.TabIndex = 2;
+            this.labelAccueil1.Text = "Bienvenue dans l\'application Cyrell AMP";
             // 
             // panelBarreMenu
             // 
@@ -461,12 +461,12 @@ namespace Application_Cyrell
 
         }
 
-        private void btnAcceuil_Click(object sender, EventArgs e)
+        private void btnAccueil_Click(object sender, EventArgs e)
         {
-            PnlNav.Height = buttonAcceuil.Height;
-            PnlNav.Top = buttonAcceuil.Top;
-            PnlNav.Left = buttonAcceuil.Left;
-            buttonAcceuil.BackColor = Color.FromArgb(46, 51, 73);
+            PnlNav.Height = buttonAccueil.Height;
+            PnlNav.Top = buttonAccueil.Top;
+            PnlNav.Left = buttonAccueil.Left;
+            buttonAccueil.BackColor = Color.FromArgb(46, 51, 73);
 
             panelContainer.BringToFront();
             pnlSe.Hide();
@@ -475,9 +475,9 @@ namespace Application_Cyrell
             hideSubMenu();
         }
 
-        private void btnAcceuil_Leave(object sender, EventArgs e)
+        private void btnAccueil_Leave(object sender, EventArgs e)
         {
-            buttonAcceuil.BackColor = Color.FromArgb(24, 30, 54);
+            buttonAccueil.BackColor = Color.FromArgb(24, 30, 54);
         }
 
         private void btnSE_Click(object sender, EventArgs e)

@@ -61,11 +61,11 @@ Le bouton **"Créer Flat Pattern"** crée un Flat Pattern des fichiers sélectio
 ![Bouton Sauvegarder DXF & Step](https://github.com/BerghamBeaubien/Application-Cyrell/blob/main/Resources/btnSaveDxfStep.png)
 Le bouton **"Sauvegarder DXF/STEP"** convertit les fichiers sélectionnés en formats DXF **(si la pièce est dépliée)** et STEP.
 
-- Sélectionnez des fichiers **PAR/PSM**.
+- Sélectionnez des fichiers **PAR, PSM ou ASM**.
 - Cliquez sur **"Sauvegarder DXF/STEP"**.
 - Choisissez le dossier de destination et cochez les options spéciales (voir Explications Détaillées pour plus d’info).
 - ![Formulaire Sauvegarder DXF & Step](https://github.com/BerghamBeaubien/Application-Cyrell/blob/main/Resources/btnDxfStepForm.png)
-- Les fichiers sont convertis en DXF et STEP.
+- Les fichiers sont convertis en DXF et/ou STEP (un ASM se sauvegarde uniquement en format STEP).
 
 ### **6. Créer un fichier DFT**
 ![Bouton Générer Dessins (DFT)](https://github.com/BerghamBeaubien/Application-Cyrell/blob/main/Resources/btnDft.png)
@@ -213,7 +213,7 @@ Ce bouton effectue les actions suivantes :
 Ce bouton effectue les actions suivantes :
 
 1. **Vérification des fichiers sélectionnés** :
-   - Vérifie qu'au moins un fichier PAR ou PSM est sélectionné.
+   - Vérifie qu'au moins un fichier PAR, PSM ou ASM est sélectionné.
    - Affiche un message d'erreur si aucun fichier n'est sélectionné.
 
 2. **Sélection du répertoire** :
@@ -226,13 +226,13 @@ Ce bouton effectue les actions suivantes :
 3. **Traitement des fichiers** :
    - Pour chaque fichier sélectionné :
      - Ouvre le fichier dans Solid Edge.
-     - Vérifie si le fichier contient un modèle déplié (Flat Pattern).
-     - Si un modèle déplié est trouvé, le fichier est sauvegardé en DXF et STEP dans le même répertoire.
+     - Vérifie s'il s'agit d'une pièce avec un modèle déplié (Flat Pattern). Si c'est le cas, elle est sauvegardée en DXF et STEP.
+     - S'il s'agit d'un assemblage (ASM), il est directement sauvegardé au format STEP sans exiger de Flat Pattern.
      - Si l'option **Tag DXF** est activée, une annotation est ajoutée au fichier DXF.
 
 4. **Gestion des erreurs** :
    - En cas d'erreur pendant le traitement, un message d'erreur est affiché avec les détails.
-   - Si un fichier ne contient pas de modèle déplié, un message d'avertissement est affiché et seul le fichier STEP est généré.
+   - Si une pièce ne contient pas de modèle déplié, un message d'avertissement est affiché et seul le fichier STEP est généré.
 
 5. **Nettoyage et fin de l'opération** :
    - Ferme Solid Edge (sauf si l'utilisateur choisit de le garder ouvert).
@@ -343,4 +343,3 @@ Ce bouton effectue les actions suivantes :
 
 ## **Conclusion**
 Ce guide vous aide à utiliser l’application Cyrell efficacement. Si vous avez des questions, n’hésitez pas à contacter Mouad pour tout problème ou suggestions.
-

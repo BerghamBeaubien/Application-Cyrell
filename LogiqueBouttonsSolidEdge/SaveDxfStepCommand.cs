@@ -12,6 +12,7 @@ using ACadSharp.Entities;
 using ACadSharp.IO;
 using Application_Cyrell.Utils;
 using SolidEdgeCommunity;
+using SolidEdgeCommunity.Extensions;
 using SolidEdgeConstants;
 using SolidEdgeDraft;
 using SolidEdgeFramework;
@@ -56,7 +57,7 @@ namespace Application_Cyrell.LogiqueBouttonsSolidEdge
                     this.paramOnlyStep = form.OnlyStep;
                     if (_outputFolderPath == "")
                     {
-                        MessageBox.Show("Choisissez un répértoire de sortie pour continuer");
+                        MessageBox.Show("Choisissez un rÃ©pÃ©rtoire de sortie pour continuer");
                         return false;
                     }
                     return true;
@@ -75,7 +76,7 @@ namespace Application_Cyrell.LogiqueBouttonsSolidEdge
 
             if (!PromptForFolder())
             {
-                MessageBox.Show("Sélection du répertoire annulée");
+                MessageBox.Show("SÃ©lection du rÃ©pertoire annulÃ©e");
                 return;
             }
 
@@ -92,13 +93,14 @@ namespace Application_Cyrell.LogiqueBouttonsSolidEdge
                     string fullPath = Path.Combine(_textBoxFolderPath.Text, selectedFile);
 
                     if (fullPath.EndsWith(".par", StringComparison.OrdinalIgnoreCase) ||
-                        fullPath.EndsWith(".psm", StringComparison.OrdinalIgnoreCase))
+                        fullPath.EndsWith(".psm", StringComparison.OrdinalIgnoreCase) ||
+                        fullPath.EndsWith(".asm", StringComparison.OrdinalIgnoreCase))
                     {
                         SaveDxfnStep(seApp, fullPath);
                     }
                     else
                     {
-                        MessageBox.Show($"Le fichier {selectedFile} n'est pas un fichier PAR ou PSM");
+                        MessageBox.Show($"Le fichier {selectedFile} n'est pas un fichier PAR, PSM ou ASM");
                     }
                 }
             }
@@ -113,7 +115,7 @@ namespace Application_Cyrell.LogiqueBouttonsSolidEdge
                     if (seApp != null)
                     {
                         DialogResult result = MessageBox.Show(
-                            "Voulez-vous voir les dxf généres dans Solid Edge",
+                            "Voulez-vous voir les dxf gÃ©nÃ©res dans Solid Edge",
                             "Solid Edge Document Management",
                             MessageBoxButtons.YesNoCancel,
                             MessageBoxIcon.Question);
@@ -141,12 +143,12 @@ namespace Application_Cyrell.LogiqueBouttonsSolidEdge
                     MessageBox.Show("Error during cleanup: " + cleanupEx.Message);
                 }
 
-                MessageBox.Show("Traitement Terminé.");
+                MessageBox.Show("Traitement TerminÃ©.");
 
             }
         }
 
-        private void SaveDxfnStep(SolidEdgeFramework.Application seApp, string fullPath)
+        private void SaveDxfnStep(dynamic seApp, string fullPath)
         {
             var documents = seApp.Documents;
             documents.Open(fullPath);
@@ -156,13 +158,78 @@ namespace Application_Cyrell.LogiqueBouttonsSolidEdge
             {
                 timeToShine(seApp.ActiveDocument, seApp);
             }
+            else if (seApp.ActiveDocument is SolidEdgeAssembly.AssemblyDocument)
+            {
+                timeToShineAsm(seApp.ActiveDocument, seApp);
+            }
+            else
+            {
+                seApp.ActiveDocument.Close();
+            }
+        }
+
+        private void timeToShineAsm(dynamic activeDocument, SolidEdgeFramework.Application seApp)
+        {
+            try
+            {
+                // Dfinition du nom par dfaut du document
+                string docName = Path.GetFileNameWithoutExtension(activeDocument.FullName);
+
+                if (paramFabbrica)
+                {
+                    docName = docName.Replace("B", "P");
+                    int index = docName.IndexOf("_Default_As Machined");
+                    if (index != -1)
+                    {
+                        docName = docName.Substring(0, index);
+                    }
+                }
+
+                if (paramChangeName)
+                {
+                    using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+                    {
+                        saveFileDialog.Filter = "STEP files (*.stp)|*.stp";
+                        saveFileDialog.Title = "Enregistrer sous";
+                        saveFileDialog.FileName = docName;
+
+                        if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                        {
+                            docName = Path.GetFileNameWithoutExtension(saveFileDialog.FileName);
+                        }
+                    }
+                }
+
+                string activeStepPath = Path.Combine(_outputFolderPath, $"{docName}.stp");
+
+                if (paramMacroDen)
+                {
+                    seApp.Visible = true;
+                    UpdatePartVariables(true);
+                    seApp.Visible = false;
+                }
+
+                if (paramOnlyDxf)
+                {
+                    MessageBox.Show($"Impossible d'exporter l'assemblage {docName} en DXF.");
+                    activeDocument.Close();
+                    return;
+                }
+
+                activeDocument.SaveAs(activeStepPath);
+                activeDocument.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erreur du traitement du fichier: {activeDocument.FullName}\nErreur: {ex.ToString()}");
+            }
         }
 
         private void timeToShine(dynamic activeDocument, SolidEdgeFramework.Application seApp)
         {
             try
             {
-                // Définition du nom par défaut du document
+                // DÃ©finition du nom par dÃ©faut du document
                 string docName = Path.GetFileNameWithoutExtension(activeDocument.FullName);
 
                 if (paramFabbrica)
@@ -199,7 +266,7 @@ namespace Application_Cyrell.LogiqueBouttonsSolidEdge
                 if (paramMacroDen)
                 {
                     seApp.Visible = true;
-                    UpdatePartVariables();
+                    UpdatePartVariables(false);
                     seApp.Visible = false;
                 }
                 // Handling export based on parameters
@@ -218,7 +285,7 @@ namespace Application_Cyrell.LogiqueBouttonsSolidEdge
                 if (flatPatternModels.Count == 0)
                 {
                     DialogResult result = MessageBox.Show(
-                        $"Le document {docName} n'est pas aplati. Impossible de générer un DXF.\nVoulez-vous en créer un ?",
+                        $"Le document {docName} n'est pas aplati. Impossible de gÃ©nÃ©rer un DXF.\nVoulez-vous en crÃ©er un ?",
                         "Confirmation",
                         MessageBoxButtons.YesNo,
                         MessageBoxIcon.Warning
@@ -237,7 +304,7 @@ namespace Application_Cyrell.LogiqueBouttonsSolidEdge
 
                         activeDocument.Close();
                         return;
-                    }                    
+                    }
                 }
 
                 // Check if flat pattern is up to date
@@ -254,7 +321,7 @@ namespace Application_Cyrell.LogiqueBouttonsSolidEdge
 
                 if (!flatPatternIsUpToDate)
                 {
-                    MessageBox.Show($"Le Flat Pattern de la piece {docName} existe mais n'est pas à jour. Impossible de générer un DXF.");
+                    MessageBox.Show($"Le Flat Pattern de la piece {docName} existe mais n'est pas Ã  jour. Impossible de gÃ©nÃ©rer un DXF.");
 
                     // If DXF can't be created, save STEP if not paramOnlyDxf
                     if (!paramOnlyDxf)
@@ -289,7 +356,7 @@ namespace Application_Cyrell.LogiqueBouttonsSolidEdge
             }
         }
 
-        private void LesAffaires(dynamic seApp,string activeDxfPath)
+        private void LesAffaires(dynamic seApp, string activeDxfPath)
         {
             // Open the saved DXF to add callout annotation
             var draftDoc = seApp.Documents.Open(activeDxfPath) as DraftDocument;
@@ -376,7 +443,7 @@ namespace Application_Cyrell.LogiqueBouttonsSolidEdge
         }
 
         #region Lancer Macro DenMarForr7
-        private void UpdatePartVariables()
+        private void UpdatePartVariables(bool assemblage)
         {
             Process appProcess = null;
             try
@@ -399,7 +466,11 @@ namespace Application_Cyrell.LogiqueBouttonsSolidEdge
                 // Additional safeguard to ensure app is fully loaded
                 System.Threading.Thread.Sleep(500);
 
-                SendKeys.SendWait("{TAB}");
+                // Handle TAB based on assemblage flag
+                if (!assemblage)
+                {
+                    SendKeys.SendWait("{TAB}");
+                }
 
                 // Send initial ENTER
                 SendKeys.SendWait("{ENTER}");
